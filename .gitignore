@@ -1,0 +1,10 @@
+# 로그 파일
+*.log
+
+# 디렉토리
+node_modules/
+tmp/
+dist/
+
+# 환경변수
+.env
