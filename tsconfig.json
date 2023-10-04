@@ -3,6 +3,7 @@
     "strict": true,
     "jsx": "react-jsx",
     "skipLibCheck": true,
-    "noImplicitAny": true
+    "noImplicitAny": true,
+    "esModuleInterop": true
   }
 }
