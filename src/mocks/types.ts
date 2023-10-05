@@ -20,6 +20,9 @@ export type Club = {
   updatedAt: string;
   status: ClubStatus;
   tags: Tags;
+  bookTitle: string;
+  author: string;
+  publisher: string;
 };
 
 export type GetClub = {
@@ -37,7 +40,7 @@ export type PostClub = {
   contents: string;
   maxPersonnel: number;
   description: string;
-  tags: string;
+  tags: Tags;
   bookTitle: string;
   author: string;
   publisher: string;
