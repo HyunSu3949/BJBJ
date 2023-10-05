@@ -1,4 +1,13 @@
 import { DB } from './types';
+export const ids = {
+  users: 3,
+  clubs: 3,
+  feeds: 3,
+  members: 7,
+  likedClubs: 6,
+  likedFeeds: 6,
+  feedComment: 2,
+};
 export const db: DB = {
   users: [
     {
@@ -34,6 +43,9 @@ export const db: DB = {
       updatedAt: '2023-10-05T13:34:56.789',
       status: '모집중',
       tags: '소모임,오프라인',
+      bookTitle: '오만과 편견0',
+      author: '제인오스틴',
+      publisher: '생능출판사',
     },
     {
       id: '1',
@@ -48,6 +60,9 @@ export const db: DB = {
       updatedAt: '2023-10-05T13:34:56.789',
       status: '모집중',
       tags: '소모임,오프라인',
+      bookTitle: '오만과 편견1',
+      author: '제인오스틴',
+      publisher: '생능출판사',
     },
     {
       id: '2',
@@ -62,6 +77,9 @@ export const db: DB = {
       updatedAt: '2023-10-05T13:34:56.789',
       status: '모집중',
       tags: '소모임,오프라인',
+      bookTitle: '오만과 편견2',
+      author: '제인오스틴',
+      publisher: '생능출판사',
     },
   ],
   feeds: [
