@@ -81,3 +81,14 @@ export function deleteLike({
 export function getLikesClubList({ userId }: { userId: string }) {
   return db.likedClubs.filter(obj => obj.userId == userId);
 }
+
+export function getFeedsSortedBylikes() {
+  return db.feeds
+    .map(obj => ({
+      id: obj.id,
+      contents: obj.contents,
+      likes: obj.likes,
+      commentCount: 1,
+    }))
+    .sort((a, b) => b.likes - a.likes);
+}
