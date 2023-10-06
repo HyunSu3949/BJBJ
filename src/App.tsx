@@ -5,5 +5,6 @@ export function App() {
     <>
       <Router />
     </>
+
   );
 }
