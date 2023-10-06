@@ -1,3 +1,9 @@
+import Router from './components/route/Router';
+
 export function App() {
-  return <div>Hi</div>;
+  return (
+    <>
+      <Router />
+    </>
+  );
 }
