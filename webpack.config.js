@@ -12,6 +12,7 @@ module.exports = {
     main: './src/index.tsx',
   },
   output: {
+    publicPath: '/',
     path: path.resolve(__dirname, 'dist'),
   },
   resolve: {
@@ -37,6 +38,7 @@ module.exports = {
   devServer: {
     hot: true,
     port: 3000,
+    historyApiFallback: true,
   },
   plugins: [
     new HtmlWebpackPlugin({
