@@ -5,7 +5,7 @@ import {
   likesClub,
   postClubs,
   getLikesClubList,
-} from './utils';
+} from '../utils';
 
 export const clubHandlers = [
   rest.post('/clubs', async (req, res, ctx) => {
@@ -19,6 +19,7 @@ export const clubHandlers = [
 
     const clubList =
       sortBy === 'likes' ? getClubsSortedByLikes() : getClubsSortedByLikes();
+
     return res(
       ctx.json({
         code: 1,

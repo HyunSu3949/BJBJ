@@ -1,9 +1,10 @@
 import { rest } from 'msw';
-import { getFeedsSortedBylikes } from './utils';
+import { getFeedsSortedBylikes } from '../utils';
 
-export const clubHandlers = [
+export const feedHandlers = [
   rest.get('feeds', (req, res, ctx) => {
     const sortBy = req.url.searchParams.get('sortby');
+    const page = req.url.searchParams.get('page');
 
     if (sortBy) {
       const feedList = getFeedsSortedBylikes();
