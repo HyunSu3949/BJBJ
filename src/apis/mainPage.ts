@@ -16,11 +16,7 @@ type ClubsResponse = {
   clubList: Club[];
 };
 export async function getClubsSortedByLikes(sortBy: ClubSort) {
-  const response: ClubsResponse = await axiosInstance
-    .get(`/clubs?sortby=${sortBy}`)
-    .then(res => {
-      return res.data.data;
-    });
-
+  const res = await axiosInstance.get(`/clubs?sortby=${sortBy}`);
+  const response: ClubsResponse = res.data.data;
   return response;
 }
