@@ -1,8 +1,8 @@
-type ClubSort = {
+export type ClubSort = {
   sortBy: 'likes' | 'createdAt';
 };
 
-type Club = {
+export type Club = {
   id: string;
   title: string;
   contents: string;
@@ -12,7 +12,7 @@ type Club = {
   likes: string;
 };
 
-type ClubsResponse = {
+export type ClubsResponse = {
   totalCount: string;
   clubList: Club[];
 };

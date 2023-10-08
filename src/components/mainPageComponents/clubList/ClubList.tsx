@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getClubsSortedByLikes } from '../../../apis/mainPage';
+import { Club, ClubSort } from '../types';
 
 export default function ClubList({ sortBy }: ClubSort) {
   const [clubs, setClubs] = useState<Club[]>([]);
