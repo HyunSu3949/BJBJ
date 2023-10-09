@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 
 import { getClubsSortedByLikes } from '../../../apis/mainPage';
-import { Club, ClubSort } from '../types';
+import { Club, ClubSort } from '../../types';
+import ClubCard from '../../common/clubCard/ClubCard';
 
 export default function ClubList({ sortBy }: ClubSort) {
   const [clubs, setClubs] = useState<Club[]>([]);
@@ -14,18 +14,12 @@ export default function ClubList({ sortBy }: ClubSort) {
     };
 
     fetchData();
-  }, []);
+  }, [sortBy]);
 
   return (
     <ul>
       {clubs.map(club => (
-        <li key={club.id}>
-          <img src={club.imgUrl} alt={club.title} />
-          <h3>{club.title}</h3>
-          <p>{club.contents}</p>
-          <span>Likes: {club.likes}</span>
-          <Link to={`/club/${club.id}`}>더 알아보기</Link>
-        </li>
+        <ClubCard key={club.id} {...club} />
       ))}
     </ul>
   );
