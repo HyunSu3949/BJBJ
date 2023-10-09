@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+
 import { getClubsSortedByLikes } from '../../../apis/mainPage';
 import { Club, ClubSort } from '../types';
 
@@ -21,7 +23,8 @@ export default function ClubList({ sortBy }: ClubSort) {
           <img src={club.imgUrl} alt={club.title} />
           <h3>{club.title}</h3>
           <p>{club.contents}</p>
-          <p>Likes: {club.likes}</p>
+          <span>Likes: {club.likes}</span>
+          <Link to={`/club/${club.id}`}>더 알아보기</Link>
         </li>
       ))}
     </ul>
