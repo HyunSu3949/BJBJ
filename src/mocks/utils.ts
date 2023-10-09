@@ -92,3 +92,7 @@ export function getFeedsSortedBylikes() {
     }))
     .sort((a, b) => b.likes - a.likes);
 }
+
+export function getJoinedClub(userId: string) {
+  return db.members.filter(member => member.userId == userId);
+}
