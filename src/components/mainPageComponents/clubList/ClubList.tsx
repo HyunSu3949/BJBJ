@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { getClubsSortedBy } from '../../../apis/mainPage';
+import { getClubsSortedBy } from '../../../apis/clubApis';
 import { Club, ClubSort } from '../../types';
 import ClubCard from '../../common/clubCard/ClubCard';
 
