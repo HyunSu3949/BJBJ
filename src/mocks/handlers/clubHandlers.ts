@@ -5,6 +5,10 @@ import {
   likesClub,
   postClubs,
   getLikesClubList,
+  getJoinedClub,
+  getClubDetails,
+  joinClub,
+  cancleJoinClub,
 } from '../utils';
 
 export const clubHandlers = [
@@ -14,7 +18,7 @@ export const clubHandlers = [
     return res(ctx.status(201));
   }),
 
-  rest.get('/clubs', (req, res, ctx) => {
+  rest.get('main/clubs', (req, res, ctx) => {
     const sortBy = req.url.searchParams.get('sortby');
 
     const clubList =
@@ -70,5 +74,55 @@ export const clubHandlers = [
 
   rest.get('/members/ids', (req, res, ctx) => {
     const userId = req.url.searchParams.get('userId');
+    if (userId) {
+      const joinedClubList = getJoinedClub(userId);
+      return res(
+        ctx.json({
+          code: 1,
+          message: '',
+          data: {
+            totalCount: joinedClubList.length,
+            joinedClubList,
+          },
+        }),
+      );
+    }
+  }),
+
+  rest.get('/clubs/:clubId', (req, res, ctx) => {
+    const clubId = req.params.clubId as string;
+    const clubDetails = getClubDetails(clubId);
+
+    return res(
+      ctx.json({
+        code: 1,
+        message: '',
+        data: clubDetails,
+      }),
+    );
+  }),
+
+  rest.post('/members', async (req, res, ctx) => {
+    const { clubId, userId } = await req.json();
+
+    joinClub({ clubId, userId });
+    return res(
+      ctx.json({
+        code: 1,
+        message: '가입 신청 완료',
+      }),
+    );
+  }),
+
+  rest.delete('/members', async (req, res, ctx) => {
+    const clubId = req.url.searchParams.get('clubId') as string;
+    const userId = req.url.searchParams.get('userId') as string;
+    cancleJoinClub({ clubId, userId });
+    return res(
+      ctx.json({
+        code: 1,
+        message: '신청 취소 완료',
+      }),
+    );
   }),
 ];
