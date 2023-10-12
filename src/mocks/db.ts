@@ -163,11 +163,6 @@ export const db: DB = {
       clubId: '0',
     },
     {
-      id: '1',
-      userId: '0',
-      clubId: '1',
-    },
-    {
       id: '2',
       userId: '0',
       clubId: '2',

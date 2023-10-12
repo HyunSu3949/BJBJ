@@ -36,9 +36,24 @@ export async function likesClub({
 }) {
   return await axiosInstance.post('/likeclubs', { clubId, userId });
 }
+export async function cancleLikesClub({
+  clubId,
+  userId,
+}: {
+  clubId: string;
+  userId: string;
+}) {
+  return await axiosInstance.delete(
+    `/likedclubs?clubId=${clubId}&userId=${userId}`,
+  );
+}
 
 export async function getJoinedClubs(userId: string) {
   const res = await axiosInstance.get(`/members/ids?userId=${userId}`);
+  return res.data.data;
+}
+export async function getlikedClubs(userId: string) {
+  const res = await axiosInstance.get(`/likedClubs/ids?userId=${userId}`);
   return res.data.data;
 }
 
