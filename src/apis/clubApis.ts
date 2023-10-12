@@ -12,20 +12,18 @@ export async function requestParticipation({
   clubId: string;
   userId: string;
 }) {
-  return await axiosInstance.post('/members', { clubId, userId });
+  await axiosInstance.post('/members', { clubId, userId });
 }
 
 export async function cancleRequestParticipation({
   clubId,
   userId,
-  myId,
 }: {
   clubId: string;
   userId: string;
-  myId: string;
 }) {
   return await axiosInstance.delete(
-    `/members?userId=${userId}&clubId=${clubId}&myId=${myId}`,
+    `/members?userId=${userId}&clubId=${clubId}`,
   );
 }
 
@@ -39,7 +37,13 @@ export async function likesClub({
   return await axiosInstance.post('/likeclubs', { clubId, userId });
 }
 
-export async function clubFeedList(id: string) {
-  const res = await axiosInstance.get(`feeds/clubs/${id}`);
+export async function getJoinedClubs(userId: string) {
+  const res = await axiosInstance.get(`/members/ids?userId=${userId}`);
   return res.data.data;
+}
+
+export async function getClubsSortedBy(sortBy: 'likes' | 'createdAt') {
+  const res = await axiosInstance.get(`main/clubs?sortby=${sortBy}`);
+  const response = res.data.data;
+  return response;
 }
