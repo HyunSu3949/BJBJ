@@ -23,7 +23,7 @@ export default function useJoinClub({
   clubId: string;
 }) {
   const [joinStatus, setJoinStatus] = useState<JoinStatus>(status);
-  const { userInfo, setJoinedClubList } = useUserContext();
+  const { userInfo, userProfile, fetchJoiedLikedClubData } = useUserContext();
   const { openModal } = useModalContext();
 
   useEffect(() => {
@@ -44,13 +44,13 @@ export default function useJoinClub({
   };
 
   const joinClub = async (clubId: string) => {
-    await requestParticipation({ clubId, userId: userInfo.userId });
-    setJoinedClubList();
+    await requestParticipation({ clubId, userId: userProfile.userId });
+    fetchJoiedLikedClubData();
   };
 
   const cancleJoinClub = async (clubId: string) => {
-    await cancleRequestParticipation({ clubId, userId: userInfo.userId });
-    setJoinedClubList();
+    await cancleRequestParticipation({ clubId, userId: userProfile.userId });
+    fetchJoiedLikedClubData();
   };
 
   const onClickWithRecuiting = async () => {
@@ -84,7 +84,15 @@ export default function useJoinClub({
       },
     });
   };
-  const onClickWithApproved = async () => {};
+  const onClickWithApproved = async () => {
+    openModal({
+      Component: modals.CompletionModal,
+      props: {
+        message: '이미 참여중인 독서모임입니다.',
+        btnText: '확인',
+      },
+    });
+  };
 
   const buttonTable = {
     모집중: {
@@ -93,11 +101,11 @@ export default function useJoinClub({
     },
     마감됨: {
       onClick: onClickWithClosed,
-      text: '신청완료',
+      text: '모집마감',
     },
     승인됨: {
       onClick: onClickWithApproved,
-      text: '신청완료',
+      text: '참여중',
     },
     대기중: {
       onClick: onClickWithPending,
