@@ -138,12 +138,6 @@ export const db: DB = {
       status: '승인됨',
     },
     {
-      id: '3',
-      userId: '0',
-      clubId: '3',
-      status: '승인됨',
-    },
-    {
       id: '4',
       userId: '0',
       clubId: '2',

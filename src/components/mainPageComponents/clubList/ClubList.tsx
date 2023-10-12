@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { getClubsSortedByLikes } from '../../../apis/mainPage';
+import { getClubsSortedBy } from '../../../apis/clubApis';
 import { Club, ClubSort } from '../../types';
 import ClubCard from '../../common/clubCard/ClubCard';
 
@@ -9,7 +9,7 @@ export default function ClubList({ sortBy }: ClubSort) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const { clubList } = await getClubsSortedByLikes(sortBy);
+      const { clubList } = await getClubsSortedBy(sortBy);
       setClubs(clubList);
     };
 

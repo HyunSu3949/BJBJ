@@ -92,3 +92,40 @@ export function getFeedsSortedBylikes() {
     }))
     .sort((a, b) => b.likes - a.likes);
 }
+
+export function getJoinedClub(userId: string) {
+  return db.members.filter(member => member.userId == userId);
+}
+
+export function getClubDetails(clubId: string) {
+  return db.clubs.find(club => club.id == clubId);
+}
+
+export function joinClub({
+  clubId,
+  userId,
+}: {
+  clubId: string;
+  userId: string;
+}) {
+  const id = ids.members++;
+
+  db.members.push({
+    id: String(id),
+    userId,
+    clubId,
+    status: '대기중',
+  });
+}
+
+export function cancleJoinClub({
+  clubId,
+  userId,
+}: {
+  clubId: string;
+  userId: string;
+}) {
+  db.members = db.members.filter(
+    member => !(member.clubId == clubId && member.userId == userId),
+  );
+}
