@@ -83,14 +83,41 @@ export function getLikesClubList({ userId }: { userId: string }) {
 }
 
 export function getFeedsSortedBylikes() {
-  return db.feeds
+  const feedList = db.feeds
     .map(obj => ({
       id: obj.id,
+      userId: obj.userId,
       contents: obj.contents,
       likes: obj.likes,
       commentCount: 1,
     }))
-    .sort((a, b) => b.likes - a.likes);
+    .sort((a, b) => b.likes - a.likes)
+    .slice(0, 4)
+    .map(obj => {
+      const userInfo: {
+        userId: string;
+        userName: string;
+        imgUrl: string;
+      } = { userId: '', userName: '', imgUrl: '' };
+
+      db.users.forEach(user => {
+        if (user.userId == obj.userId) {
+          userInfo.userId = user.userId;
+          userInfo.userName = user.userName;
+          userInfo.imgUrl = user.imgUrl;
+        }
+      });
+
+      return {
+        user: userInfo,
+        id: obj.id,
+        contents: obj.contents,
+        likes: obj.likes,
+        commentCount: obj.commentCount,
+      };
+    });
+
+  return feedList;
 }
 
 export function getJoinedClub(userId: string) {
@@ -128,4 +155,36 @@ export function cancleJoinClub({
   db.members = db.members.filter(
     member => !(member.clubId == clubId && member.userId == userId),
   );
+}
+
+export function getClubFeeds(clubId: string) {
+  const clubFeeds = db.feeds
+    .filter(feed => feed.clubId == clubId)
+    .sort((a, b) => b.likes - a.likes)
+    .slice(0, 4)
+    .map(obj => {
+      const userInfo: {
+        userId: string;
+        userName: string;
+        imgUrl: string;
+      } = { userId: '', userName: '', imgUrl: '' };
+
+      db.users.forEach(user => {
+        if (user.userId == obj.userId) {
+          userInfo.userId = user.userId;
+          userInfo.userName = user.userName;
+          userInfo.imgUrl = user.imgUrl;
+        }
+      });
+
+      return {
+        user: userInfo,
+        id: obj.id,
+        contents: obj.contents,
+        likes: obj.likes,
+        commentCount: 1,
+      };
+    });
+
+  return clubFeeds;
 }

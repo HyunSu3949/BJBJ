@@ -48,8 +48,9 @@ export type PostClub = {
 
 export type Users = {
   id: string;
-  name: string;
-  email: string;
+  userId: string;
+  userName: string;
+  userEmail: string;
   imgUrl: string;
 };
 export type Members = {
