@@ -9,7 +9,7 @@ if (container === null) {
 }
 const root = createRoot(container);
 
-if (process.env.NODE_ENV === 'development') {
+if (process.env.REACT_APP_NODE_ENV === 'development') {
   worker.start();
 }
 root.render(<App />);

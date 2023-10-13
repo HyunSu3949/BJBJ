@@ -1,10 +1,11 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
+import { domains } from '../constants/constants';
 
 let baseURL;
-if (process.env.NODE_ENV === 'development') {
-  baseURL = process.env.BACK_URL;
+if (process.env.REACT_APP_NODE_ENV === 'development') {
+  baseURL = domains.backEnd;
 } else {
-  baseURL = process.env.BACK_URL;
+  baseURL = domains.backEnd;
 }
 
 const axiosInstance = axios.create({
