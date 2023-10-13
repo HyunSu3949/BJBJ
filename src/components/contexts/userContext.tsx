@@ -75,7 +75,7 @@ export function UserContextProvider({ children }: { children: ReactNode }) {
     setUserInfo(userInfo => ({
       ...userInfo,
       joinedClubs: joinedClubData.joinedClubList,
-      likedClubs: likedClubData.LikedClubList.map(
+      likedClubs: likedClubData.likedClubList.map(
         (obj: LikedClub) => obj.clubId,
       ),
     }));

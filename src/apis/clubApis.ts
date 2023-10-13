@@ -34,7 +34,7 @@ export async function likesClub({
   clubId: string;
   userId: string;
 }) {
-  return await axiosInstance.post('/likeclubs', { clubId, userId });
+  return await axiosInstance.post('/likedclubs', { clubId, userId });
 }
 export async function cancleLikesClub({
   clubId,
@@ -53,7 +53,7 @@ export async function getJoinedClubs(userId: string) {
   return res.data.data;
 }
 export async function getlikedClubs(userId: string) {
-  const res = await axiosInstance.get(`/likedClubs/ids?userId=${userId}`);
+  const res = await axiosInstance.get(`/likedclubs/ids?userId=${userId}`);
   return res.data.data;
 }
 
