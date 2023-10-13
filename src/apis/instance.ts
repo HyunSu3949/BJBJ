@@ -2,9 +2,9 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 
 let baseURL;
 if (process.env.NODE_ENV === 'development') {
-  baseURL = process.env.DEV_DOMAIN;
+  baseURL = process.env.BACK_URL;
 } else {
-  baseURL = process.env.PROD_DOMAIN;
+  baseURL = process.env.BACK_URL;
 }
 
 const axiosInstance = axios.create({
