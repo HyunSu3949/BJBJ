@@ -5,44 +5,55 @@ import {
   useEffect,
   useState,
 } from 'react';
-import {
-  cancleRequestParticipation,
-  getJoinedClubs,
-  requestParticipation,
-} from '../../apis/clubApis';
+import { getJoinedClubs, getlikedClubs } from '../../apis/clubApis';
 
 type JoinedClub = {
   userId: string;
   clubId: string;
   status: string;
 };
-type UserInfoType = {
+type LikedClub = {
+  id: string;
+  userId: string;
+  clubId: string;
+};
+type UserInfo = {
+  joinedClubs: JoinedClub[];
+  likedClubs: string[];
+};
+type UserProfile = {
   userId: string;
   userName: string;
   userImgUrl: string;
-  joinedClubs: JoinedClub[];
 };
 type UserContextType = {
   isLogedin: boolean;
-  userInfo: UserInfoType;
+  userProfile: UserProfile;
+  userInfo: UserInfo;
   setIsLogedin: React.Dispatch<React.SetStateAction<boolean>>;
-  setJoinedClubList: () => void;
+  fetchJoiedLikedClubData: () => void;
 };
 
 // mocking data
-const initialUserInfo: UserInfoType = {
+const initialUserInfo: UserInfo = {
+  joinedClubs: [],
+  likedClubs: [],
+};
+
+const initialUserProfile: UserProfile = {
   userId: '0',
   userName: '현수',
   userImgUrl: 'hs.png',
-  joinedClubs: [],
 };
 
 const initialValue: UserContextType = {
   userInfo: initialUserInfo,
+  userProfile: initialUserProfile,
   isLogedin: true,
   setIsLogedin: () => {},
-  setJoinedClubList: () => {},
+  fetchJoiedLikedClubData: () => {},
 };
+
 export const UserContext = createContext<UserContextType>(initialValue);
 
 export function useUserContext() {
@@ -53,19 +64,26 @@ export function useUserContext() {
 
 export function UserContextProvider({ children }: { children: ReactNode }) {
   const [isLogedin, setIsLogedin] = useState(true); //mocking을 위해 true 설정
+  const [userProfile, setUserProfile] = useState(initialUserProfile);
   const [userInfo, setUserInfo] = useState(initialUserInfo);
 
-  const setJoinedClubList = async () => {
-    const joinedClubData = await getJoinedClubs(userInfo.userId);
+  const fetchUserProfile = async () => {};
+
+  const fetchJoiedLikedClubData = async () => {
+    const joinedClubData = await getJoinedClubs(userProfile.userId);
+    const likedClubData = await getlikedClubs(userProfile.userId);
     setUserInfo(userInfo => ({
       ...userInfo,
       joinedClubs: joinedClubData.joinedClubList,
+      likedClubs: likedClubData.likedClubList.map(
+        (obj: LikedClub) => obj.clubId,
+      ),
     }));
   };
 
   const fetchUserInfo = async () => {
     if (isLogedin) {
-      setJoinedClubList();
+      fetchJoiedLikedClubData();
     } else {
       setUserInfo(initialUserInfo);
     }
@@ -75,7 +93,13 @@ export function UserContextProvider({ children }: { children: ReactNode }) {
     fetchUserInfo();
   }, [isLogedin]);
 
-  const value = { userInfo, isLogedin, setIsLogedin, setJoinedClubList };
+  const value = {
+    userInfo,
+    userProfile,
+    isLogedin,
+    setIsLogedin,
+    fetchJoiedLikedClubData,
+  };
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 }

@@ -12,20 +12,23 @@ export const db: DB = {
   users: [
     {
       id: '0',
-      name: '현수',
-      email: 'ahs@gmail.com',
+      userId: '0',
+      userName: '현수',
+      userEmail: 'ahs@gmail.com',
       imgUrl: 'hs.png',
     },
     {
       id: '1',
-      name: '주홍',
-      email: 'mjh@gmail.com',
+      userId: '1',
+      userName: '주홍',
+      userEmail: 'mjh@gmail.com',
       imgUrl: 'jh.png',
     },
     {
       id: '2',
-      name: '준용',
-      email: 'bjy@gmail.com',
+      userId: '2',
+      userName: '준용',
+      userEmail: 'bjy@gmail.com',
       imgUrl: 'jy.png',
     },
   ],
@@ -161,11 +164,6 @@ export const db: DB = {
       id: '0',
       userId: '0',
       clubId: '0',
-    },
-    {
-      id: '1',
-      userId: '0',
-      clubId: '1',
     },
     {
       id: '2',

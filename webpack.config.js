@@ -26,12 +26,16 @@ module.exports = {
         loader: 'babel-loader',
       },
       {
-        test: /\.(png|jpg|jpeg|gif|svg)$/,
+        test: /\.(png|jpg|jpeg|gif)$/,
         use: 'file-loader',
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/,
         use: 'file-loader',
+      },
+      {
+        test: /\.svg$/,
+        use: ['@svgr/webpack'],
       },
     ],
   },

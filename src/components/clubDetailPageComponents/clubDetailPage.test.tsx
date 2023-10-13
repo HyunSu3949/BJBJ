@@ -61,3 +61,41 @@ test('참여 신청 버튼 상태, 모달 테스트', async () => {
     expect(joinButton).toHaveTextContent(/참여신청/);
   });
 });
+
+test('독서모임 좋아요 기능 테스트', async () => {
+  const user = userEvent.setup();
+  render(
+    <UserContextProvider>
+      <MemoryRouter initialEntries={['/club/1']}>
+        <Routes>
+          <Route path="/club/:clubId" element={<ClubDetailPage />} />
+        </Routes>
+      </MemoryRouter>
+    </UserContextProvider>,
+  );
+
+  const likeButton = await screen.findByLabelText('좋아요 버튼');
+  expect(likeButton).toBeInTheDocument();
+
+  await user.click(likeButton);
+  const cancleLikeButton = await screen.findByLabelText('좋아요 취소 버튼');
+  await waitFor(() => {
+    expect(cancleLikeButton).toBeInTheDocument();
+  });
+  await user.click(cancleLikeButton);
+
+  const afterCancleLikeButton = await screen.findByLabelText('좋아요 버튼');
+  expect(afterCancleLikeButton).toBeInTheDocument();
+});
+
+test('독서모임 페이지 피드 렌더링', async () => {
+  render(
+    <MemoryRouter initialEntries={['/club/1']}>
+      <Routes>
+        <Route path="/club/:clubId" element={<ClubDetailPage />} />
+      </Routes>
+    </MemoryRouter>,
+  );
+  const clubFeedList = await screen.findAllByRole('listitem');
+  expect(clubFeedList).not.toHaveLength(0);
+});

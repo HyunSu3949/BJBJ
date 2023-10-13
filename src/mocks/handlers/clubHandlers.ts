@@ -36,12 +36,18 @@ export const clubHandlers = [
     );
   }),
 
-  rest.post('/likeclubs', async (req, res, ctx) => {
+  rest.post('/likedclubs', async (req, res, ctx) => {
     const { clubId, userId } = await req.json();
     likesClub({ clubId, userId });
+    return res(
+      ctx.json({
+        code: 1,
+        message: '좋아요 누름',
+      }),
+    );
   }),
 
-  rest.delete('/likesclubs', async (req, res, ctx) => {
+  rest.delete('/likedclubs', async (req, res, ctx) => {
     const clubId = req.url.searchParams.get('clubId');
     const userId = req.url.searchParams.get('userId');
     if (clubId && userId) {
@@ -59,14 +65,14 @@ export const clubHandlers = [
 
   rest.get('/likedClubs/ids', (req, res, ctx) => {
     const userId = req.url.searchParams.get('userId');
-    const likesClubList = userId != null ? getLikesClubList({ userId }) : [];
+    const likedClubList = userId != null ? getLikesClubList({ userId }) : [];
     return res(
       ctx.json({
         code: 1,
         message: '',
         data: {
-          totalCount: likesClubList.length,
-          likesClubList,
+          totalCount: likedClubList.length,
+          likedClubList,
         },
       }),
     );
