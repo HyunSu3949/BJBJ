@@ -1,8 +1,8 @@
 import { rest } from 'msw';
-import { getFeedsSortedBylikes } from '../utils';
+import { getClubFeeds, getFeedsSortedBylikes } from '../utils';
 
 export const feedHandlers = [
-  rest.get('feeds', (req, res, ctx) => {
+  rest.get('/main/feeds', (req, res, ctx) => {
     const sortBy = req.url.searchParams.get('sortby');
     const page = req.url.searchParams.get('page');
 
@@ -18,6 +18,28 @@ export const feedHandlers = [
           },
         }),
       );
-    } else return res(ctx.status(400));
+    } else {
+      return res(ctx.status(400));
+    }
+  }),
+
+  rest.get('/feeds/clubs/:clubId', (req, res, ctx) => {
+    const clubId = req.params.clubId as string;
+    const sortBy = req.url.searchParams.get('sortby');
+    if (clubId) {
+      const feedList = getClubFeeds(clubId);
+      return res(
+        ctx.json({
+          code: 1,
+          message: '',
+          data: {
+            totalCount: feedList.length,
+            feedList,
+          },
+        }),
+      );
+    } else {
+      return res(ctx.status(400));
+    }
   }),
 ];

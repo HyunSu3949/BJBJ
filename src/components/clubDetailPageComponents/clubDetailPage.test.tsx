@@ -87,3 +87,15 @@ test('독서모임 좋아요 기능 테스트', async () => {
   const afterCancleLikeButton = await screen.findByLabelText('좋아요 버튼');
   expect(afterCancleLikeButton).toBeInTheDocument();
 });
+
+test('독서모임 페이지 피드 렌더링', async () => {
+  render(
+    <MemoryRouter initialEntries={['/club/1']}>
+      <Routes>
+        <Route path="/club/:clubId" element={<ClubDetailPage />} />
+      </Routes>
+    </MemoryRouter>,
+  );
+  const clubFeedList = await screen.findAllByRole('listitem');
+  expect(clubFeedList).not.toHaveLength(0);
+});

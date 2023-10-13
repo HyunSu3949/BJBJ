@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { getClubFeedList } from '../../../apis/feedApis';
 import FeedCardSmall from '../../common/feedCard/FeedCardSmall';
-import { mainFeedListSortBy } from '../../../apis/feedApis';
-
-type Props = {
-  sortBy: 'likes' | 'createdAt';
-};
 
 type Feed = {
   user: {
@@ -18,17 +14,16 @@ type Feed = {
   commentCount: string;
 };
 
-export default function FeedList({ sortBy }: Props) {
+export default function FeedList({ clubId }: { clubId: string }) {
   const [feedList, setFeedList] = useState<Feed[]>([]);
 
   useEffect(() => {
-    const fetchFeedList = async (sortBy: string) => {
-      const feedData = await mainFeedListSortBy(sortBy);
-
+    const fetchFeedData = async (clubId: string) => {
+      const feedData = await getClubFeedList(clubId);
       setFeedList(feedData.feedList);
     };
-    fetchFeedList(sortBy);
-  }, [sortBy]);
+    fetchFeedData(clubId);
+  }, []);
 
   return (
     <ul>
