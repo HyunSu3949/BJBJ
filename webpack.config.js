@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 
-const isDevelopment = process.env.REACT_APP_NODE_ENV !== 'production';
+const isDevelopment = process.env.REACT_APP_NODE_ENV == 'development';
 
 module.exports = {
   mode: isDevelopment ? 'development' : 'production',
