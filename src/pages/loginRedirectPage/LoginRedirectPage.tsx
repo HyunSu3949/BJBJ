@@ -5,10 +5,12 @@ export default function LoginRedirectPage() {
   const navigate = useNavigate();
 
   const handleLogin = () => {
+    console.log('handleLogin');
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const Access_Token = urlParams.get('Access_Token');
     const Refresh_Toke = urlParams.get('Refresh_Toke');
+    console.log(Access_Token);
     if (Access_Token) localStorage.setItem('Access_Token', Access_Token);
     if (Refresh_Toke) localStorage.setItem('Refresh_Token', Refresh_Toke);
   };
