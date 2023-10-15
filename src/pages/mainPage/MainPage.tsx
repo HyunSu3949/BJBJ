@@ -13,11 +13,16 @@ export default function MainPage() {
 
       const urlParams = new URLSearchParams(queryString);
       console.log(urlParams);
-      const Access_Token = urlParams.get('Access_Token');
-      console.log(Access_Token);
-      const Refresh_Toke = urlParams.get('Refresh_Token');
-      if (Access_Token) localStorage.setItem('Access_Token', Access_Token);
-      if (Refresh_Toke) localStorage.setItem('Refresh_Token', Refresh_Toke);
+      for (const [key, value] of urlParams.entries()) {
+        console.log(`${key}, ${value}`);
+      }
+      const accessToken = urlParams.get('Access_Token');
+      console.log('token: ', accessToken);
+      const refreshToken = urlParams.get('Refresh_Token');
+      if (accessToken !== null)
+        localStorage.setItem('Access_Token', accessToken.slice(8));
+      if (refreshToken !== null)
+        localStorage.setItem('Refresh_Token', refreshToken.slice(8));
     };
     handleLogin();
   }, []);
