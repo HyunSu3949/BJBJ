@@ -3,6 +3,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
+const webpack = require('webpack');
 
 const isDevelopment = process.env.REACT_APP_NODE_ENV == 'development';
 
@@ -53,6 +54,20 @@ module.exports = {
     }),
     new ESLintPlugin({
       extensions: ['js', 'jsx', 'ts', 'tsx'],
+    }),
+    new webpack.DefinePlugin({
+      'process.env.REACT_APP_NODE_ENV': JSON.stringify(
+        process.env.REACT_APP_NODE_ENV,
+      ),
+      'process.env.REACT_APP_FRONT_URL': JSON.stringify(
+        process.env.REACT_APP_FRONT_URL,
+      ),
+      'process.env.REACT_APP_BACK_URL': JSON.stringify(
+        process.env.REACT_APP_BACK_URL,
+      ),
+      'process.env.REACT_APP_IMG_URL': JSON.stringify(
+        process.env.REACT_APP_IMG_URL,
+      ),
     }),
   ],
 };
