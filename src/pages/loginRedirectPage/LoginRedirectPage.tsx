@@ -9,7 +9,7 @@ export default function LoginRedirectPage() {
     const Refresh_Toke = urlParams.get('Refresh_Toke');
     window.opener.postMessage(
       { Access_Token, Refresh_Toke },
-      `http://${domains.frontEnd}.com`,
+      `${domains.frontEnd}`,
     );
     window.close();
   };
