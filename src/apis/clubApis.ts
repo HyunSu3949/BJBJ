@@ -57,8 +57,13 @@ export async function getlikedClubs(userId: string) {
   return res.data.data;
 }
 
-export async function getClubsSortedBy(sortBy: 'likes' | 'createdAt') {
-  const res = await axiosInstance.get(`main/clubs?sortby=${sortBy}`);
+export async function getClubsSortedBy(
+  sortBy: 'likes' | 'createdAt',
+  page = 1,
+) {
+  const res = await axiosInstance.get(
+    `main/clubs?sortby=${sortBy}&page=${page}`,
+  );
   const response = res.data.data;
   return response;
 }

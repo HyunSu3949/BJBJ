@@ -7,6 +7,7 @@ import SearchPage from '../../pages/searchPage/SearchPage';
 import ClubDetailPage from '../../pages/clubDetailPage/ClubDetailPage';
 import FeedPage from '../../pages/feedPage/FeedPage';
 import NotFoundPage from '../../pages/notFoundPage/NotFoundPage';
+import LoginRedirectPage from '../../pages/loginRedirectPage/LoginRedirectPage';
 
 export default function Router() {
   return (
@@ -19,6 +20,7 @@ export default function Router() {
           <Route path="/club/:clubId" element={<ClubDetailPage />} />
           <Route path="/feed/:clubId" element={<FeedPage />} />
         </Route>
+        <Route path="/login" element={<LoginRedirectPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>

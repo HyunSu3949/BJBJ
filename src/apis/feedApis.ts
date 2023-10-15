@@ -1,12 +1,14 @@
 import axiosInstance from './instance';
 
-export async function mainFeedListSortBy(sortBy: string) {
-  const res = await axiosInstance.get(`main/feeds?sortby=${sortBy}`);
+export async function mainFeedListSortBy(sortBy: string, page = 1) {
+  const res = await axiosInstance.get(
+    `main/feeds?sortby=${sortBy}&page=${page}`,
+  );
 
   return res.data.data;
 }
 
-export async function getClubFeedList(clubId: string) {
-  const res = await axiosInstance.get(`feeds/clubs/${clubId}`);
+export async function getClubFeedList(clubId: string, page = 1) {
+  const res = await axiosInstance.get(`feeds/clubs/${clubId}&page=${page}`);
   return res.data.data;
 }
