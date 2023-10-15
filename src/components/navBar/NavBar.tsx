@@ -15,10 +15,6 @@ export default function NavBar() {
     };
 
     window.addEventListener('message', handleTokenMessage);
-
-    return () => {
-      window.removeEventListener('message', handleTokenMessage);
-    };
   }, []);
 
   return (
