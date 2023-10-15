@@ -1,9 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ClubList from './../../components/mainPageComponents/clubList/ClubList';
 import FeedList from '../../components/mainPageComponents/feedList/FeedList';
 import MoreButton from './../../components/mainPageComponents/moreButton/MoreButton';
 
 export default function MainPage() {
+  useEffect(() => {
+    const handleLogin = () => {
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+      const Access_Token = urlParams.get('Access_Token');
+      const Refresh_Toke = urlParams.get('Refresh_Toke');
+      if (Access_Token) localStorage.setItem('Access_Token', Access_Token);
+      if (Refresh_Toke) localStorage.setItem('Refresh_Token', Refresh_Toke);
+    };
+    handleLogin();
+  }, []);
   return (
     <>
       <h1>메인페이지</h1>
