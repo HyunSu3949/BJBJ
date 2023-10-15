@@ -19,13 +19,7 @@ export default function NavBar() {
 
   return (
     <div>
-      <a
-        href={domains.backEnd + '/oauth2/authorization/google'}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        로그인
-      </a>
+      <a href={domains.backEnd + '/oauth2/authorization/google'}>로그인</a>
     </div>
   );
 }
