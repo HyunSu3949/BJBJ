@@ -4,6 +4,7 @@
     "jsx": "react-jsx",
     "skipLibCheck": true,
     "noImplicitAny": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "downlevelIteration": true
   }
 }
