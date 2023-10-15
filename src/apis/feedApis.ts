@@ -2,7 +2,7 @@ import axiosInstance from './instance';
 
 export async function mainFeedListSortBy(sortBy: string, page = 1) {
   const res = await axiosInstance.get(
-    `main/feeds?sortby=${sortBy}&page=${page}`,
+    `main/feeds?sortBy=${sortBy}&page=${page}`,
   );
 
   return res.data.data;

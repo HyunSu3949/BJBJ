@@ -62,7 +62,7 @@ export async function getClubsSortedBy(
   page = 1,
 ) {
   const res = await axiosInstance.get(
-    `main/clubs?sortby=${sortBy}&page=${page}`,
+    `main/clubs?sortBy=${sortBy}&page=${page}`,
   );
   const response = res.data.data;
   return response;
