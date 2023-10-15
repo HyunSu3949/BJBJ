@@ -20,7 +20,7 @@ export default function Router() {
           <Route path="/club/:clubId" element={<ClubDetailPage />} />
           <Route path="/feed/:clubId" element={<FeedPage />} />
         </Route>
-        <Route path="/login" element={<LoginRedirectPage />} />
+        <Route path="/login/*" element={<LoginRedirectPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
