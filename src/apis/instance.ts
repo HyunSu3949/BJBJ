@@ -3,7 +3,7 @@ import { domains } from '../constants/constants';
 
 let baseURL;
 if (process.env.REACT_APP_NODE_ENV === 'development') {
-  baseURL = domains.backEnd;
+  baseURL = 'http://localhost:3000';
 } else {
   baseURL = domains.backEnd;
 }
