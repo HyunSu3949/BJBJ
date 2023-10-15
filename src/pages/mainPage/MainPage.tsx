@@ -1,22 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import ClubList from './../../components/mainPageComponents/clubList/ClubList';
 import FeedList from '../../components/mainPageComponents/feedList/FeedList';
 import MoreButton from './../../components/mainPageComponents/moreButton/MoreButton';
 
 export default function MainPage() {
-  const [accessToken, setAccessToken] = useState<null | string>(null);
-  const [refreshToken, setRefreshToken] = useState<null | string>(null);
-
   const handleLogin = () => {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-
-    setAccessToken(urlParams.get('Access_Token'));
-    setRefreshToken(urlParams.get('Refresh_Token'));
+    window.localStorage.setItem(
+      'Access_Token',
+      urlParams.get('Access_Token') || '',
+    );
+    window.localStorage.setItem(
+      'Refresh_Token',
+      urlParams.get('Refresh_Token') || '',
+    );
   };
   useEffect(() => {
-    if (!accessToken) handleLogin();
-  }, [accessToken]);
+    handleLogin();
+  }, []);
   return (
     <>
       <h1>메인페이지</h1>
