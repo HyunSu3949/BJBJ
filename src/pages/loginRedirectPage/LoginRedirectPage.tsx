@@ -7,6 +7,7 @@ export default function LoginRedirectPage() {
   const handleLogin = () => {
     console.log('handleLogin');
     const queryString = window.location.search;
+    console.log('handleLogin');
     const urlParams = new URLSearchParams(queryString);
     const Access_Token = urlParams.get('Access_Token');
     const Refresh_Toke = urlParams.get('Refresh_Toke');
