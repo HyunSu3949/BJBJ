@@ -20,7 +20,7 @@ export const clubHandlers = [
 
   rest.get('main/clubs', (req, res, ctx) => {
     const sortBy = req.url.searchParams.get('sortby');
-
+    const page = req.url.searchParams.get('page');
     const clubList =
       sortBy === 'likes' ? getClubsSortedByLikes() : getClubsSortedByLikes();
 
