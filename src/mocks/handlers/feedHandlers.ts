@@ -3,7 +3,7 @@ import { getClubFeeds, getFeedsSortedBylikes } from '../utils';
 
 export const feedHandlers = [
   rest.get('/main/feeds', (req, res, ctx) => {
-    const sortBy = req.url.searchParams.get('sortby');
+    const sortBy = req.url.searchParams.get('sortBy');
     const page = req.url.searchParams.get('page');
 
     if (sortBy) {
@@ -25,7 +25,7 @@ export const feedHandlers = [
 
   rest.get('/feeds/clubs/:clubId', (req, res, ctx) => {
     const clubId = req.params.clubId as string;
-    const sortBy = req.url.searchParams.get('sortby');
+    const sortBy = req.url.searchParams.get('sortBy') || 'likes';
     if (clubId) {
       const feedList = getClubFeeds(clubId);
       return res(
