@@ -3,12 +3,51 @@ import { domains } from '../constants/constants';
 
 const baseURL = domains.backEnd;
 
-const axiosInstance = axios.create({
+export const axsiosPuplic = axios.create({
   baseURL,
 });
 
-axiosInstance.interceptors.response.use(
+axsiosPuplic.interceptors.response.use(
   (res: AxiosResponse) => res,
+  (error: AxiosError<unknown>) => {
+    console.log(error);
+    return Promise.reject(error);
+  },
+);
+
+export const axiosInstance = axios.create({
+  baseURL,
+});
+
+const isTokenExpiredError = (error: AxiosError) => {
+  return error.response && error.response.status === 401;
+};
+axiosInstance.interceptors.request.use(
+  config => {
+    const accessToken = localStorage.getItem('Access_Token');
+    const refreshToken = localStorage.getItem('Refresh_Token');
+
+    config.headers['Content-Type'] = 'application/json';
+    config.headers['Access_Token'] = accessToken;
+    config.headers['Refresh_Token'] = refreshToken;
+
+    return config;
+  },
+  error => {
+    isTokenExpiredError(error);
+    return Promise.reject(error);
+  },
+);
+
+axiosInstance.interceptors.response.use(
+  (res: AxiosResponse) => {
+    const accessToken = res.headers['Access_Token'];
+
+    if (accessToken) {
+      localStorage.setItem('token', accessToken);
+    }
+    return res;
+  },
   (error: AxiosError<unknown>) => {
     console.log(error);
     return Promise.reject(error);

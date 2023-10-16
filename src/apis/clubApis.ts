@@ -1,4 +1,4 @@
-import axiosInstance from './instance';
+import { axiosInstance, axsiosPuplic } from './instance';
 
 export async function getClubDetails(id: string) {
   const res = await axiosInstance.get(`/clubs/${id}`);
@@ -61,7 +61,7 @@ export async function getClubsSortedBy(
   sortBy: 'likes' | 'createdAt',
   page = 1,
 ) {
-  const res = await axiosInstance.get(
+  const res = await axsiosPuplic.get(
     `main/clubs?sortBy=${sortBy}&page=${page}`,
   );
   const response = res.data.data;
