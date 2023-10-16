@@ -45,12 +45,12 @@ export default function useJoinClub({
 
   const joinClub = async (clubId: string) => {
     await requestParticipation({ clubId, userId: userProfile.userId });
-    fetchJoiedLikedClubData();
+    fetchJoiedLikedClubData(userProfile.userId);
   };
 
   const cancleJoinClub = async (clubId: string) => {
     await cancleRequestParticipation({ clubId, userId: userProfile.userId });
-    fetchJoiedLikedClubData();
+    fetchJoiedLikedClubData(userProfile.userId);
   };
 
   const onClickWithRecuiting = async () => {

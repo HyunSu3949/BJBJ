@@ -6,7 +6,6 @@ export default function LikeButton({ clubId }: { clubId: string }) {
   const { onClickForCancleLike, onClickForLike, isLike } = useLikeClub({
     clubId,
   });
-  console.log(isLike);
 
   return isLike ? (
     <FilledHeart onClick={onClickForCancleLike} aria-label="좋아요 취소 버튼" />

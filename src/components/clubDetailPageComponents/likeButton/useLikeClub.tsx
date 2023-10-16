@@ -15,12 +15,12 @@ export default function useLikeClub({ clubId }: { clubId: string }) {
 
   const onClickForLike = async () => {
     await likesClub({ clubId, userId: userProfile.userId });
-    fetchJoiedLikedClubData();
+    fetchJoiedLikedClubData(userProfile.userId);
   };
 
   const onClickForCancleLike = async () => {
     await cancleLikesClub({ clubId, userId: userProfile.userId });
-    fetchJoiedLikedClubData();
+    fetchJoiedLikedClubData(userProfile.userId);
   };
 
   return { isLike, onClickForLike, onClickForCancleLike };

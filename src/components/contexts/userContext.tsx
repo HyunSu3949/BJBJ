@@ -6,6 +6,119 @@ import {
   useState,
 } from 'react';
 import { getJoinedClubs, getlikedClubs } from '../../apis/clubApis';
+import { getUserProfile } from '../../apis/authApis';
+
+const initialStatus: Status = {
+  development: {
+    login: true,
+    userProfile: {
+      userId: '0',
+      userName: '현수',
+      imgUrl: 'hs.png',
+    },
+    userInfo: { joinedClubs: [], likedClubs: [] },
+  },
+  production: {
+    login: false,
+    userProfile: {
+      userId: '',
+      userName: '',
+      imgUrl: '',
+    },
+    userInfo: { joinedClubs: [], likedClubs: [] },
+  },
+};
+const nodeEnv = process.env.REACT_APP_NODE_ENV || 'development';
+
+const initialValue: UserContextType = {
+  userInfo: initialStatus[nodeEnv].userInfo,
+  userProfile: initialStatus[nodeEnv].userProfile,
+  isLogedin: true,
+  fetchJoiedLikedClubData: () => {},
+  storeTokenInLocalStorage: () => {},
+  handleLogin: () => new Promise(() => {}),
+  handleLogout: () => {},
+};
+
+export const UserContext = createContext<UserContextType>(initialValue);
+
+export function useUserContext() {
+  const value = useContext(UserContext);
+
+  return value;
+}
+
+export function UserContextProvider({ children }: { children: ReactNode }) {
+  const [isLogedin, setIsLogedin] = useState(initialStatus[nodeEnv].login);
+  const [userProfile, setUserProfile] = useState(
+    initialStatus[nodeEnv].userProfile,
+  );
+  const [userInfo, setUserInfo] = useState(initialStatus[nodeEnv].userInfo);
+
+  const storeTokenInLocalStorage = () => {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const Access_Token = urlParams.get('Access_Token')?.slice(7);
+    const Refresh_Toke = urlParams.get('Refresh_Toke')?.slice(7);
+    if (Access_Token) localStorage.setItem('Access_Token', Access_Token);
+    if (Refresh_Toke) localStorage.setItem('Refresh_Token', Refresh_Toke);
+  };
+
+  const fetchUserProfile = async () => {
+    const userProfile = await getUserProfile();
+    setUserProfile(userProfile);
+    return userProfile;
+  };
+
+  const fetchJoiedLikedClubData = async (userId: string) => {
+    const joinedClubData = await getJoinedClubs(userId);
+    const likedClubData = await getlikedClubs(userId);
+    setUserInfo({
+      joinedClubs: joinedClubData.joinedClubList,
+      likedClubs: likedClubData.likedClubList.map(
+        (club: LikedClub) => club.clubId,
+      ),
+    });
+  };
+
+  const removeAllState = () => {
+    setIsLogedin(false);
+    setUserInfo(initialStatus[nodeEnv].userInfo);
+    setUserProfile(initialStatus[nodeEnv].userProfile);
+  };
+
+  const handleLogout = () => {
+    removeAllState();
+    localStorage.removeItem('Access_Token');
+    localStorage.removeItem('Refresh_Token');
+  };
+
+  const handleLogin = async () => {
+    if (localStorage.getItem('Access_Token')) {
+      const { userId } = await fetchUserProfile();
+      await fetchJoiedLikedClubData(userId);
+      setIsLogedin(true);
+    } else {
+      alert('로그인이 필요합니다.');
+    }
+  };
+
+  useEffect(() => {
+    handleLogin();
+  }, []);
+
+  const value = {
+    userInfo,
+    userProfile,
+    isLogedin,
+    storeTokenInLocalStorage,
+    fetchJoiedLikedClubData,
+    handleLogin,
+    handleLogout,
+  };
+
+  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
+}
 
 type JoinedClub = {
   userId: string;
@@ -24,82 +137,21 @@ type UserInfo = {
 type UserProfile = {
   userId: string;
   userName: string;
-  userImgUrl: string;
+  imgUrl: string;
 };
 type UserContextType = {
   isLogedin: boolean;
   userProfile: UserProfile;
   userInfo: UserInfo;
-  setIsLogedin: React.Dispatch<React.SetStateAction<boolean>>;
-  fetchJoiedLikedClubData: () => void;
+  fetchJoiedLikedClubData: (userId: string) => void;
+  storeTokenInLocalStorage: () => void;
+  handleLogin: () => Promise<void>;
+  handleLogout: () => void;
 };
-
-// mocking data
-const initialUserInfo: UserInfo = {
-  joinedClubs: [],
-  likedClubs: [],
-};
-
-const initialUserProfile: UserProfile = {
-  userId: '0',
-  userName: '현수',
-  userImgUrl: 'hs.png',
-};
-
-const initialValue: UserContextType = {
-  userInfo: initialUserInfo,
-  userProfile: initialUserProfile,
-  isLogedin: true,
-  setIsLogedin: () => {},
-  fetchJoiedLikedClubData: () => {},
-};
-
-export const UserContext = createContext<UserContextType>(initialValue);
-
-export function useUserContext() {
-  const value = useContext(UserContext);
-
-  return value;
-}
-
-export function UserContextProvider({ children }: { children: ReactNode }) {
-  const [isLogedin, setIsLogedin] = useState(true); //mocking을 위해 true 설정
-  const [userProfile, setUserProfile] = useState(initialUserProfile);
-  const [userInfo, setUserInfo] = useState(initialUserInfo);
-
-  const fetchUserProfile = async () => {};
-
-  const fetchJoiedLikedClubData = async () => {
-    const joinedClubData = await getJoinedClubs(userProfile.userId);
-    const likedClubData = await getlikedClubs(userProfile.userId);
-    setUserInfo(userInfo => ({
-      ...userInfo,
-      joinedClubs: joinedClubData.joinedClubList,
-      likedClubs: likedClubData.likedClubList.map(
-        (obj: LikedClub) => obj.clubId,
-      ),
-    }));
+type Status = {
+  [key in string]: {
+    login: boolean;
+    userProfile: UserProfile;
+    userInfo: UserInfo;
   };
-
-  const fetchUserInfo = async () => {
-    if (isLogedin) {
-      fetchJoiedLikedClubData();
-    } else {
-      setUserInfo(initialUserInfo);
-    }
-  };
-
-  useEffect(() => {
-    fetchUserInfo();
-  }, [isLogedin]);
-
-  const value = {
-    userInfo,
-    userProfile,
-    isLogedin,
-    setIsLogedin,
-    fetchJoiedLikedClubData,
-  };
-
-  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
-}
+};
