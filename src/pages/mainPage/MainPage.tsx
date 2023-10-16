@@ -5,10 +5,9 @@ import { useEffect } from 'react';
 import { useUserContext } from '../../components/contexts/userContext';
 
 export default function MainPage() {
-  const { afterGetToken } = useUserContext();
+  const { storeTokenInLocalStorage } = useUserContext();
   useEffect(() => {
-    const queryString = window.location.search;
-    if (queryString) afterGetToken(queryString);
+    storeTokenInLocalStorage();
   }, []);
   return (
     <>

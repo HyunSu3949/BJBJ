@@ -14,7 +14,7 @@ const initialStatus: Status = {
     userProfile: {
       userId: '0',
       userName: '현수',
-      userImgUrl: 'hs.png',
+      imgUrl: 'hs.png',
     },
     userInfo: { joinedClubs: [], likedClubs: [] },
   },
@@ -23,7 +23,7 @@ const initialStatus: Status = {
     userProfile: {
       userId: '',
       userName: '',
-      userImgUrl: '',
+      imgUrl: '',
     },
     userInfo: { joinedClubs: [], likedClubs: [] },
   },
@@ -35,7 +35,8 @@ const initialValue: UserContextType = {
   userProfile: initialStatus[nodeEnv].userProfile,
   isLogedin: true,
   fetchJoiedLikedClubData: () => {},
-  afterGetToken: () => new Promise(() => {}),
+  storeTokenInLocalStorage: () => {},
+  handleLogin: () => new Promise(() => {}),
   handleLogout: () => {},
 };
 
@@ -54,11 +55,11 @@ export function UserContextProvider({ children }: { children: ReactNode }) {
   );
   const [userInfo, setUserInfo] = useState(initialStatus[nodeEnv].userInfo);
 
-  const storeTokenInLocalStorage = (queryString: string) => {
-    // const queryString = window.location.search;
+  const storeTokenInLocalStorage = () => {
+    const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-    const Access_Token = urlParams.get('Access_Token');
-    const Refresh_Toke = urlParams.get('Refresh_Toke');
+    const Access_Token = urlParams.get('Access_Token')?.slice(7);
+    const Refresh_Toke = urlParams.get('Refresh_Toke')?.slice(7);
     if (Access_Token) localStorage.setItem('Access_Token', Access_Token);
     if (Refresh_Toke) localStorage.setItem('Refresh_Token', Refresh_Toke);
   };
@@ -80,13 +81,6 @@ export function UserContextProvider({ children }: { children: ReactNode }) {
     });
   };
 
-  const afterGetToken = async (queryString: string) => {
-    storeTokenInLocalStorage(queryString);
-    setIsLogedin(true);
-    const { userId } = await fetchUserProfile();
-    await fetchJoiedLikedClubData(userId);
-  };
-
   const removeAllState = () => {
     setIsLogedin(false);
     setUserInfo(initialStatus[nodeEnv].userInfo);
@@ -99,18 +93,27 @@ export function UserContextProvider({ children }: { children: ReactNode }) {
     localStorage.removeItem('Refresh_Token');
   };
 
-  useEffect(() => {
-    if (!isLogedin) {
-      removeAllState();
+  const handleLogin = async () => {
+    if (localStorage.getItem('Access_Token')) {
+      const { userId } = await fetchUserProfile();
+      await fetchJoiedLikedClubData(userId);
+      setIsLogedin(true);
+    } else {
+      alert('로그인이 필요합니다.');
     }
-  }, [isLogedin]);
+  };
+
+  useEffect(() => {
+    handleLogin();
+  }, []);
 
   const value = {
     userInfo,
     userProfile,
     isLogedin,
+    storeTokenInLocalStorage,
     fetchJoiedLikedClubData,
-    afterGetToken,
+    handleLogin,
     handleLogout,
   };
 
@@ -134,14 +137,15 @@ type UserInfo = {
 type UserProfile = {
   userId: string;
   userName: string;
-  userImgUrl: string;
+  imgUrl: string;
 };
 type UserContextType = {
   isLogedin: boolean;
   userProfile: UserProfile;
   userInfo: UserInfo;
   fetchJoiedLikedClubData: (userId: string) => void;
-  afterGetToken: (queryString: string) => Promise<void>;
+  storeTokenInLocalStorage: () => void;
+  handleLogin: () => Promise<void>;
   handleLogout: () => void;
 };
 type Status = {

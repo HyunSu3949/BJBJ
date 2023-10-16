@@ -34,7 +34,11 @@ axiosInstance.interceptors.request.use(
     return config;
   },
   error => {
-    isTokenExpiredError(error);
+    if (isTokenExpiredError(error)) {
+      localStorage.removeItem('Access_Token');
+      localStorage.removeItem('Refresh_Token');
+      alert('다시 로그인 해주세요');
+    }
     return Promise.reject(error);
   },
 );
