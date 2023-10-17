@@ -9,7 +9,7 @@ import { useUserContext } from '../../components/contexts/userContext';
 export default function MainPage() {
   const { storeTokenInLocalStorage } = useUserContext();
   useEffect(() => {
-    storeTokenInLocalStorage();
+    storeTokenInLocalStorage(new URLSearchParams(location.search));
   }, []);
   return (
     <>

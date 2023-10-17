@@ -8,9 +8,9 @@ export default function LoginRedirectPage() {
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
-    queryParams.set('Access_Token', '0');
-    queryParams.set('Refresh_Token', '0');
-    storeTokenInLocalStorage();
+    queryParams.set('Access_Token', 'Bearer 0'); // 0번 아이디를 가정해서 토큰을 0으로 설정
+    queryParams.set('Refresh_Token', 'Bearer 0');
+    storeTokenInLocalStorage(queryParams);
     handleLogin();
     if (localStorage.getItem('Access_Token')) navigate('/');
   }, []);
