@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import ClubList from './../../components/mainPageComponents/clubList/ClubList';
 import FeedList from '../../components/mainPageComponents/feedList/FeedList';
 import MoreButton from './../../components/mainPageComponents/moreButton/MoreButton';
+
 import { useUserContext } from '../../components/contexts/userContext';
 
 export default function MainPage() {
