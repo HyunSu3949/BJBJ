@@ -3,7 +3,8 @@ import { db } from '../db';
 
 export const authHandlers = [
   rest.get('/users', (req, res, ctx) => {
-    const userProfile = { ...db.users.find(user => user.userId == '0') };
+    const token = req.headers.get('Access_Token') || '0';
+    const userProfile = { ...db.users.find(user => user.userId == token) };
     if (userProfile.id) delete userProfile.id;
     return res(
       ctx.json({

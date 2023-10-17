@@ -49,11 +49,17 @@ export function useUserContext() {
 }
 
 export function UserContextProvider({ children }: { children: ReactNode }) {
+  const [isTokenExist, setIsTokenExist] = useState(false);
   const [isLogedin, setIsLogedin] = useState(initialStatus[nodeEnv].login);
   const [userProfile, setUserProfile] = useState(
     initialStatus[nodeEnv].userProfile,
   );
   const [userInfo, setUserInfo] = useState(initialStatus[nodeEnv].userInfo);
+
+  const checkToken = () => {
+    if (localStorage.getItem('Access_Token')) return true;
+    else return false;
+  };
 
   const storeTokenInLocalStorage = () => {
     const queryString = window.location.search;
@@ -62,6 +68,7 @@ export function UserContextProvider({ children }: { children: ReactNode }) {
     const Refresh_Toke = urlParams.get('Refresh_Toke')?.slice(7);
     if (Access_Token) localStorage.setItem('Access_Token', Access_Token);
     if (Refresh_Toke) localStorage.setItem('Refresh_Token', Refresh_Toke);
+    setIsTokenExist(checkToken());
   };
 
   const fetchUserProfile = async () => {
@@ -85,27 +92,24 @@ export function UserContextProvider({ children }: { children: ReactNode }) {
     setIsLogedin(false);
     setUserInfo(initialStatus[nodeEnv].userInfo);
     setUserProfile(initialStatus[nodeEnv].userProfile);
+    localStorage.removeItem('Access_Token');
+    localStorage.removeItem('Refresh_Token');
+    setIsTokenExist(checkToken());
   };
 
   const handleLogout = () => {
     removeAllState();
-    localStorage.removeItem('Access_Token');
-    localStorage.removeItem('Refresh_Token');
   };
 
   const handleLogin = async () => {
-    if (localStorage.getItem('Access_Token')) {
-      const { userId } = await fetchUserProfile();
-      await fetchJoiedLikedClubData(userId);
-      setIsLogedin(true);
-    } else {
-      alert('로그인이 필요합니다.');
-    }
+    const { userId } = await fetchUserProfile();
+    await fetchJoiedLikedClubData(userId);
+    setIsLogedin(true);
   };
 
   useEffect(() => {
-    handleLogin();
-  }, []);
+    if (isTokenExist) handleLogin();
+  }, [isTokenExist]);
 
   const value = {
     userInfo,

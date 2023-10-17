@@ -1,20 +1,18 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useUserContext } from '../../components/contexts/userContext';
 
 export default function LoginRedirectPage() {
   const navigate = useNavigate();
-
-  const handleLogin = () => {
-    localStorage.setItem('Access_Token', 'accessToken');
-    localStorage.setItem('Refresh_Token', 'refreshToken');
-  };
-  const afterLogin = () => {
-    navigate('/');
-  };
+  const { storeTokenInLocalStorage, handleLogin } = useUserContext();
 
   useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    queryParams.set('Access_Token', '0');
+    queryParams.set('Refresh_Token', '0');
+    storeTokenInLocalStorage();
     handleLogin();
-    afterLogin();
+    if (localStorage.getItem('Access_Token')) navigate('/');
   }, []);
   return (
     <>
