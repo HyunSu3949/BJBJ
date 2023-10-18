@@ -7,6 +7,7 @@ import {
 } from 'react';
 import { getJoinedClubs, getlikedClubs } from '../../apis/clubApis';
 import { getUserProfile } from '../../apis/authApis';
+import { useNavigate } from 'react-router-dom';
 
 const initialStatus: InitialStatus = {
   login: false,
@@ -52,6 +53,7 @@ export function UserContextProvider({ children }: { children: ReactNode }) {
     const Refresh_Toke = queryPrams.get('Refresh_Toke')?.slice(7);
     if (Access_Token) localStorage.setItem('Access_Token', Access_Token);
     if (Refresh_Toke) localStorage.setItem('Refresh_Token', Refresh_Toke);
+
     setIsTokenExist(checkToken());
   };
 
