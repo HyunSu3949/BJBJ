@@ -5,6 +5,8 @@ import ClubDetailPage from './../../pages/clubDetailPage/ClubDetailPage';
 import Modals from '../modals/Modals';
 import { UserContextProvider } from '../contexts/userContext';
 import { ModalContextProvider } from './../contexts/modalContext';
+import Layout from '../route/Layout';
+import MainPage from '../../pages/mainPage/MainPage';
 
 test('독서모임 상세정보 렌더링 테스트', async () => {
   render(
@@ -18,21 +20,37 @@ test('독서모임 상세정보 렌더링 테스트', async () => {
   expect(clubTitle).toBeInTheDocument();
 });
 
-test('참여 신청 버튼 상태, 모달 테스트', async () => {
+test('참여 신청 기능, 좋아요 기능, 모달 테스트', async () => {
   const user = userEvent.setup();
-
   render(
     <UserContextProvider>
       <ModalContextProvider>
-        <MemoryRouter initialEntries={['/club/1']}>
+        <MemoryRouter initialEntries={['/', '/club/1']}>
           <Routes>
-            <Route path="/club/:clubId" element={<ClubDetailPage />} />
+            <Route element={<Layout />}>
+              <Route path="/" element={<MainPage />} />
+              <Route path="/club/:clubId" element={<ClubDetailPage />} />
+            </Route>
           </Routes>
           <Modals />
         </MemoryRouter>
       </ModalContextProvider>
     </UserContextProvider>,
   );
+  const loginButton = await screen.findByLabelText('구글 로그인');
+  user.click(loginButton);
+
+  await waitFor(async () => {
+    expect(
+      await screen.findByAltText('유저 프로필 이미지'),
+    ).toBeInTheDocument();
+  });
+
+  const linkElements = await screen.findAllByText('더 알아보기');
+  await user.click(linkElements[0]);
+
+  const detailHeader = screen.getByText('모임 상세페이지');
+  expect(detailHeader).toBeInTheDocument();
 
   const joinButton = await screen.findByRole('button', { name: '참여신청' });
   await user.click(joinButton);
@@ -60,19 +78,6 @@ test('참여 신청 버튼 상태, 모달 테스트', async () => {
   await waitFor(() => {
     expect(joinButton).toHaveTextContent(/참여신청/);
   });
-});
-
-test('독서모임 좋아요 기능 테스트', async () => {
-  const user = userEvent.setup();
-  render(
-    <UserContextProvider>
-      <MemoryRouter initialEntries={['/club/1']}>
-        <Routes>
-          <Route path="/club/:clubId" element={<ClubDetailPage />} />
-        </Routes>
-      </MemoryRouter>
-    </UserContextProvider>,
-  );
 
   const likeButton = await screen.findByLabelText('좋아요 버튼');
   expect(likeButton).toBeInTheDocument();

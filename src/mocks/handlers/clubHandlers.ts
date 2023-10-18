@@ -37,7 +37,7 @@ export const clubHandlers = [
   }),
 
   rest.post('/likedclubs', async (req, res, ctx) => {
-    const { clubId, userId } = await req.json();
+    const { clubId = '1', userId = '0' } = await req.json();
     likesClub({ clubId, userId });
     return res(
       ctx.json({
@@ -48,8 +48,8 @@ export const clubHandlers = [
   }),
 
   rest.delete('/likedclubs', async (req, res, ctx) => {
-    const clubId = req.url.searchParams.get('clubId');
-    const userId = req.url.searchParams.get('userId');
+    const clubId = req.url.searchParams.get('clubId') || '0';
+    const userId = req.url.searchParams.get('userId') || '1';
     if (clubId && userId) {
       deleteLike({ clubId, userId });
       return res(
@@ -64,7 +64,7 @@ export const clubHandlers = [
   }),
 
   rest.get('/likedClubs/ids', (req, res, ctx) => {
-    const userId = req.url.searchParams.get('userId');
+    const userId = req.url.searchParams.get('userId') || '0';
     const likedClubList = userId != null ? getLikesClubList({ userId }) : [];
     return res(
       ctx.json({
@@ -79,7 +79,7 @@ export const clubHandlers = [
   }),
 
   rest.get('/members/ids', (req, res, ctx) => {
-    const userId = req.url.searchParams.get('userId');
+    const userId = req.url.searchParams.get('userId') || '0';
     if (userId) {
       const joinedClubList = getJoinedClub(userId);
       return res(
@@ -109,7 +109,7 @@ export const clubHandlers = [
   }),
 
   rest.post('/members', async (req, res, ctx) => {
-    const { clubId, userId } = await req.json();
+    const { clubId = '1', userId = '0' } = await req.json();
 
     joinClub({ clubId, userId });
     return res(
@@ -121,8 +121,8 @@ export const clubHandlers = [
   }),
 
   rest.delete('/members', async (req, res, ctx) => {
-    const clubId = req.url.searchParams.get('clubId') as string;
-    const userId = req.url.searchParams.get('userId') as string;
+    const clubId = (req.url.searchParams.get('clubId') as string) || '1';
+    const userId = (req.url.searchParams.get('userId') as string) || '0';
     cancleJoinClub({ clubId, userId });
     return res(
       ctx.json({
