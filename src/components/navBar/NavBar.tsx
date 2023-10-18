@@ -1,33 +1,34 @@
-import { domains } from '../../constants/constants';
-import GoogleLogin from '../../assets/image/btn_google_light_normal_ios.svg';
 import AddClubButton from '../../assets/image/add_club_button.svg';
 import { useUserContext } from '../contexts/userContext';
 import { Link } from 'react-router-dom';
+import LoginButton from './LoginButton/LoginButton';
 
+import logo from '../../assets/image/bjbj_logo.png';
 export default function NavBar() {
-  const { isLogedin, userProfile } = useUserContext();
+  const { isLogedin, userProfile, userInfo, handleLogout } = useUserContext();
 
   return (
     <nav>
       <div>
         <Link to="/search">검색</Link>
-        <button>피드</button>
+        <button>
+          <ul>
+            {userInfo.joinedClubs.map(club => (
+              <li key={club.clubId}>{club.clubId}</li>
+            ))}
+          </ul>
+        </button>
       </div>
-      <div>로고</div>
+      <Link to="/">
+        <img
+          src={logo}
+          alt="메인로고"
+          role="button"
+          style={{ width: '50px', height: '50px' }}
+        />
+      </Link>
       <div>
-        {isLogedin ? (
-          <a href={domains.backEnd + '/oauth2/authorization/google'}>
-            <GoogleLogin aria-label="구글 로그인" role="button" />
-          </a>
-        ) : (
-          <Link to="/my">
-            <img
-              src={userProfile.imgUrl}
-              role="link"
-              alt="유저 프로필 이미지"
-            />
-          </Link>
-        )}
+        <LoginButton />
         <AddClubButton aria-label="독서 모임 만들기" role="button" />
       </div>
     </nav>

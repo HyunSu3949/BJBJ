@@ -7,32 +7,21 @@ import {
 } from 'react';
 import { getJoinedClubs, getlikedClubs } from '../../apis/clubApis';
 import { getUserProfile } from '../../apis/authApis';
+import { useNavigate } from 'react-router-dom';
 
-const initialStatus: Status = {
-  development: {
-    login: true,
-    userProfile: {
-      userId: '0',
-      userName: '현수',
-      imgUrl: 'hs.png',
-    },
-    userInfo: { joinedClubs: [], likedClubs: [] },
+const initialStatus: InitialStatus = {
+  login: false,
+  userProfile: {
+    userId: '',
+    userName: '',
+    imgUrl: '',
   },
-  production: {
-    login: false,
-    userProfile: {
-      userId: '',
-      userName: '',
-      imgUrl: '',
-    },
-    userInfo: { joinedClubs: [], likedClubs: [] },
-  },
+  userInfo: { joinedClubs: [], likedClubs: [] },
 };
-const nodeEnv = process.env.REACT_APP_NODE_ENV || 'development';
 
 const initialValue: UserContextType = {
-  userInfo: initialStatus[nodeEnv].userInfo,
-  userProfile: initialStatus[nodeEnv].userProfile,
+  userInfo: initialStatus.userInfo,
+  userProfile: initialStatus.userProfile,
   isLogedin: true,
   fetchJoiedLikedClubData: () => {},
   storeTokenInLocalStorage: () => {},
@@ -50,24 +39,21 @@ export function useUserContext() {
 
 export function UserContextProvider({ children }: { children: ReactNode }) {
   const [isTokenExist, setIsTokenExist] = useState(false);
-  const [isLogedin, setIsLogedin] = useState(initialStatus[nodeEnv].login);
-  const [userProfile, setUserProfile] = useState(
-    initialStatus[nodeEnv].userProfile,
-  );
-  const [userInfo, setUserInfo] = useState(initialStatus[nodeEnv].userInfo);
+  const [isLogedin, setIsLogedin] = useState(initialStatus.login);
+  const [userProfile, setUserProfile] = useState(initialStatus.userProfile);
+  const [userInfo, setUserInfo] = useState(initialStatus.userInfo);
 
   const checkToken = () => {
     if (localStorage.getItem('Access_Token')) return true;
     else return false;
   };
 
-  const storeTokenInLocalStorage = () => {
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const Access_Token = urlParams.get('Access_Token')?.slice(7);
-    const Refresh_Toke = urlParams.get('Refresh_Toke')?.slice(7);
+  const storeTokenInLocalStorage = (queryPrams: URLSearchParams) => {
+    const Access_Token = queryPrams.get('Access_Token')?.slice(7);
+    const Refresh_Toke = queryPrams.get('Refresh_Toke')?.slice(7);
     if (Access_Token) localStorage.setItem('Access_Token', Access_Token);
     if (Refresh_Toke) localStorage.setItem('Refresh_Token', Refresh_Toke);
+
     setIsTokenExist(checkToken());
   };
 
@@ -90,8 +76,8 @@ export function UserContextProvider({ children }: { children: ReactNode }) {
 
   const removeAllState = () => {
     setIsLogedin(false);
-    setUserInfo(initialStatus[nodeEnv].userInfo);
-    setUserProfile(initialStatus[nodeEnv].userProfile);
+    setUserInfo(initialStatus.userInfo);
+    setUserProfile(initialStatus.userProfile);
     localStorage.removeItem('Access_Token');
     localStorage.removeItem('Refresh_Token');
     setIsTokenExist(checkToken());
@@ -148,14 +134,12 @@ type UserContextType = {
   userProfile: UserProfile;
   userInfo: UserInfo;
   fetchJoiedLikedClubData: (userId: string) => void;
-  storeTokenInLocalStorage: () => void;
+  storeTokenInLocalStorage: (queryParams: URLSearchParams) => void;
   handleLogin: () => Promise<void>;
   handleLogout: () => void;
 };
-type Status = {
-  [key in string]: {
-    login: boolean;
-    userProfile: UserProfile;
-    userInfo: UserInfo;
-  };
+type InitialStatus = {
+  login: boolean;
+  userProfile: UserProfile;
+  userInfo: UserInfo;
 };

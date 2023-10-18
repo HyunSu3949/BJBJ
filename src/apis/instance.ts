@@ -46,9 +46,13 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   (res: AxiosResponse) => {
     const accessToken = res.headers['Access_Token'];
+    const refreshToken = res.headers['Refresh_Token'];
 
     if (accessToken) {
-      localStorage.setItem('token', accessToken);
+      localStorage.setItem('Access_Token', accessToken);
+    }
+    if (refreshToken) {
+      localStorage.setItem('Refresh_Token', accessToken);
     }
     return res;
   },
