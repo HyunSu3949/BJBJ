@@ -1,10 +1,9 @@
-import { domains } from '../../constants/constants';
-import GoogleLogin from '../../assets/image/btn_google_light_normal_ios.svg';
 import AddClubButton from '../../assets/image/add_club_button.svg';
 import { useUserContext } from '../contexts/userContext';
 import { Link } from 'react-router-dom';
 import LoginButton from './LoginButton/LoginButton';
 
+import logo from '../../assets/image/bjbj_logo.png';
 export default function NavBar() {
   const { isLogedin, userProfile, userInfo, handleLogout } = useUserContext();
 
@@ -20,7 +19,14 @@ export default function NavBar() {
           </ul>
         </button>
       </div>
-      <div>로고</div>
+      <Link to="/">
+        <img
+          src={logo}
+          alt="메인로고"
+          role="button"
+          style={{ width: '50px', height: '50px' }}
+        />
+      </Link>
       <div>
         <LoginButton />
         <AddClubButton aria-label="독서 모임 만들기" role="button" />
