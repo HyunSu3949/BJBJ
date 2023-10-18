@@ -49,9 +49,7 @@ export async function cancleLikesClub({
 }
 
 export async function getJoinedClubs(userId: string, page: string) {
-  const res = await axiosInstance.get(
-    `/members/users/${userId}?page = ${page}`,
-  );
+  const res = await axiosInstance.get(`/members/users/${userId}?page=${page}`);
   return res.data.data;
 }
 export async function getAppliedClubs(userId: string) {

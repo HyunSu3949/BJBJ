@@ -138,6 +138,7 @@ export const clubHandlers = [
     const page = req.url.searchParams.get('page') as string;
 
     const clubList = getJoinedClub(userId, page);
+    console.log(clubList);
 
     return res(
       ctx.json({
