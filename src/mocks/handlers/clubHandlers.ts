@@ -9,6 +9,7 @@ import {
   getClubDetails,
   joinClub,
   cancleJoinClub,
+  getAppliedClub,
 } from '../utils';
 
 export const clubHandlers = [
@@ -81,14 +82,14 @@ export const clubHandlers = [
   rest.get('/members/ids', (req, res, ctx) => {
     const userId = req.url.searchParams.get('userId');
     if (userId) {
-      const joinedClubList = getJoinedClub(userId);
+      const appliedClubList = getAppliedClub(userId);
       return res(
         ctx.json({
           code: 1,
           message: '',
           data: {
-            totalCount: joinedClubList.length,
-            joinedClubList,
+            totalCount: appliedClubList.length,
+            memberList: appliedClubList,
           },
         }),
       );
@@ -128,6 +129,24 @@ export const clubHandlers = [
       ctx.json({
         code: 1,
         message: '신청 취소 완료',
+      }),
+    );
+  }),
+
+  rest.get('/members/users/:userId', (req, res, ctx) => {
+    const userId = req.params.userId as string;
+    const page = req.url.searchParams.get('page') as string;
+
+    const clubList = getJoinedClub(userId, page);
+
+    return res(
+      ctx.json({
+        code: 1,
+        message: '',
+        data: {
+          totalCount: clubList.length,
+          clubList,
+        },
       }),
     );
   }),

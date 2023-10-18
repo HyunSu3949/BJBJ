@@ -1,62 +1,55 @@
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import { findAllByRole, render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { UserContextProvider } from '../contexts/userContext';
 import MainPage from '../../pages/mainPage/MainPage';
-import LoginRedirectPage from '../../pages/loginRedirectPage/LoginRedirectPage';
 import Layout from '../route/Layout';
+import FeedPage from '../../pages/feedPage/FeedPage';
+import SearchPage from '../../pages/searchPage/SearchPage';
+import MyPage from '../../pages/myPage/MyPage';
 
-const mockLocalStorage = (() => {
-  let store: { [key in string]: string } = {};
-  return {
-    getItem: function (key: string) {
-      return store[key] || null;
-    },
-    setItem: function (key: string, value: string) {
-      store[key] = value.toString();
-    },
-    removeItem: function (key: string) {
-      delete store[key];
-    },
-    clear: function () {
-      store = {};
-    },
-  };
-})();
+const setup = async () => {
+  render(
+    <UserContextProvider>
+      <MemoryRouter>
+        <Routes>
+          <Route element={<Layout />}>
+            <Route path="/" element={<MainPage />} />
+            <Route path="/feed/:clubId" element={<FeedPage />} />
+            <Route path="/search" element={<SearchPage />} />
+            <Route path="/my" element={<MyPage />} />
+          </Route>
+        </Routes>
+      </MemoryRouter>
+    </UserContextProvider>,
+  );
+};
 
-describe('token 테스트', () => {
-  beforeEach(() => {
-    Object.defineProperty(global, 'localStorage', {
-      value: mockLocalStorage,
-      writable: true,
-    });
+const login = async () => {
+  const loginButton = await screen.findByLabelText('구글 로그인');
+  userEvent.click(loginButton);
+
+  await waitFor(async () => {
+    expect(
+      await screen.findByAltText('유저 프로필 이미지'),
+    ).toBeInTheDocument();
+  });
+};
+
+describe('navBar 테스트', () => {
+  beforeEach(async () => {
+    await setup();
+    await login();
   });
 
-  test('로그인 테스트', async () => {
-    const user = userEvent.setup();
-    render(
-      <UserContextProvider>
-        <MemoryRouter initialEntries={['/']}>
-          <Routes>
-            <Route element={<Layout />}>
-              <Route path="/" element={<MainPage />} />
-            </Route>
-          </Routes>
-        </MemoryRouter>
-      </UserContextProvider>,
-    );
+  test('로그아웃 테스트', async () => {
+    expect(
+      await screen.findByAltText('유저 프로필 이미지'),
+    ).toBeInTheDocument();
 
-    const loginButton = await screen.findByLabelText('구글 로그인');
-    user.click(loginButton);
-
-    await waitFor(async () => {
-      expect(
-        await screen.findByAltText('유저 프로필 이미지'),
-      ).toBeInTheDocument();
-    });
-
-    const clubIds = await screen.findAllByRole('listitem');
-    expect(clubIds).not.toHaveLength(0);
+    const logoutButton = await screen.findByRole('button', { name: 'logout' });
+    userEvent.click(logoutButton);
+    expect(await screen.findByLabelText('구글 로그인')).toBeInTheDocument();
   });
 });

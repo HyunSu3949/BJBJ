@@ -19,7 +19,7 @@ export default function ClubList({ sortBy }: ClubSort) {
   return (
     <ul>
       {clubs.map(club => (
-        <ClubCard key={club.id} {...club} />
+        <ClubCard key={club.clubId} {...club} />
       ))}
     </ul>
   );

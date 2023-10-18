@@ -5,9 +5,12 @@ import {
   useEffect,
   useState,
 } from 'react';
-import { getJoinedClubs, getlikedClubs } from '../../apis/clubApis';
+import {
+  getAppliedClubs,
+  getJoinedClubs,
+  getlikedClubs,
+} from '../../apis/clubApis';
 import { getUserProfile } from '../../apis/authApis';
-import { useNavigate } from 'react-router-dom';
 
 const initialStatus: InitialStatus = {
   login: false,
@@ -16,14 +19,20 @@ const initialStatus: InitialStatus = {
     userName: '',
     imgUrl: '',
   },
-  userInfo: { joinedClubs: [], likedClubs: [] },
+  appliedClubs: [],
+  joinedClubs: [],
+  likedClubs: [],
 };
 
 const initialValue: UserContextType = {
-  userInfo: initialStatus.userInfo,
+  appliedClubs: [],
+  joinedClubs: [],
+  likedClubs: [],
   userProfile: initialStatus.userProfile,
   isLogedin: true,
-  fetchJoiedLikedClubData: () => {},
+  fetchAppliedClubs: () => {},
+  fetchLikedClubs: () => {},
+  fetchJoinedClubs: () => {},
   storeTokenInLocalStorage: () => {},
   handleLogin: () => new Promise(() => {}),
   handleLogout: () => {},
@@ -41,7 +50,9 @@ export function UserContextProvider({ children }: { children: ReactNode }) {
   const [isTokenExist, setIsTokenExist] = useState(false);
   const [isLogedin, setIsLogedin] = useState(initialStatus.login);
   const [userProfile, setUserProfile] = useState(initialStatus.userProfile);
-  const [userInfo, setUserInfo] = useState(initialStatus.userInfo);
+  const [joinedClubs, setJoinedClubs] = useState(initialStatus.joinedClubs);
+  const [appliedClubs, setAppliedClubs] = useState(initialStatus.appliedClubs);
+  const [likedClubs, setLikedClubs] = useState(initialStatus.likedClubs);
 
   const checkToken = () => {
     if (localStorage.getItem('Access_Token')) return true;
@@ -63,20 +74,21 @@ export function UserContextProvider({ children }: { children: ReactNode }) {
     return userProfile;
   };
 
-  const fetchJoiedLikedClubData = async (userId: string) => {
-    const joinedClubData = await getJoinedClubs(userId);
+  const fetchAppliedClubs = async (userId: string) => {
+    const appliedClubData = await getAppliedClubs(userId);
+    setAppliedClubs(appliedClubData.memberList);
+  };
+  const fetchLikedClubs = async (userId: string) => {
     const likedClubData = await getlikedClubs(userId);
-    setUserInfo({
-      joinedClubs: joinedClubData.joinedClubList,
-      likedClubs: likedClubData.likedClubList.map(
-        (club: LikedClub) => club.clubId,
-      ),
-    });
+    setLikedClubs(likedClubData.likedClubList);
+  };
+  const fetchJoinedClubs = async (userId: string) => {
+    const joinedClubData = await getJoinedClubs(userId, '1');
+    setJoinedClubs(joinedClubData.clubList);
   };
 
   const removeAllState = () => {
     setIsLogedin(false);
-    setUserInfo(initialStatus.userInfo);
     setUserProfile(initialStatus.userProfile);
     localStorage.removeItem('Access_Token');
     localStorage.removeItem('Refresh_Token');
@@ -89,7 +101,9 @@ export function UserContextProvider({ children }: { children: ReactNode }) {
 
   const handleLogin = async () => {
     const { userId } = await fetchUserProfile();
-    await fetchJoiedLikedClubData(userId);
+    await fetchJoinedClubs(userId);
+    await fetchLikedClubs(userId);
+    await fetchAppliedClubs(userId);
     setIsLogedin(true);
   };
 
@@ -98,19 +112,29 @@ export function UserContextProvider({ children }: { children: ReactNode }) {
   }, [isTokenExist]);
 
   const value = {
-    userInfo,
     userProfile,
     isLogedin,
+    joinedClubs,
+    appliedClubs,
+    likedClubs,
+    fetchAppliedClubs,
+    fetchLikedClubs,
+    fetchJoinedClubs,
     storeTokenInLocalStorage,
-    fetchJoiedLikedClubData,
     handleLogin,
     handleLogout,
   };
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 }
-
 type JoinedClub = {
+  clubId: string;
+  title: string;
+  contents: string;
+  imgUrl: string;
+  likes: string;
+};
+type AppliedClub = {
   userId: string;
   clubId: string;
   status: string;
@@ -120,10 +144,6 @@ type LikedClub = {
   userId: string;
   clubId: string;
 };
-type UserInfo = {
-  joinedClubs: JoinedClub[];
-  likedClubs: string[];
-};
 type UserProfile = {
   userId: string;
   userName: string;
@@ -132,14 +152,21 @@ type UserProfile = {
 type UserContextType = {
   isLogedin: boolean;
   userProfile: UserProfile;
-  userInfo: UserInfo;
-  fetchJoiedLikedClubData: (userId: string) => void;
+  joinedClubs: JoinedClub[];
+  likedClubs: LikedClub[];
+  appliedClubs: AppliedClub[];
+  fetchJoinedClubs: (userId: string) => void;
+  fetchLikedClubs: (userId: string) => void;
+  fetchAppliedClubs: (userId: string) => void;
   storeTokenInLocalStorage: (queryParams: URLSearchParams) => void;
   handleLogin: () => Promise<void>;
   handleLogout: () => void;
 };
+
 type InitialStatus = {
   login: boolean;
   userProfile: UserProfile;
-  userInfo: UserInfo;
+  joinedClubs: JoinedClub[];
+  likedClubs: LikedClub[];
+  appliedClubs: AppliedClub[];
 };

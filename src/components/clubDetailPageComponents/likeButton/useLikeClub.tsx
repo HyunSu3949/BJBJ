@@ -3,24 +3,24 @@ import { useUserContext } from '../../contexts/userContext';
 import { cancleLikesClub, likesClub } from '../../../apis/clubApis';
 
 export default function useLikeClub({ clubId }: { clubId: string }) {
-  const { userProfile, userInfo, fetchJoiedLikedClubData } = useUserContext();
+  const { userProfile, likedClubs, fetchLikedClubs } = useUserContext();
   const [isLike, setIsLike] = useState(false);
   useEffect(() => {
-    if (userInfo.likedClubs.includes(clubId)) {
+    if (likedClubs.some(data => data.clubId == clubId)) {
       setIsLike(true);
     } else {
       setIsLike(false);
     }
-  }, [userInfo.likedClubs.length]);
+  }, [likedClubs.length]);
 
   const onClickForLike = async () => {
     await likesClub({ clubId, userId: userProfile.userId });
-    fetchJoiedLikedClubData(userProfile.userId);
+    fetchLikedClubs(userProfile.userId);
   };
 
   const onClickForCancleLike = async () => {
     await cancleLikesClub({ clubId, userId: userProfile.userId });
-    fetchJoiedLikedClubData(userProfile.userId);
+    fetchLikedClubs(userProfile.userId);
   };
 
   return { isLike, onClickForLike, onClickForCancleLike };

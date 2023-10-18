@@ -11,7 +11,7 @@ export default function ClubCard(club: Club) {
         <div>
           <span data-testid="likes-count">{club.likes}</span>
         </div>
-        <Link to={`/club/${club.id}`}>더 알아보기</Link>
+        <Link to={`/club/${club.clubId}`}>더 알아보기</Link>
       </li>
     </>
   );

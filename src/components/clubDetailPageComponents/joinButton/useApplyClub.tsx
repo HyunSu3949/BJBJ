@@ -9,48 +9,47 @@ import { ClubDetailsStatus } from '../../types';
 import { useModalContext } from '../../contexts/modalContext';
 import { modals } from '../../modals/Modals';
 
-type JoinStatus = ClubDetailsStatus | '승인됨' | '대기중';
+type ApplyStatus = ClubDetailsStatus | '승인됨' | '대기중';
 
 type ConfirmModaltype = {
   onConfirm: () => void;
 };
 
-export default function useJoinClub({
+export default function useApplyClub({
   clubId,
   status,
 }: {
   status: ClubDetailsStatus;
   clubId: string;
 }) {
-  const [joinStatus, setJoinStatus] = useState<JoinStatus>(status);
-  const { userInfo, userProfile, fetchJoiedLikedClubData } = useUserContext();
+  const [applyStatus, setApplyStatus] = useState<ApplyStatus>(status);
+  const { appliedClubs, userProfile, fetchAppliedClubs } = useUserContext();
   const { openModal } = useModalContext();
 
   useEffect(() => {
     setButtonText();
-  }, [userInfo.joinedClubs]);
+  }, [appliedClubs]);
 
   const setButtonText = () => {
-    const joinedClubs = userInfo.joinedClubs;
-    joinedClubs.forEach(info => {
-      if (info.clubId == clubId && info.status == '승인됨') {
-        setJoinStatus('승인됨');
-      } else if (info.clubId == clubId && info.status == '대기중') {
-        setJoinStatus('대기중');
+    appliedClubs.forEach(club => {
+      if (club.clubId == clubId && club.status == '승인됨') {
+        setApplyStatus('승인됨');
+      } else if (club.clubId == clubId && club.status == '대기중') {
+        setApplyStatus('대기중');
       } else {
-        setJoinStatus(status);
+        setApplyStatus(status);
       }
     });
   };
 
   const joinClub = async (clubId: string) => {
     await requestParticipation({ clubId, userId: userProfile.userId });
-    fetchJoiedLikedClubData(userProfile.userId);
+    fetchAppliedClubs(userProfile.userId);
   };
 
   const cancleJoinClub = async (clubId: string) => {
     await cancleRequestParticipation({ clubId, userId: userProfile.userId });
-    fetchJoiedLikedClubData(userProfile.userId);
+    fetchAppliedClubs(userProfile.userId);
   };
 
   const onClickWithRecuiting = async () => {
@@ -112,6 +111,6 @@ export default function useJoinClub({
       text: '신청완료',
     },
   };
-  const buttonStatus = buttonTable[joinStatus];
+  const buttonStatus = buttonTable[applyStatus];
   return { buttonStatus, setButtonText };
 }

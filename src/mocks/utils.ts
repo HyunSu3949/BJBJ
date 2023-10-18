@@ -4,7 +4,7 @@ import { GetClub, PostClub } from './types';
 export function getClubsSortedByLikes(): GetClub[] {
   return db.clubs
     .map(club => ({
-      id: club.id,
+      clubId: club.clubId,
       title: club.title,
       contents: club.contents,
       imgUrl: club.imgUrl,
@@ -31,6 +31,7 @@ export function postClubs(data: PostClub) {
 
   db.clubs.push({
     id: String(nextId),
+    clubId: String(nextId),
     userId,
     title,
     imgUrl,
@@ -120,8 +121,26 @@ export function getFeedsSortedBylikes() {
   return feedList;
 }
 
-export function getJoinedClub(userId: string) {
+export function getAppliedClub(userId: string) {
   return db.members.filter(member => member.userId == userId);
+}
+
+export function getJoinedClub(userId: string, page: string) {
+  return db.members
+    .filter(member => member.userId == userId && member.status == '승인됨')
+    .map(member => {
+      const clubId = member.clubId;
+      const clubInfo = { ...db.clubs.find(club => club.clubId == clubId) };
+
+      return {
+        clubId: clubInfo.clubId,
+        title: clubInfo.title,
+        contents: clubInfo.contents,
+        imgUrl: clubInfo.imgUrl,
+        likes: clubInfo.likes,
+      };
+    })
+    .slice(0, 4 * +page);
 }
 
 export function getClubDetails(clubId: string) {

@@ -1,14 +1,14 @@
 import { ClubDetailsStatus } from '../../types';
-import useJoinClub from './useJoinClub';
+import useApplyClub from './useApplyClub';
 
-export default function JoinButton({
+export default function ApplyButton({
   status,
   clubId,
 }: {
   status: ClubDetailsStatus;
   clubId: string;
 }) {
-  const { buttonStatus } = useJoinClub({
+  const { buttonStatus } = useApplyClub({
     clubId,
     status,
   });

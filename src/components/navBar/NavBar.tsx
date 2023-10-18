@@ -5,7 +5,7 @@ import LoginButton from './LoginButton/LoginButton';
 
 import logo from '../../assets/image/bjbj_logo.png';
 export default function NavBar() {
-  const { isLogedin, userProfile, userInfo, handleLogout } = useUserContext();
+  const { joinedClubs } = useUserContext();
 
   return (
     <nav>
@@ -13,7 +13,7 @@ export default function NavBar() {
         <Link to="/search">검색</Link>
         <button>
           <ul>
-            {userInfo.joinedClubs.map(club => (
+            {joinedClubs.map(club => (
               <li key={club.clubId}>{club.clubId}</li>
             ))}
           </ul>
