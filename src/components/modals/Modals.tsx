@@ -2,10 +2,12 @@ import React, { useContext } from 'react';
 import { ModalsContext } from '../contexts/modalContext';
 import ConfirmModal from './ConfirmModal';
 import CompletionModal from './CompletionModal';
+import AddClubModal from './addClubModal/AddClubModal';
 
 export const modals = {
   ConfirmModal,
   CompletionModal,
+  AddClubModal,
 };
 
 export default function Modals() {

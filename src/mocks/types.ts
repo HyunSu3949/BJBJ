@@ -9,6 +9,7 @@ export type ClubStatus = '모집중' | '마감됨';
 
 export type Club = {
   id: string;
+  clubId: string;
   userId: string;
   title: string;
   imgUrl: string;
@@ -26,7 +27,7 @@ export type Club = {
 };
 
 export type GetClub = {
-  id: string;
+  clubId: string;
   title: string;
   contents: string;
   imgUrl: string;

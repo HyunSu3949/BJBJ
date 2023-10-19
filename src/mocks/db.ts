@@ -35,6 +35,7 @@ export const db: DB = {
   clubs: [
     {
       id: '0',
+      clubId: '0',
       userId: '0', // 현수
       title: '오만과편견 독서모임0',
       contents: '한줄소개0',
@@ -52,6 +53,7 @@ export const db: DB = {
     },
     {
       id: '1',
+      clubId: '1',
       userId: '1', //주홍
       title: '오만과편견 독서모임1',
       contents: '한줄소개1',
@@ -69,6 +71,7 @@ export const db: DB = {
     },
     {
       id: '2',
+      clubId: '2',
       userId: '2', // 준용
       title: '오만과편견 독서모임2',
       contents: '한줄소개2',

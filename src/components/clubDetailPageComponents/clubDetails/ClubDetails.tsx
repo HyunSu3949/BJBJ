@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getClubDetails } from '../../../apis/clubApis';
 import { ClubDetailsType } from '../../types';
-import JoinButton from './../joinButton/JoinButton';
+import ApplyButton from '../joinButton/ApplyButton';
 import LikeButton from '../likeButton/LikeButton';
 
 export default function ClubDetails({ clubId }: { clubId: string }) {
@@ -39,7 +39,7 @@ export default function ClubDetails({ clubId }: { clubId: string }) {
           <p>{clubDetail.tags}</p>
         </div>
         <div>
-          <JoinButton status={clubDetail.status} clubId={clubDetail.userId} />
+          <ApplyButton status={clubDetail.status} clubId={clubDetail.userId} />
           <LikeButton clubId={clubDetail.userId} />
         </div>
       </div>

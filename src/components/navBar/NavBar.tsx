@@ -1,23 +1,16 @@
-import AddClubButton from '../../assets/image/add_club_button.svg';
-import { useUserContext } from '../contexts/userContext';
 import { Link } from 'react-router-dom';
+
 import LoginButton from './LoginButton/LoginButton';
-
+import AddClubButton from './addClubButton/AddClubButton';
 import logo from '../../assets/image/bjbj_logo.png';
-export default function NavBar() {
-  const { isLogedin, userProfile, userInfo, handleLogout } = useUserContext();
+import JoinedClubDropdown from './joinedClubDropdown/JoinedClubDropdown';
 
+export default function NavBar() {
   return (
-    <nav>
+    <nav style={{ display: 'flex' }}>
       <div>
         <Link to="/search">검색</Link>
-        <button>
-          <ul>
-            {userInfo.joinedClubs.map(club => (
-              <li key={club.clubId}>{club.clubId}</li>
-            ))}
-          </ul>
-        </button>
+        <JoinedClubDropdown />
       </div>
       <Link to="/">
         <img
@@ -29,7 +22,7 @@ export default function NavBar() {
       </Link>
       <div>
         <LoginButton />
-        <AddClubButton aria-label="독서 모임 만들기" role="button" />
+        <AddClubButton />
       </div>
     </nav>
   );

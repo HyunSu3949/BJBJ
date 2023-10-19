@@ -3,7 +3,7 @@ export type ClubSort = {
 };
 
 export type Club = {
-  id: string;
+  clubId: string;
   title: string;
   contents: string;
   imgUrl: string;
