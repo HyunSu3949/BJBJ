@@ -30,7 +30,7 @@ export default function ClubDetails({ clubId }: { clubId: string }) {
       <div>
         <h2>모임 소개</h2>
         <div>
-          <img src="" alt="모임 대표 사진" />
+          <img src={clubDetail.imgUrl} alt="모임 대표 사진" />
         </div>
         <div>
           <h3>{clubDetail.title}</h3>

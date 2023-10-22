@@ -4,6 +4,7 @@ import { modals } from '../../modals/Modals';
 
 export default function AddClubButton() {
   const { openModal } = useModalContext();
+
   const onClick = () => {
     openModal({
       Component: modals.AddClubModal,
