@@ -104,7 +104,7 @@ export const db: DB = {
     {
       id: '1',
       feedId: '1',
-      userId: '0',
+      userId: '1',
       clubId: '1',
       title: '오만과 편견1을 읽고',
       likes: 2,
@@ -116,7 +116,7 @@ export const db: DB = {
     {
       id: '2',
       feedId: '2',
-      userId: '0',
+      userId: '2',
       clubId: '2',
       title: '오만과 편견2을 읽고',
       likes: 2,
