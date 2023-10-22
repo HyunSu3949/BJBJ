@@ -88,11 +88,15 @@ export async function deleteLikeFeed(feedId: string, userId: string) {
   return res.data;
 }
 
-export async function postComment(
-  feedId: string,
-  userId: string,
-  contents: string,
-) {
+export async function postComment({
+  feedId,
+  userId,
+  contents,
+}: {
+  feedId: string;
+  userId: string;
+  contents: string;
+}) {
   const res = await axsiosPuplic.post(`comments`, { feedId, userId, contents });
 
   return res.data;

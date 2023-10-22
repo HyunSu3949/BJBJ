@@ -27,7 +27,7 @@ export const feedHandlers = [
   rest.get('/feeds/clubs/:clubId', (req, res, ctx) => {
     const clubId = req.params.clubId as string;
     const sortBy = req.url.searchParams.get('sortBy') || 'likes';
-    if (clubId) {
+    if (clubId != undefined) {
       const feedList = getClubFeeds(clubId);
       return res(
         ctx.json({
@@ -141,11 +141,8 @@ export const feedHandlers = [
     const page = req.url.searchParams.get('page') || 1;
 
     if (feedId != undefined) {
-      const commentList = db.feedComment.filter(
-        comment => comment.feedId == feedId,
-      );
-
-      commentList
+      const commentList = db.feedComment
+        .filter(comment => comment.feedId == feedId)
         .map(comment => {
           const userInfo = {
             ...db.users.find(user => user.userId == comment.userId),

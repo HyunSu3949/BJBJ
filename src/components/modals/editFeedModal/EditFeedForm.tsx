@@ -1,17 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import { useModalContext } from '../../contexts/modalContext';
 import { useUserContext } from '../../contexts/userContext';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { modals } from '../Modals';
 import { uploadImgToS3 } from '../../../apis/authApis';
 import { v4 as uuidv4 } from 'uuid';
 import { useParams } from 'react-router-dom';
-import { deleteFeed, getFeedDetail, putFeed } from '../../../apis/feedApis';
+import { getFeedDetail } from '../../../apis/feedApis';
 import EmptyImg from '../../../assets/image/empty_img.svg';
+
+type PutFeedType = {
+  feedId: string;
+  clubId: string;
+  userId: string;
+  title: string;
+  contents: string;
+  imgUrl: string;
+};
 
 type Props = {
   onClose: () => void;
   feedId: string;
+  handleDelete: () => void;
+  handleEdit: (PutFeed: PutFeedType) => void;
 };
 
 type FormValue = {
@@ -20,14 +29,16 @@ type FormValue = {
   contents: string;
 };
 
-type ConfirmModaltype = {
-  onConfirm: () => void;
-};
+export default function EditFeedForm({
+  onClose,
+  handleDelete,
+  handleEdit,
+  feedId,
+}: Props) {
+  console.log('handle: ', handleEdit);
 
-export default function EditFeedForm({ onClose, feedId }: Props) {
   const { clubId } = useParams();
   const [previewImg, setPreviewImg] = useState<string | null>(null);
-  const { openModal } = useModalContext();
   const { userProfile } = useUserContext();
   const {
     register,
@@ -82,31 +93,8 @@ export default function EditFeedForm({ onClose, feedId }: Props) {
       contents: data.contents,
       imgUrl,
     };
-
-    const { code } = await putFeed(postData);
-    if (code != 1) {
-      openModal({
-        Component: modals.CompletionModal,
-        props: {
-          message: '등록에 실패했습니다. 잠시후 다시 시도해주세요.',
-          btnText: '확인',
-        },
-      });
-    }
+    handleEdit(postData);
     onClose();
-  };
-
-  const handleDelete = () => {
-    openModal<ConfirmModaltype>({
-      Component: modals.ConfirmModal,
-      props: {
-        onConfirm: () => {
-          deleteFeed(feedId);
-        },
-        message: '게시글을 삭제하시겠어요?',
-        btnText: '확인',
-      },
-    });
   };
 
   return (

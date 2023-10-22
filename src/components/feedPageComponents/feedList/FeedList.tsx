@@ -27,7 +27,7 @@ export default function FeedList() {
     };
 
     fetchClubFeedList();
-  }, []);
+  }, [clubId]);
 
   return (
     <ul>
