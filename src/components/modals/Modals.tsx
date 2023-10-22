@@ -5,6 +5,7 @@ import CompletionModal from './CompletionModal';
 import AddClubModal from './addClubModal/AddClubModal';
 import PostFeedModal from './postFeedModal/PostFeedModal';
 import FeedModal from './feedModal/FeedModal';
+import EditFeedModal from './editFeedModal/EditFeedModal';
 
 export const modals = {
   ConfirmModal,
@@ -12,6 +13,7 @@ export const modals = {
   AddClubModal,
   PostFeedModal,
   FeedModal,
+  EditFeedModal,
 };
 
 export default function Modals() {
