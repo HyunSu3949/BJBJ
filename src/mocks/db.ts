@@ -6,7 +6,7 @@ export const ids = {
   members: 7,
   likedClubs: 6,
   likedFeeds: 6,
-  feedComment: 2,
+  feedComment: 9,
 };
 export const db: DB = {
   users: [
@@ -91,6 +91,7 @@ export const db: DB = {
   feeds: [
     {
       id: '0',
+      feedId: '0',
       userId: '0',
       clubId: '0',
       title: '오만과 편견0을 읽고',
@@ -102,6 +103,7 @@ export const db: DB = {
     },
     {
       id: '1',
+      feedId: '1',
       userId: '0',
       clubId: '1',
       title: '오만과 편견1을 읽고',
@@ -113,6 +115,7 @@ export const db: DB = {
     },
     {
       id: '2',
+      feedId: '2',
       userId: '0',
       clubId: '2',
       title: '오만과 편견2을 읽고',
@@ -224,7 +227,8 @@ export const db: DB = {
   feedComment: [
     {
       id: '0',
-      userId: '1',
+      commentId: '0',
+      userId: '0',
       feedId: '0',
       contents: '잘 읽었습니다',
       createdAt: '2023-10-05T12:34:56.789',
@@ -232,6 +236,70 @@ export const db: DB = {
     },
     {
       id: '1',
+      commentId: '1',
+      userId: '0',
+      feedId: '1',
+      contents: '잘 읽었습니다',
+      createdAt: '2023-10-05T12:34:56.789',
+      updatedAt: '2023-10-05T12:34:56.789',
+    },
+    {
+      id: '2',
+      commentId: '2',
+      userId: '0',
+      feedId: '2',
+      contents: '잘 읽었습니다',
+      createdAt: '2023-10-05T12:34:56.789',
+      updatedAt: '2023-10-05T12:34:56.789',
+    },
+    {
+      id: '3',
+      commentId: '3',
+      userId: '1',
+      feedId: '0',
+      contents: '잘 읽었습니다',
+      createdAt: '2023-10-05T12:34:56.789',
+      updatedAt: '2023-10-05T12:34:56.789',
+    },
+    {
+      id: '4',
+      commentId: '4',
+      userId: '1',
+      feedId: '1',
+      contents: '잘 읽었습니다',
+      createdAt: '2023-10-05T12:34:56.789',
+      updatedAt: '2023-10-05T12:34:56.789',
+    },
+    {
+      id: '5',
+      commentId: '5',
+      userId: '1',
+      feedId: '2',
+      contents: '잘 읽었습니다',
+      createdAt: '2023-10-05T12:34:56.789',
+      updatedAt: '2023-10-05T12:34:56.789',
+    },
+    {
+      id: '6',
+      commentId: '6',
+      userId: '2',
+      feedId: '0',
+      contents: '잘 읽었습니다',
+      createdAt: '2023-10-05T12:34:56.789',
+      updatedAt: '2023-10-05T12:34:56.789',
+    },
+    {
+      id: '7',
+      commentId: '7',
+      userId: '2',
+      feedId: '1',
+      contents: '잘 읽었습니다',
+      createdAt: '2023-10-05T12:34:56.789',
+      updatedAt: '2023-10-05T12:34:56.789',
+    },
+    {
+      id: '8',
+      commentId: '8',
       userId: '2',
       feedId: '2',
       contents: '잘 읽었습니다',

@@ -72,6 +72,7 @@ export type LikedClubs = {
 };
 export type Feeds = {
   id: string;
+  feedId: string;
   userId: string;
   clubId: string;
   title: string;
@@ -83,11 +84,27 @@ export type Feeds = {
 };
 export type FeedComment = {
   id: string;
+  commentId: string;
   userId: string;
   feedId: string;
   contents: string;
   createdAt: string;
   updatedAt: string;
+};
+export type PostFeed = {
+  userId: string;
+  clubId: string;
+  title: string;
+  contents: string;
+  imgUrl: string;
+};
+export type PutFeed = {
+  feedId: string;
+  userId: string;
+  clubId: string;
+  title: string;
+  contents: string;
+  imgUrl: string;
 };
 
 export type DB = {
