@@ -11,7 +11,7 @@ export default function useLikeClub({ clubId }: { clubId: string }) {
     } else {
       setIsLike(false);
     }
-  }, [likedClubs.length]);
+  }, [clubId, likedClubs, likedClubs.length]);
 
   const onClickForLike = async () => {
     await likesClub({ clubId, userId: userProfile.userId });
