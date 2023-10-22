@@ -21,30 +21,30 @@ export async function getClubFeedList(
 }
 
 export async function getFeedDetail(feedId: string) {
-  const res = await axsiosPuplic.get(`feeds/${feedId}`);
+  const res = await axsiosPuplic.get(`/feeds/${feedId}`);
 
   return res.data.data;
 }
 
 export async function getMyFeedList(userId: string, page = 1) {
-  const res = await axsiosPuplic.get(`feeds/users/${userId}?page=${page}`);
+  const res = await axsiosPuplic.get(`/feeds/users/${userId}?page=${page}`);
 
   return res.data.data;
 }
 export async function postFeed(postFeed: PostFeed) {
-  const res = await axsiosPuplic.post(`feeds`, postFeed);
+  const res = await axsiosPuplic.post(`/feeds`, postFeed);
 
   return res.data;
 }
 
 export async function putFeed(putFeed: PutFeed) {
-  const res = await axsiosPuplic.put(`feeds`, putFeed);
+  const res = await axsiosPuplic.put(`/feeds`, putFeed);
 
   return res.data;
 }
 
 export async function deleteFeed(feedId: string) {
-  const res = await axsiosPuplic.delete(`feeds?feedId=${feedId}`);
+  const res = await axsiosPuplic.delete(`/feeds?feedId=${feedId}`);
 
   return res.data;
 }
@@ -63,26 +63,26 @@ export async function putFeedComment(putComment: {
   userId: string;
   contents: string;
 }) {
-  const res = await axsiosPuplic.put(`comments`, putComment);
+  const res = await axsiosPuplic.put(`/comments`, putComment);
 
   return res.data;
 }
 
 export async function deleteComment(commentId: string) {
-  const res = await axsiosPuplic.delete(`comments?commentId=${commentId}`);
+  const res = await axsiosPuplic.delete(`/comments?commentId=${commentId}`);
 
   return res.data;
 }
 
 export async function likeFeed(feedId: string, userId: string) {
-  const res = await axsiosPuplic.post(`likefeeds`, { feedId, userId });
+  const res = await axsiosPuplic.post(`/likedfeeds`, { feedId, userId });
 
   return res.data;
 }
 
 export async function deleteLikeFeed(feedId: string, userId: string) {
   const res = await axsiosPuplic.delete(
-    `likefeeds?feedId=${feedId}&userId=${userId}`,
+    `/likedfeeds?feedId=${feedId}&userId=${userId}`,
   );
 
   return res.data;
@@ -97,7 +97,19 @@ export async function postComment({
   userId: string;
   contents: string;
 }) {
-  const res = await axsiosPuplic.post(`comments`, { feedId, userId, contents });
+  const res = await axsiosPuplic.post(`/comments`, {
+    feedId,
+    userId,
+    contents,
+  });
 
   return res.data;
+}
+
+export async function getlikedFeedList(userId: string, page: number) {
+  const res = await axsiosPuplic.get(
+    `/likedfeeds/users/${userId}?page=${page}`,
+  );
+
+  return res.data.data;
 }

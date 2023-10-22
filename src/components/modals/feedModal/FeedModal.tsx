@@ -1,15 +1,26 @@
 import ReactModal from 'react-modal';
 import useFeed from './useFeed';
-import CommentForm from './CommentForm';
 import CloseIcon from '../../../assets/image/close.svg';
 import { useUserContext } from '../../contexts/userContext';
+import Comment from './Comment';
+import CommentForm from './CommentForm';
+import LikeFeedButton from './LikeFeedButton';
+
 type Props = {
   onClose: () => void;
   feedId: string;
 };
 export default function FeedModal({ onClose, feedId }: Props) {
-  const { feedDetails, commentList, handlePostComment, openEditFeedModal } =
-    useFeed({ feedId });
+  const {
+    isLiked,
+    feedDetails,
+    commentList,
+    handlePostComment,
+    openEditFeedModal,
+    handleDeleteComment,
+    handleLikeFeed,
+    handleDeleteLikeFeed,
+  } = useFeed({ feedId });
 
   const { userProfile } = useUserContext();
   return (
@@ -32,14 +43,21 @@ export default function FeedModal({ onClose, feedId }: Props) {
         <div>{feedDetails && feedDetails.contents}</div>
       </div>
       <div>
+        <LikeFeedButton
+          isLiked={isLiked}
+          feedId={feedId}
+          handleLikeFeed={handleLikeFeed}
+          handleDeleteLikeFeed={handleDeleteLikeFeed}
+        />
+      </div>
+      <div>
         <CommentForm feedId={feedId} handlePostComment={handlePostComment} />
       </div>
       <div>
         <ul>
           {commentList.map((comment, idx) => (
             <li key={idx}>
-              <p>{comment.userName}</p>
-              <p>{comment.contents}</p>
+              <Comment {...comment} handleDeleteComment={handleDeleteComment} />
             </li>
           ))}
         </ul>

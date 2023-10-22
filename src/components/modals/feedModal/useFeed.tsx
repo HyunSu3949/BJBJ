@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useUserContext } from '../../contexts/userContext';
 import {
+  deleteComment,
   deleteFeed,
+  deleteLikeFeed,
   getFeedCommentList,
   getFeedDetail,
+  likeFeed,
   postComment,
   putFeed,
+  putFeedComment,
 } from '../../../apis/feedApis';
 import { useModalContext } from '../../contexts/modalContext';
 import { modals } from '../Modals';
@@ -32,6 +36,7 @@ type Comment = {
   userName: string;
   imgUrl: string;
   contents: string;
+  commentId: string;
 };
 type EditFeedModalType = {
   feedId: string;
@@ -52,13 +57,16 @@ type PutFeedType = {
 
 export default function useFeed({ feedId }: Props) {
   // 좋아요, 취소
-  // 댓글 지우기, 수정
   const [feedDetails, setFeedDetails] = useState<FeedDetail | undefined>();
   const [commentList, setCommentList] = useState<Comment[]>([]);
+  const [isLiked, setIsLiked] = useState(false);
+
   const { openModal } = useModalContext();
+  const { likedFeeds, userProfile } = useUserContext();
   useEffect(() => {
     fetchFeedDetails(feedId);
     fetchCommentList(feedId, 1);
+    setIsLiked(likedFeeds.some(feed => feed.feedId == feedId));
   }, [feedId]);
 
   const fetchFeedDetails = async (feedId: string) => {
@@ -116,5 +124,38 @@ export default function useFeed({ feedId }: Props) {
       },
     });
   };
-  return { feedDetails, commentList, handlePostComment, openEditFeedModal };
+
+  const handleDeleteComment = async (commentId: string) => {
+    openModal<ConfirmModaltype>({
+      Component: modals.ConfirmModal,
+      props: {
+        onConfirm: async () => {
+          await deleteComment(commentId);
+          await fetchCommentList(feedId, 1);
+        },
+        message: '댓글을 삭제하시겠어요?',
+        btnText: '확인',
+      },
+    });
+  };
+
+  const handleLikeFeed = async (feedId: string) => {
+    await likeFeed(feedId, userProfile.userId);
+    setIsLiked(true);
+  };
+  const handleDeleteLikeFeed = async (feedId: string) => {
+    await deleteLikeFeed(feedId, userProfile.userId);
+    setIsLiked(false);
+  };
+
+  return {
+    isLiked,
+    feedDetails,
+    commentList,
+    handlePostComment,
+    openEditFeedModal,
+    handleDeleteComment,
+    handleLikeFeed,
+    handleDeleteLikeFeed,
+  };
 }

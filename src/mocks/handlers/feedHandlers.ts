@@ -71,7 +71,7 @@ export const feedHandlers = [
     }
   }),
 
-  rest.post('feeds', async (req, res, ctx) => {
+  rest.post('/feeds', async (req, res, ctx) => {
     const data = await req.json();
     db.feeds.push({
       id: String(ids.feeds++),
@@ -89,7 +89,7 @@ export const feedHandlers = [
     );
   }),
 
-  rest.put('feeds', async (req, res, ctx) => {
+  rest.put('/feeds', async (req, res, ctx) => {
     const data = await req.json();
     const feed = db.feeds.find(feed => feed.id == data.feedId);
     if (feed) {
@@ -106,7 +106,7 @@ export const feedHandlers = [
     }
   }),
 
-  rest.delete('feeds', async (req, res, ctx) => {
+  rest.delete('/feeds', async (req, res, ctx) => {
     const feedId = req.url.searchParams.get('feedId');
     db.feeds = db.feeds.filter(feed => feed.id != feedId);
 
@@ -118,7 +118,7 @@ export const feedHandlers = [
     );
   }),
 
-  rest.get('feeds/:feedId', (req, res, ctx) => {
+  rest.get('/feeds/:feedId', (req, res, ctx) => {
     const feedId = req.params.feedId as string;
 
     const feed = db.feeds.find(feed => feed.feedId == feedId);
@@ -153,6 +153,7 @@ export const feedHandlers = [
             userName: userInfo.userName,
             imgUrl: userInfo.imgUrl,
             contents: comment.contents,
+            commentId: comment.commentId,
           };
         })
         .slice(0, 10 * +page);
@@ -170,7 +171,7 @@ export const feedHandlers = [
     }
   }),
 
-  rest.post('comments', async (req, res, ctx) => {
+  rest.post('/comments', async (req, res, ctx) => {
     const data = await req.json();
     db.feedComment.push(data);
 
@@ -182,7 +183,7 @@ export const feedHandlers = [
     );
   }),
 
-  rest.delete('comments', async (req, res, ctx) => {
+  rest.delete('/comments', async (req, res, ctx) => {
     const commentId = req.url.searchParams.get('commentId');
     db.feedComment = db.feedComment.filter(
       comment => comment.commentId != commentId,
@@ -223,6 +224,42 @@ export const feedHandlers = [
       );
     } else {
       return res(ctx.status(400));
+    }
+  }),
+
+  rest.get('/likedfeeds/users/:userId', (req, res, ctx) => {
+    const userId = req.params.userId;
+    const page = req.url.searchParams.get('page') || 1;
+
+    if (userId) {
+      const feedList = db.likedFeeds
+        .filter(like => like.userId == userId)
+        .map(like => {
+          const feed = { ...db.feeds.find(feed => feed.feedId == like.feedId) };
+          const user = { ...db.users.find(user => user.userId == like.userId) };
+          const commentCount = db.feedComment.filter(
+            comment => comment.feedId == feed.feedId,
+          );
+          return {
+            user,
+            feedId: feed.feedId,
+            contents: feed.contents,
+            likes: feed.likes,
+            commentCount,
+          };
+        })
+        .slice(0, 10 * +page);
+
+      return res(
+        ctx.json({
+          code: 1,
+          message: '',
+          data: {
+            totalCount: feedList.length,
+            feedList,
+          },
+        }),
+      );
     }
   }),
 ];
