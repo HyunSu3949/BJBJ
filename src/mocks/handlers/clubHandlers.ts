@@ -11,12 +11,19 @@ import {
   cancleJoinClub,
   getAppliedClub,
 } from '../utils';
+import { db } from '../db';
+import { Club } from '../types';
 
 export const clubHandlers = [
   rest.post('/clubs', async (req, res, ctx) => {
     const data = await req.json();
     postClubs(data);
-    return res(ctx.status(201));
+    return res(
+      ctx.json({
+        code: 1,
+        message: '등록 완료',
+      }),
+    );
   }),
 
   rest.get('main/clubs', (req, res, ctx) => {
@@ -147,6 +154,55 @@ export const clubHandlers = [
           totalCount: clubList.length,
           clubList,
         },
+      }),
+    );
+  }),
+
+  rest.get('/clubs/users/:userId', (req, res, ctx) => {
+    const userId = req.params.userId as string;
+    const userClubInfo = { ...db.clubs.find(club => club.userId == userId) };
+
+    const data = {
+      title: userClubInfo.title,
+      imgUrl: userClubInfo.imgUrl,
+      author: userClubInfo.author,
+      contents: userClubInfo.contents,
+      maxPersonnel: userClubInfo.maxPersonnel,
+      description: userClubInfo.description,
+      tags: userClubInfo.tags,
+      bookTitle: userClubInfo.bookTitle,
+      publisher: userClubInfo.publisher,
+    };
+
+    return res(
+      ctx.json({
+        code: 1,
+        message: '',
+        data,
+      }),
+    );
+  }),
+
+  rest.put('/clubs/users/:userId', async (req, res, ctx) => {
+    const userId = req.params.userId as string;
+    const editData = await req.json();
+
+    const userClubInfo = db.clubs.find(club => club.userId == userId) as Club;
+
+    userClubInfo.title = editData.title;
+    userClubInfo.author = editData.author;
+    userClubInfo.imgUrl = editData.imgUrl;
+    userClubInfo.contents = editData.contents;
+    userClubInfo.maxPersonnel = editData.maxPersonnel;
+    userClubInfo.description = editData.description;
+    userClubInfo.tags = editData.tags;
+    userClubInfo.bookTitle = editData.bookTitle;
+    userClubInfo.publisher = editData.publisher;
+
+    return res(
+      ctx.json({
+        code: 1,
+        message: '수정 완료',
       }),
     );
   }),

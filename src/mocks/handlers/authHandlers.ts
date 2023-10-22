@@ -18,12 +18,20 @@ export const authHandlers = [
   rest.post('/s3', async (req, res, ctx) => {
     const body = await req.json();
     const imageName = body.imageName;
-    const url = `http://pre-singed-url/${imageName}`;
+    const url = `http://localhost:3000/pre-singed-url/${imageName}`;
     return res(
       ctx.json({
         code: 1,
         message: '',
         data: { url },
+      }),
+    );
+  }),
+  rest.put('/pre-singed-url/:imgName', (req, res, ctx) => {
+    return res(
+      ctx.json({
+        code: 1,
+        message: '이미지 등록 완료',
       }),
     );
   }),

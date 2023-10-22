@@ -199,6 +199,7 @@ export function getClubFeeds(clubId: string) {
       return {
         user: userInfo,
         id: obj.id,
+        feedId: obj.feedId,
         contents: obj.contents,
         likes: obj.likes,
         commentCount: 1,

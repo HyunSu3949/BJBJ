@@ -1,6 +1,6 @@
 import useLikeClub from './useLikeClub';
-import EmptyHeart from '../../../assets/image/empty-heart.svg';
-import FilledHeart from '../../../assets/image/filled-heart.svg';
+import EmptyHeart from '../../../assets/image/empty_heart.svg';
+import FilledHeart from '../../../assets/image/filled_heart.svg';
 
 export default function LikeButton({ clubId }: { clubId: string }) {
   const { onClickForCancleLike, onClickForLike, isLike } = useLikeClub({

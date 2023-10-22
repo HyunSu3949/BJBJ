@@ -21,7 +21,7 @@ export type ClubDetailsStatus = '모집중' | '마감됨';
 export type ClubDetailsType = {
   userId: string;
   title: string;
-  img_url: string;
+  imgUrl: string;
   contents: string;
   maxPersonnel: number;
   description: string;

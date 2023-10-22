@@ -58,6 +58,7 @@
     "webpack-dev-server": "^4.15.1"
   },
   "dependencies": {
+    "@types/uuid": "^9.0.6",
     "axios": "^1.5.1",
     "jest-transformer-svg": "^2.0.1",
     "react": "^18.2.0",
@@ -65,7 +66,8 @@
     "react-hook-form": "^7.47.0",
     "react-modal": "^3.16.1",
     "react-router-dom": "^6.16.0",
-    "styled-components": "^6.0.8"
+    "styled-components": "^6.0.8",
+    "uuid": "^9.0.1"
   },
   "msw": {
     "workerDirectory": "public"
