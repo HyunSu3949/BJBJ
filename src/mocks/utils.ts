@@ -125,7 +125,7 @@ export function getAppliedClub(userId: string) {
   return db.members.filter(member => member.userId == userId);
 }
 
-export function getJoinedClub(userId: string, page: string) {
+export function getJoinedClub(userId: string, page: number) {
   return db.members
     .filter(member => member.userId == userId && member.status == '승인됨')
     .map(member => {

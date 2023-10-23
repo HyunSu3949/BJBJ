@@ -262,4 +262,23 @@ export const feedHandlers = [
       );
     }
   }),
+
+  rest.get('/comments/users/:userId', (req, res, ctx) => {
+    const userId = req.params.userId;
+
+    const commentList = db.feedComment.filter(
+      comment => comment.userId == userId,
+    );
+
+    return res(
+      ctx.json({
+        code: 1,
+        message: '',
+        data: {
+          totalCount: commentList.length,
+          commentList,
+        },
+      }),
+    );
+  }),
 ];

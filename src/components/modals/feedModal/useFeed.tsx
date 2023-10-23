@@ -61,7 +61,7 @@ export default function useFeed({ feedId }: Props) {
   const [isLiked, setIsLiked] = useState(false);
 
   const { openModal } = useModalContext();
-  const { likedFeeds, userProfile } = useUserContext();
+  const { likedFeeds, userProfile, fetchLikedFeeds } = useUserContext();
 
   useEffect(() => {
     fetchFeedDetails(feedId);
@@ -142,10 +142,12 @@ export default function useFeed({ feedId }: Props) {
   const handleLikeFeed = async (feedId: string) => {
     await likeFeed(feedId, userProfile.userId);
     setIsLiked(true);
+    fetchLikedFeeds(userProfile.userId);
   };
   const handleDeleteLikeFeed = async (feedId: string) => {
     await deleteLikeFeed(feedId, userProfile.userId);
     setIsLiked(false);
+    fetchLikedFeeds(userProfile.userId);
   };
 
   return {

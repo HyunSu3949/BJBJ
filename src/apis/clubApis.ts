@@ -51,7 +51,7 @@ export async function cancleLikesClub({
   return res.data;
 }
 
-export async function getJoinedClubs(userId: string, page: string) {
+export async function getJoinedClubs(userId: string, page: number) {
   const res = await axiosInstance.get(`/members/users/${userId}?page=${page}`);
   return res.data.data;
 }
@@ -111,7 +111,7 @@ export async function getClubList({
   return res.data.data;
 }
 
-export async function getLikedClubs(userId: string, page: number) {
+export async function getMyLikedClubList(userId: string, page: number) {
   const res = await axsiosPuplic.get(
     `/likedclubs/users/${userId}?page=${page}`,
   );
@@ -127,7 +127,7 @@ export async function getAwaitingApprovalList(userId: string, page: number) {
   return res.data.data;
 }
 
-export async function approveMember(memberId: PostClub) {
+export async function approveMember(memberId: string) {
   const res = await axiosInstance.put(`/members`, { memberId });
 
   return res.data;
