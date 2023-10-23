@@ -142,9 +142,9 @@ export const clubHandlers = [
 
   rest.get('/members/users/:userId', (req, res, ctx) => {
     const userId = req.params.userId as string;
-    const page = req.url.searchParams.get('page') as string;
+    const page = req.url.searchParams.get('page') || 1;
 
-    const clubList = getJoinedClub(userId, page);
+    const clubList = getJoinedClub(userId, +page);
 
     return res(
       ctx.json({

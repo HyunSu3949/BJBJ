@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from 'react';
 
-import { getClubsSortedBy } from '../../../apis/clubApis';
+import { getJoinedClubs } from '../../../apis/clubApis';
 import { Club, ClubSort } from '../../types';
 import ClubCard from '../../common/clubCard/ClubCard';
+import { useUserContext } from '../../contexts/userContext';
 
-export default function ClubList({ sortBy }: ClubSort) {
+export default function MyLikedClubList() {
   const [clubs, setClubs] = useState<Club[]>([]);
+  const { userProfile } = useUserContext();
 
   useEffect(() => {
     const fetchData = async () => {
-      const { clubList } = await getClubsSortedBy(sortBy, 1);
+      const { clubList } = await getJoinedClubs(userProfile.userId, 1);
+
       setClubs(clubList);
     };
 
     fetchData();
-  }, [sortBy]);
+  }, [userProfile.userId]);
 
   return (
     <ul>

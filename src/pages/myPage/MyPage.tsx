@@ -1,13 +1,28 @@
-import React from 'react';
-import EditMyClubForm from '../../components/myPageComponents/editMyClubForm/EditMyClubForm';
-import MyFeedList from '../../components/myPageComponents/myFeedList/MyFeedList';
+import React, { useState } from 'react';
+import AboutMyActivity from './AboutMyActivity';
+import AboutClub from './AboutClub';
 
 export default function MyPage() {
+  const [toggle, setToggle] = useState('activity');
+
   return (
     <>
       <h1>마이페이지</h1>
-      <EditMyClubForm />
-      <MyFeedList />
+      <button
+        onClick={() => {
+          setToggle('activity');
+        }}
+      >
+        내 활동
+      </button>{' '}
+      <button
+        onClick={() => {
+          setToggle('club');
+        }}
+      >
+        독서 모임
+      </button>
+      {toggle == 'activity' ? <AboutMyActivity /> : <AboutClub />}
     </>
   );
 }
