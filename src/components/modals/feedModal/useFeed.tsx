@@ -56,18 +56,18 @@ type PutFeedType = {
 };
 
 export default function useFeed({ feedId }: Props) {
-  // 좋아요, 취소
   const [feedDetails, setFeedDetails] = useState<FeedDetail | undefined>();
   const [commentList, setCommentList] = useState<Comment[]>([]);
   const [isLiked, setIsLiked] = useState(false);
 
   const { openModal } = useModalContext();
   const { likedFeeds, userProfile } = useUserContext();
+
   useEffect(() => {
     fetchFeedDetails(feedId);
     fetchCommentList(feedId, 1);
     setIsLiked(likedFeeds.some(feed => feed.feedId == feedId));
-  }, [feedId]);
+  }, [feedId, likedFeeds]);
 
   const fetchFeedDetails = async (feedId: string) => {
     const res = await getFeedDetail(feedId);
