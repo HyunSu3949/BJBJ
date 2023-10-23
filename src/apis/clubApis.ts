@@ -1,4 +1,4 @@
-import { Club, PostClub } from '../mocks/types';
+import { Club, PostClub, Tag, Tags } from '../mocks/types';
 import { axiosInstance, axsiosPuplic } from './instance';
 
 export async function getClubDetails(id: string) {
@@ -44,9 +44,11 @@ export async function cancleLikesClub({
   clubId: string;
   userId: string;
 }) {
-  return await axiosInstance.delete(
+  const res = await axiosInstance.delete(
     `/likedclubs?clubId=${clubId}&userId=${userId}`,
   );
+
+  return res.data;
 }
 
 export async function getJoinedClubs(userId: string, page: string) {
@@ -86,6 +88,83 @@ export async function getUsersClubInfo(userId: string) {
 
 export async function putUsersClubInfo(userId: string, data: PostClub) {
   const res = await axiosInstance.put(`/clubs/users/${userId}`, data);
+
+  return res.data;
+}
+
+type SearchFormValues = {
+  keyword: string;
+  tags: Tags;
+  sortBy: 'createdAt' | 'likes';
+  page: number;
+};
+export async function getClubList({
+  sortBy,
+  page,
+  keyword,
+  tags,
+}: SearchFormValues) {
+  const res = await axiosInstance.get(
+    `/clubs?sortBy=${sortBy}&tags=${tags}&keyword=${keyword}&page=${page}`,
+  );
+
+  return res.data.data;
+}
+
+export async function getLikedClubs(userId: string, page: number) {
+  const res = await axsiosPuplic.get(
+    `/likedclubs/users/${userId}?page=${page}`,
+  );
+
+  return res.data.data;
+}
+
+export async function getAwaitingApprovalList(userId: string, page: number) {
+  const res = await axsiosPuplic.get(
+    `/members?userId=${userId}&approvalStatus=대기중&page=${page}`,
+  );
+
+  return res.data.data;
+}
+
+export async function approveMember(memberId: PostClub) {
+  const res = await axiosInstance.put(`/members`, { memberId });
+
+  return res.data;
+}
+
+export async function rejectMember({
+  clubId,
+  userId,
+}: {
+  clubId: string;
+  userId: string;
+}) {
+  const res = await axiosInstance.delete(
+    `/members?userId=${userId}&clubId=${clubId}`,
+  );
+
+  return res.data;
+}
+
+export async function getParticipantsList(userId: string, page: number) {
+  const res = await axsiosPuplic.get(
+    `/members?userId=${userId}&approvalStatus=승인됨&page=${page}`,
+  );
+
+  return res.data.data;
+}
+
+export async function removeParticipant({
+  clubId,
+  userId,
+}: {
+  clubId: string;
+  userId: string;
+}) {
+  const res = await axiosInstance.delete(
+    `/members?userId=${userId}&clubId=${clubId}`,
+  );
 
   return res.data;
 }
