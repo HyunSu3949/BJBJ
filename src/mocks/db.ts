@@ -1,9 +1,9 @@
 import { DB } from './types';
 export const ids = {
-  users: 3,
+  users: 4,
   clubs: 3,
   feeds: 3,
-  members: 7,
+  members: 8,
   likedClubs: 6,
   likedFeeds: 6,
   feedComment: 9,
@@ -31,6 +31,13 @@ export const db: DB = {
       userEmail: 'bjy@gmail.com',
       imgUrl: 'jy.png',
     },
+    {
+      id: '3',
+      userId: '3',
+      userName: '지훈',
+      userEmail: 'sjh@gmail.com',
+      imgUrl: 'sjh.png',
+    },
   ],
   clubs: [
     {
@@ -46,7 +53,7 @@ export const db: DB = {
       createdAt: '2023-10-05T12:34:56.789',
       updatedAt: '2023-10-05T13:34:56.789',
       status: '모집중',
-      tags: '소모임,오프라인',
+      tags: '소모임,오프라인,온라인',
       bookTitle: '오만과 편견0',
       author: '제인오스틴',
       publisher: '생능출판사',
@@ -129,39 +136,45 @@ export const db: DB = {
   members: [
     {
       // 현수(0)가 만든 0번 모임
-      id: '0',
+      memberId: '0',
       userId: '0',
       clubId: '0',
       status: '승인됨',
     },
     {
-      id: '1', // 주홍(1)이 만든 1번 모임
+      memberId: '1', // 주홍(1)이 만든 1번 모임
       userId: '1',
       clubId: '1',
       status: '승인됨',
     },
     {
-      id: '2', // 준용(2)가 만든 2번 모임
+      memberId: '2', // 준용(2)가 만든 2번 모임
       userId: '2',
       clubId: '2',
       status: '승인됨',
     },
     {
-      id: '4',
+      memberId: '4',
       userId: '0',
       clubId: '2',
-      status: '승인됨',
+      status: '대기중',
     },
     {
-      id: '5',
+      memberId: '5',
       userId: '1',
       clubId: '0',
       status: '승인됨',
     },
     {
-      id: '6',
+      memberId: '6',
       userId: '2',
       clubId: '1',
+      status: '대기중',
+    },
+    {
+      memberId: '7',
+      userId: '3',
+      clubId: '0',
       status: '대기중',
     },
   ],
@@ -308,5 +321,3 @@ export const db: DB = {
     },
   ],
 };
-
-export const usersDB = {};

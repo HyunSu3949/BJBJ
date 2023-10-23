@@ -157,7 +157,7 @@ export function joinClub({
   const id = ids.members++;
 
   db.members.push({
-    id: String(id),
+    memberId: String(id),
     userId,
     clubId,
     status: '대기중',

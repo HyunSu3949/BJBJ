@@ -113,3 +113,9 @@ export async function getlikedFeedList(userId: string, page: number) {
 
   return res.data.data;
 }
+
+export async function getMyCommentList(userId: string, page: number) {
+  const res = await axsiosPuplic.get(`/comments/users/${userId}?page=${page}`);
+
+  return res.data.data;
+}

@@ -55,7 +55,7 @@ export type Users = {
   imgUrl: string;
 };
 export type Members = {
-  id: string;
+  memberId: string;
   userId: string;
   clubId: string;
   status: string;
