@@ -3,6 +3,7 @@ import { useUserContext } from '../../contexts/userContext';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { domains, nodeEnv } from '../../../constants/constants';
 import { useEffect } from 'react';
+import UserImg from '../../common/userImg/UserImg';
 
 export default function LoginButton() {
   const navigate = useNavigate();
@@ -19,11 +20,7 @@ export default function LoginButton() {
       {isLogedin ? (
         <>
           <Link to="/my">
-            <img
-              src={userProfile.imgUrl}
-              role="link"
-              alt="유저 프로필 이미지"
-            />
+            <UserImg imgUrl={userProfile.imgUrl} />
           </Link>
           <button
             onClick={() => {

@@ -1,26 +1,38 @@
-import React, { useEffect, useState } from 'react';
-
 import { getClubsSortedBy } from '../../../apis/clubApis';
 import { Club, ClubSort } from '../../types';
 import ClubCard from '../../common/clubCard/ClubCard';
+import usePagination from '../../../hooks/usePagination';
+import Pagination from './../../common/pagination/Pagination';
 
-export default function ClubList({ sortBy }: ClubSort) {
-  const [clubs, setClubs] = useState<Club[]>([]);
+type Props = {
+  sortBy: ClubSort;
+};
+type ClubFetchParams = {
+  sortBy: ClubSort;
+  page: number;
+};
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const { clubList } = await getClubsSortedBy(sortBy, 1);
-      setClubs(clubList);
-    };
-
-    fetchData();
-  }, [sortBy]);
+export default function ClubList({ sortBy }: Props) {
+  const {
+    data: clubs,
+    setPage,
+    maxPage,
+  } = usePagination<Club, ClubFetchParams>({
+    fetchData: getClubsSortedBy,
+    fetchParams: {
+      page: 1,
+      sortBy,
+    },
+    itemsPerPage: 4,
+    dataKey: 'clubList',
+  });
 
   return (
-    <ul>
-      {clubs.map(club => (
-        <ClubCard key={club.clubId} {...club} />
-      ))}
-    </ul>
+    <>
+      <ul style={{ display: 'flex' }}>
+        {clubs?.map(club => <ClubCard key={club.clubId} {...club} />)}
+      </ul>
+      <Pagination maxPage={maxPage} setPage={setPage} />
+    </>
   );
 }

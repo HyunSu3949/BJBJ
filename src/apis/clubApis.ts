@@ -1,3 +1,4 @@
+import { ClubSort } from '../components/types';
 import { Club, PostClub, Tag, Tags } from '../mocks/types';
 import { axiosInstance, axsiosPuplic } from './instance';
 
@@ -64,10 +65,13 @@ export async function getlikedClubs(userId: string) {
   return res.data.data;
 }
 
-export async function getClubsSortedBy(
-  sortBy: 'likes' | 'createdAt',
-  page = 1,
-) {
+export async function getClubsSortedBy({
+  sortBy,
+  page,
+}: {
+  sortBy: ClubSort;
+  page: number;
+}) {
   const res = await axsiosPuplic.get(
     `main/clubs?sortBy=${sortBy}&page=${page}`,
   );

@@ -1,24 +1,16 @@
-type Feed = {
-  user: {
-    userId: string;
-    userName: string;
-    imgUrl: string;
-  };
-  id: string;
-  likes: number;
-  contents: string;
-  commentCount: string;
-};
-export default function FeedCardSmall(props: Feed) {
+import { MainFeed } from '../../../mocks/types';
+import UserImg from '../userImg/UserImg';
+
+export default function FeedCardSmall(props: MainFeed) {
   return (
-    <li key={props.id}>
+    <>
       <div>
-        <img src={props.user.imgUrl} alt="피드 유저 사진" />
+        <UserImg imgUrl={props.user.imgUrl} />
         <span>{props.user.userName}</span>
       </div>
       <p>{props.contents}</p>
       <p>comments: {props.commentCount}</p>
       <p>Likes: {props.likes}</p>
-    </li>
+    </>
   );
 }

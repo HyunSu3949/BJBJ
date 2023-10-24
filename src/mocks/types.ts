@@ -116,3 +116,15 @@ export type DB = {
   feeds: Feeds[];
   feedComment: FeedComment[];
 };
+
+export type MainFeed = {
+  user: {
+    userId: string;
+    userName: string;
+    imgUrl: string;
+  };
+  feedId: string;
+  likes: number;
+  contents: string;
+  commentCount: string;
+};

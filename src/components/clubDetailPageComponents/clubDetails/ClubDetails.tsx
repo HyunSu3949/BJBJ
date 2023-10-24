@@ -3,6 +3,7 @@ import { getClubDetails } from '../../../apis/clubApis';
 import { ClubDetailsType } from '../../types';
 import ApplyButton from '../joinButton/ApplyButton';
 import LikeButton from '../likeButton/LikeButton';
+import ClubImgBig from './../../common/clubImg/ClubImgBit';
 
 export default function ClubDetails({ clubId }: { clubId: string }) {
   const [clubDetail, setClubDetail] = useState<ClubDetailsType | null>();
@@ -30,7 +31,7 @@ export default function ClubDetails({ clubId }: { clubId: string }) {
       <div>
         <h2>모임 소개</h2>
         <div>
-          <img src={clubDetail.imgUrl} alt="모임 대표 사진" />
+          <ClubImgBig imgUrl={clubDetail.imgUrl} />
         </div>
         <div>
           <h3>{clubDetail.title}</h3>

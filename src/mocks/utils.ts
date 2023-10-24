@@ -93,7 +93,6 @@ export function getFeedsSortedBylikes() {
       commentCount: 1,
     }))
     .sort((a, b) => b.likes - a.likes)
-    .slice(0, 4)
     .map(obj => {
       const userInfo: {
         userId: string;
@@ -140,7 +139,7 @@ export function getJoinedClub(userId: string, page: number) {
         likes: clubInfo.likes,
       };
     })
-    .slice(0, 4 * +page);
+    .slice((page - 1) * 4, page * 4);
 }
 
 export function getClubDetails(clubId: string) {
@@ -176,11 +175,11 @@ export function cancleJoinClub({
   );
 }
 
-export function getClubFeeds(clubId: string) {
+export function getClubFeeds(clubId: string, page: number) {
   const clubFeeds = db.feeds
     .filter(feed => feed.clubId == clubId)
     .sort((a, b) => b.likes - a.likes)
-    .slice(0, 4)
+    .slice((page - 1) * 4, page * 4)
     .map(obj => {
       const userInfo: {
         userId: string;
