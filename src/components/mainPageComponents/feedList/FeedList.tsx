@@ -1,40 +1,41 @@
-import React, { useEffect, useState } from 'react';
 import FeedCardSmall from '../../common/feedCard/FeedCardSmall';
-import { mainFeedListSortBy } from '../../../apis/feedApis';
-
+import { getMainFeedListSortBy } from '../../../apis/feedApis';
+import { ClubSort } from '../../types';
+import { MainFeed } from '../../../mocks/types';
+import usePagination from '../../../hooks/usePagination';
+import Pagination from './../../common/pagination/Pagination';
 type Props = {
-  sortBy: 'likes' | 'createdAt';
+  sortBy: ClubSort;
 };
-
-type Feed = {
-  user: {
-    userId: string;
-    userName: string;
-    imgUrl: string;
-  };
-  id: string;
-  likes: number;
-  contents: string;
-  commentCount: string;
+type MainFeedFetchParams = {
+  sortBy: ClubSort;
+  page: number;
 };
-
 export default function FeedList({ sortBy }: Props) {
-  const [feedList, setFeedList] = useState<Feed[]>([]);
-
-  useEffect(() => {
-    const fetchFeedList = async (sortBy: string) => {
-      const feedData = await mainFeedListSortBy(sortBy);
-
-      setFeedList(feedData.feedList);
-    };
-    fetchFeedList(sortBy);
-  }, [sortBy]);
+  const {
+    data: feeds,
+    setPage,
+    maxPage,
+  } = usePagination<MainFeed, MainFeedFetchParams>({
+    fetchData: getMainFeedListSortBy,
+    fetchParams: {
+      page: 1,
+      sortBy,
+    },
+    itemsPerPage: 4,
+    dataKey: 'feedList',
+  });
 
   return (
-    <ul>
-      {feedList.map(feed => (
-        <FeedCardSmall key={feed.id} {...feed} />
-      ))}
-    </ul>
+    <>
+      <ul style={{ display: 'flex' }}>
+        {feeds?.map(feed => (
+          <li key={feed.feedId}>
+            <FeedCardSmall {...feed} />
+          </li>
+        ))}
+      </ul>
+      <Pagination maxPage={maxPage} setPage={setPage} />
+    </>
   );
 }

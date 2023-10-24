@@ -1,7 +1,14 @@
-import { PostFeed, PutFeed } from '../mocks/types';
+import { ClubSort } from '../components/types';
+import { ClubStatus, PostFeed, PutFeed } from '../mocks/types';
 import { axiosInstance, axsiosPuplic } from './instance';
 
-export async function mainFeedListSortBy(sortBy = 'likes', page = 1) {
+export async function getMainFeedListSortBy({
+  sortBy,
+  page,
+}: {
+  sortBy: ClubSort;
+  page: number;
+}) {
   const res = await axsiosPuplic.get(
     `/main/feeds?sortBy=${sortBy}&page=${page}`,
   );

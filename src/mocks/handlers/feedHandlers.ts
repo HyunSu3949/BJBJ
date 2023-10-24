@@ -5,7 +5,7 @@ import { db, ids } from '../db';
 export const feedHandlers = [
   rest.get('/main/feeds', (req, res, ctx) => {
     const sortBy = req.url.searchParams.get('sortBy');
-    const page = req.url.searchParams.get('page');
+    const page = +(req.url.searchParams.get('page') || 1);
 
     if (sortBy) {
       const feedList = getFeedsSortedBylikes();
@@ -15,7 +15,7 @@ export const feedHandlers = [
           message: '',
           data: {
             totalCount: feedList.length,
-            feedList,
+            feedList: feedList.slice((page - 1) * 4, page * 4),
           },
         }),
       );

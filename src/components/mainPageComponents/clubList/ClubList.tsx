@@ -1,9 +1,8 @@
-import { useEffect, useState } from 'react';
-
 import { getClubsSortedBy } from '../../../apis/clubApis';
 import { Club, ClubSort } from '../../types';
 import ClubCard from '../../common/clubCard/ClubCard';
 import usePagination from '../../../hooks/usePagination';
+import Pagination from './../../common/pagination/Pagination';
 
 type Props = {
   sortBy: ClubSort;
@@ -33,16 +32,7 @@ export default function ClubList({ sortBy }: Props) {
       <ul style={{ display: 'flex' }}>
         {clubs?.map(club => <ClubCard key={club.clubId} {...club} />)}
       </ul>
-      <ul style={{ display: 'flex' }}>
-        {Array(maxPage)
-          .fill(0)
-          .map((_, i) => i + 1)
-          .map((v, i) => (
-            <li key={i} onClick={() => setPage(i + 1)}>
-              {v}
-            </li>
-          ))}
-      </ul>
+      <Pagination maxPage={maxPage} setPage={setPage} />
     </>
   );
 }
