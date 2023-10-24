@@ -1,3 +1,5 @@
+import UserImg from '../userImg/UserImg';
+
 type Feed = {
   user: {
     userId: string;
@@ -13,7 +15,7 @@ export default function FeedCardSmall(props: Feed) {
   return (
     <li key={props.id}>
       <div>
-        <img src={props.user.imgUrl} alt="피드 유저 사진" />
+        <UserImg imgUrl={props.user.imgUrl} />
         <span>{props.user.userName}</span>
       </div>
       <p>{props.contents}</p>

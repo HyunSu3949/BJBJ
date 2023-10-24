@@ -1,10 +1,11 @@
 import { Club } from '../../types';
 import { Link } from 'react-router-dom';
+import ClubImg from '../clubImg/ClubImg';
 
 export default function ClubCard(club: Club) {
   return (
     <>
-      <img src={club.imgUrl} alt={`${club.title}의 배경 사진`} />
+      <ClubImg imgUrl={club.imgUrl} />
       <h3>{club.title}</h3>
       <p>{club.contents}</p>
       <div>
