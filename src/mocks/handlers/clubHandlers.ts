@@ -28,7 +28,8 @@ export const clubHandlers = [
 
   rest.get('main/clubs', (req, res, ctx) => {
     const sortBy = req.url.searchParams.get('sortby');
-    const page = req.url.searchParams.get('page');
+    const page = Number(req.url.searchParams.get('page') || 1);
+
     const clubList =
       sortBy === 'likes' ? getClubsSortedByLikes() : getClubsSortedByLikes();
 
@@ -38,7 +39,7 @@ export const clubHandlers = [
         message: '',
         data: {
           totalCount: clubList.length,
-          clubList,
+          clubList: clubList.slice((page - 1) * 4, page * 4),
         },
       }),
     );
