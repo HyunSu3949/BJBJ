@@ -26,8 +26,6 @@ export default function useApplyClub({
   const { appliedClubs, userProfile, fetchAppliedClubs } = useUserContext();
   const { openModal } = useModalContext();
 
-  console.log(appliedClubs);
-
   useEffect(() => {
     setButtonText();
   }, [appliedClubs]);
