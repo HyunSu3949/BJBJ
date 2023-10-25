@@ -1,14 +1,27 @@
 import { domains } from '../constants/constants';
-import { axiosInstance } from './instance';
+import { axiosInstance, axsiosPuplic } from './instance';
 export async function getUserProfile() {
   const res = await axiosInstance.get('/users');
 
   return res.data.data;
 }
 
-export async function uploadImgToS3(imageName: string, file: File) {
+export async function uploadImgToS3(
+  imageName: string,
+  file: File,
+  fileType: string,
+): Promise<string> {
+  console.log('fileType: ', fileType);
+  console.log('imageName: ', imageName);
   const { url } = await getPreSingedUrl(imageName);
-  await axiosInstance.put(url, file);
+  await fetch(url, {
+    method: 'PUT',
+    body: file,
+    headers: {
+      'Content-Type': fileType,
+    },
+  });
+  console.log('presignedUrl: ', url);
 
   return domains.imgUrl + imageName;
 }

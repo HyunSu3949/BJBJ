@@ -32,7 +32,7 @@ export default function LoginButton() {
           </button>
         </>
       ) : nodeEnv == 'development' ? (
-        <Link to={`/?${'Access_Token=Bearer 0'}`}>
+        <Link to={`/?${'Access_Token=0'}`}>
           <GoogleLogin aria-label="구글 로그인" role="button" />
         </Link>
       ) : (

@@ -80,7 +80,11 @@ export default function EditFeedForm({
   const onSubmit: SubmitHandler<FormValue> = async data => {
     let imgUrl = '';
     if (data.img?.length) {
-      imgUrl = await uploadImgToS3(uuidv4() + data.img[0].name, data.img[0]);
+      const imageName = uuidv4() + data.img[0].name;
+      const file: File = data.img[0];
+      const fileType: string = file.type;
+
+      imgUrl = await uploadImgToS3(imageName, file, fileType);
     }
 
     const postData = {
