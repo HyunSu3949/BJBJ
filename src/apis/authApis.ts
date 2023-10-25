@@ -20,7 +20,10 @@ export async function uploadImgToS3(
     headers: {
       'Content-Type': fileType,
     },
+  }).catch(err => {
+    console.log(err);
   });
+
   console.log('presignedUrl: ', url);
 
   return domains.imgUrl + imageName;
