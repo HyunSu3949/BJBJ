@@ -66,8 +66,8 @@ export function UserContextProvider({ children }: { children: ReactNode }) {
   };
 
   const storeTokenInLocalStorage = (queryPrams: URLSearchParams) => {
-    const Access_Token = queryPrams.get('Access_Token')?.slice(7);
-    const Refresh_Toke = queryPrams.get('Refresh_Token')?.slice(7);
+    const Access_Token = queryPrams.get('Access_Token');
+    const Refresh_Toke = queryPrams.get('Refresh_Token');
     if (Access_Token) localStorage.setItem('Access_Token', Access_Token);
     if (Refresh_Toke) localStorage.setItem('Refresh_Token', Refresh_Toke);
 
