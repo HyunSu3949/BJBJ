@@ -102,7 +102,7 @@ export default function ClubForm({ handleClose }: Props) {
       publisher: data.publisher,
       imgUrl,
     };
-    console.log(postData);
+    console.log('클럽 등록 데이터: ', postData);
 
     const { code } = await postClub(postData);
 

@@ -35,8 +35,6 @@ export default function EditFeedForm({
   handleEdit,
   feedId,
 }: Props) {
-  console.log('handle: ', handleEdit);
-
   const { clubId } = useParams();
   const [previewImg, setPreviewImg] = useState<string | null>(null);
   const { userProfile } = useUserContext();

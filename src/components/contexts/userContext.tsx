@@ -77,7 +77,7 @@ export function UserContextProvider({ children }: { children: ReactNode }) {
 
   const fetchUserProfile = async () => {
     const userProfile = await getUserProfile();
-    console.log(userProfile);
+    console.log('유저 프로필:', userProfile);
 
     setUserProfile(userProfile);
     return userProfile;
