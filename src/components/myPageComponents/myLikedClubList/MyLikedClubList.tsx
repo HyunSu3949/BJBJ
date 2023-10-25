@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import {
-  getClubsSortedBy,
-  getMyLikedClubList,
-  getlikedClubs,
-} from '../../../apis/clubApis';
+import { getMyLikedClubList } from '../../../apis/clubApis';
 import { Club, ClubSort } from '../../types';
 import ClubCard from '../../common/clubCard/ClubCard';
 import { useUserContext } from '../../contexts/userContext';
@@ -23,7 +19,7 @@ export default function MyLikedClubList() {
   }, [userProfile.userId]);
 
   return (
-    <ul>
+    <ul style={{ display: 'flex' }}>
       {clubs.map(club => (
         <ClubCard key={club.clubId} {...club} />
       ))}

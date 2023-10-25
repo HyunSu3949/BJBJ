@@ -20,7 +20,7 @@ export default function MyLikedClubList() {
   }, [userProfile.userId]);
 
   return (
-    <ul>
+    <ul style={{ display: 'flex' }}>
       {clubs.map(club => (
         <ClubCard key={club.clubId} {...club} />
       ))}

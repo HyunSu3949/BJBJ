@@ -4,13 +4,15 @@ import { ClubSort } from '../../types';
 import { MainFeed } from '../../../mocks/types';
 import usePagination from '../../../hooks/usePagination';
 import Pagination from './../../common/pagination/Pagination';
+
 type Props = {
-  sortBy: ClubSort;
+  sortBy: 'likes' | 'createdAt';
 };
 type MainFeedFetchParams = {
-  sortBy: ClubSort;
+  sortBy: 'likes' | 'createdAt';
   page: number;
 };
+
 export default function FeedList({ sortBy }: Props) {
   const {
     data: feeds,
@@ -29,8 +31,8 @@ export default function FeedList({ sortBy }: Props) {
   return (
     <>
       <ul style={{ display: 'flex' }}>
-        {feeds?.map(feed => (
-          <li key={feed.feedId}>
+        {feeds?.map((feed, idx) => (
+          <li key={idx}>
             <FeedCardSmall {...feed} />
           </li>
         ))}

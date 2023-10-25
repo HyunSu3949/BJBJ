@@ -1,5 +1,6 @@
 import React from 'react';
 import { removeParticipant } from '../../../apis/clubApis';
+import UserImg from '../../common/userImg/UserImg';
 
 type Props = {
   memberId: string;
@@ -15,7 +16,7 @@ export default function ParticipantCard({ clubId, user, fetchList }: Props) {
   };
   return (
     <div>
-      <img src={user.imgUrl} alt="유저 프로필 사진" />
+      <UserImg imgUrl={user.imgUrl} />
       <span>{user.userName}</span>
       <button onClick={onRemove}>내보내기</button>
     </div>

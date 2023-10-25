@@ -10,6 +10,7 @@ export default function AboutClub() {
       <MyJoinedClubList />
       <h2>내가 운영중인 독서모임</h2>
       <UserList />
+      <h3>독서모임 수정하기</h3>
       <EditMyClubForm />
     </div>
   );

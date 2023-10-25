@@ -1,6 +1,7 @@
 import React from 'react';
 import { useModalContext } from '../../contexts/modalContext';
 import { modals } from '../../modals/Modals';
+import UserImg from '../../common/userImg/UserImg';
 
 type Props = {
   imgUrl: string;
@@ -23,8 +24,8 @@ export default function Comment({ imgUrl, contents, feedId }: Props) {
     });
   };
   return (
-    <div>
-      <img src={imgUrl} alt="유저 프로필 이미지" />
+    <div style={{ display: 'flex' }}>
+      <UserImg imgUrl={imgUrl} />
       <p>{contents}</p>
       <button onClick={onClick}>글보기</button>
     </div>

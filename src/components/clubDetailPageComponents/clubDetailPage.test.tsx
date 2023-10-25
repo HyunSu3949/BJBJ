@@ -27,11 +27,11 @@ const setup = async () => {
 };
 const login = async () => {
   const loginButton = await screen.findByLabelText('구글 로그인');
-  userEvent.click(loginButton);
+  await userEvent.click(loginButton);
 
   await waitFor(async () => {
     expect(
-      await screen.findByAltText('유저 프로필 이미지'),
+      await screen.findByLabelText('유저 프로필 이미지'),
     ).toBeInTheDocument();
   });
 };

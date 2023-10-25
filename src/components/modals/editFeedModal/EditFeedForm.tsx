@@ -98,7 +98,10 @@ export default function EditFeedForm({
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      style={{ display: 'flex', flexDirection: 'column' }}
+    >
       <label>title</label>
       <input {...register('title', { required: true, maxLength: 20 })} />
       {errors.title && errors.title.type === 'required' && (

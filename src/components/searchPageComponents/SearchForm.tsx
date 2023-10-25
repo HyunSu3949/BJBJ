@@ -114,11 +114,13 @@ export default function SearchForm() {
 
       <div>
         <h2>검색 결과</h2>
-        {clubList.map(club => (
-          <li key={club.clubId}>
-            <ClubCard {...club} />
-          </li>
-        ))}
+        <ul style={{ display: 'flex' }}>
+          {clubList.map(club => (
+            <li key={club.clubId}>
+              <ClubCard {...club} />
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );

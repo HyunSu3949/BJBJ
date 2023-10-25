@@ -1,5 +1,5 @@
-import React from 'react';
 import { useUserContext } from '../../contexts/userContext';
+import UserImg from '../../common/userImg/UserImg';
 
 type Props = {
   userId: string;
@@ -21,7 +21,7 @@ export default function Comment({
   return (
     <>
       <div>
-        <img src={imgUrl} alt="유저 이미지" />
+        <UserImg imgUrl={imgUrl} />
       </div>
       <div>
         <span>{userName}</span>

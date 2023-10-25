@@ -33,7 +33,7 @@ const setup = async () => {
 
 const login = async () => {
   const loginButton = await screen.findByLabelText('구글 로그인');
-  userEvent.click(loginButton);
+  await userEvent.click(loginButton);
 
   await waitFor(async () => {
     expect(
@@ -50,7 +50,7 @@ describe('navBar 테스트', () => {
 
   test('로그아웃 테스트', async () => {
     expect(
-      await screen.findByAltText('유저 프로필 이미지'),
+      await screen.findByLabelText('유저 프로필 이미지'),
     ).toBeInTheDocument();
 
     const logoutButton = await screen.findByRole('button', { name: 'logout' });

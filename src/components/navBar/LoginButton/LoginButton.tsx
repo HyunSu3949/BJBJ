@@ -13,7 +13,7 @@ export default function LoginButton() {
 
   useEffect(() => {
     storeTokenInLocalStorage(new URLSearchParams(location.search));
-  }, [location]);
+  }, [location, storeTokenInLocalStorage]);
 
   return (
     <div>

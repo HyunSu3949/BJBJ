@@ -8,7 +8,7 @@ type Feed = {
     userName: string;
     imgUrl: string;
   };
-  id: string;
+  feedId: string;
   likes: number;
   contents: string;
   commentCount: string;
@@ -28,7 +28,7 @@ export default function FeedList({ clubId }: { clubId: string }) {
   return (
     <ul>
       {feedList.map(feed => (
-        <FeedCardSmall key={feed.id} {...feed} />
+        <FeedCardSmall key={feed.feedId} {...feed} />
       ))}
     </ul>
   );

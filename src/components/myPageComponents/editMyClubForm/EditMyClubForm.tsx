@@ -203,7 +203,9 @@ export default function EditMyClubForm() {
       )}
 
       <label>description</label>
-      <input {...register('description', { required: true, maxLength: 200 })} />
+      <textarea
+        {...register('description', { required: true, maxLength: 200 })}
+      />
       {errors.description && errors.description.type === 'required' && (
         <div>모임 상세 설명을 입력해주세요!</div>
       )}

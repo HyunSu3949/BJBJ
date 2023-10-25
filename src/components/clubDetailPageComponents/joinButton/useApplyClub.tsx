@@ -26,20 +26,27 @@ export default function useApplyClub({
   const { appliedClubs, userProfile, fetchAppliedClubs } = useUserContext();
   const { openModal } = useModalContext();
 
+  console.log(appliedClubs);
+
   useEffect(() => {
     setButtonText();
   }, [appliedClubs]);
 
   const setButtonText = () => {
-    appliedClubs.forEach(club => {
-      if (club.clubId == clubId && club.status == '승인됨') {
-        setApplyStatus('승인됨');
-      } else if (club.clubId == clubId && club.status == '대기중') {
-        setApplyStatus('대기중');
-      } else {
-        setApplyStatus(status);
-      }
-    });
+    setApplyStatus(status);
+    if (
+      appliedClubs.some(
+        member => member.clubId == clubId && member.status == '승인됨',
+      )
+    )
+      setApplyStatus('승인됨');
+
+    if (
+      appliedClubs.some(
+        member => member.clubId == clubId && member.status == '대기중',
+      )
+    )
+      setApplyStatus('대기중');
   };
 
   const joinClub = async (clubId: string) => {
@@ -112,5 +119,6 @@ export default function useApplyClub({
     },
   };
   const buttonStatus = buttonTable[applyStatus];
+
   return { buttonStatus, setButtonText };
 }

@@ -5,10 +5,10 @@ import usePagination from '../../../hooks/usePagination';
 import Pagination from './../../common/pagination/Pagination';
 
 type Props = {
-  sortBy: ClubSort;
+  sortBy: 'likes' | 'createdAt';
 };
 type ClubFetchParams = {
-  sortBy: ClubSort;
+  sortBy: 'likes' | 'createdAt';
   page: number;
 };
 

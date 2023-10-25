@@ -5,6 +5,8 @@ import { useUserContext } from '../../contexts/userContext';
 import Comment from './Comment';
 import CommentForm from './CommentForm';
 import LikeFeedButton from './LikeFeedButton';
+import UserImg from '../../common/userImg/UserImg';
+import ClubImg from '../../common/clubImg/ClubImg';
 
 type Props = {
   onClose: () => void;
@@ -28,19 +30,28 @@ export default function FeedModal({ onClose, feedId }: Props) {
       isOpen
       ariaHideApp={false}
       onRequestClose={onClose}
-      className="ModalSmall"
+      className="Modal"
       overlayClassName="Overlay"
     >
-      <div>
-        <CloseIcon onClick={onClose} />
+      <div
+        style={{
+          width: '95%',
+          display: 'flex',
+          justifyContent: 'flex-end',
+          alignItems: 'center',
+        }}
+      >
         {userProfile.userId == feedDetails?.user.userId && (
           <button onClick={openEditFeedModal}>수정/삭제</button>
         )}
+        <CloseIcon onClick={onClose} />
       </div>
       <div>
-        <span>{feedDetails && feedDetails.user.userName}</span>
-        <h2>{feedDetails && feedDetails.title}</h2>
-        <div>{feedDetails && feedDetails.contents}</div>
+        <UserImg imgUrl={feedDetails.user.imgUrl} />
+        <span>{feedDetails.user.userName}</span>
+        <h2>{feedDetails.title}</h2>
+        <div>{feedDetails.contents}</div>
+        {feedDetails.imgUrl && <ClubImg imgUrl={feedDetails.imgUrl} />}
       </div>
       <div>
         <LikeFeedButton

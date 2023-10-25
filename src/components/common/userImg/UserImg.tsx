@@ -12,8 +12,15 @@ export default function UserImg({ imgUrl }: Props) {
   };
 
   if (hasError) {
-    return <S.BasigUserProfile />;
+    return <S.BasigUserProfile aria-label="유저 프로필 이미지" />;
   }
 
-  return <S.Img src={imgUrl} onError={handleError} alt="유저 프로필 이미지" />;
+  return (
+    <S.Img
+      src={imgUrl}
+      onError={handleError}
+      alt="유저 프로필 이미지"
+      aria-label="유저 프로필 이미지"
+    />
+  );
 }

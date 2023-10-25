@@ -9,7 +9,6 @@ import {
   likeFeed,
   postComment,
   putFeed,
-  putFeedComment,
 } from '../../../apis/feedApis';
 import { useModalContext } from '../../contexts/modalContext';
 import { modals } from '../Modals';
@@ -17,7 +16,7 @@ import { modals } from '../Modals';
 type Props = {
   feedId: string;
 };
-type FeedDetail = {
+type FeedDetails = {
   clubId: string;
   user: {
     userId: string;
@@ -54,20 +53,33 @@ type PutFeedType = {
   contents: string;
   imgUrl: string;
 };
-
+const initialFeedState: FeedDetails = {
+  clubId: '',
+  user: {
+    userId: '',
+    userName: '',
+    imgUrl: '',
+  },
+  title: '',
+  contents: '',
+  imgUrl: '',
+  likes: '',
+  created_at: '',
+  updated_at: '',
+};
 export default function useFeed({ feedId }: Props) {
-  const [feedDetails, setFeedDetails] = useState<FeedDetail | undefined>();
+  const [feedDetails, setFeedDetails] = useState<FeedDetails>(initialFeedState);
   const [commentList, setCommentList] = useState<Comment[]>([]);
   const [isLiked, setIsLiked] = useState(false);
 
   const { openModal } = useModalContext();
-  const { likedFeeds, userProfile, fetchLikedFeeds } = useUserContext();
+  const { likedFeedIds, userProfile, fetchLikedFeedIds } = useUserContext();
 
   useEffect(() => {
     fetchFeedDetails(feedId);
     fetchCommentList(feedId, 1);
-    setIsLiked(likedFeeds.some(feed => feed.feedId == feedId));
-  }, [feedId, likedFeeds]);
+    setIsLiked(likedFeedIds.some(feed => feed.feedId == feedId));
+  }, [feedId, likedFeedIds]);
 
   const fetchFeedDetails = async (feedId: string) => {
     const res = await getFeedDetail(feedId);
@@ -76,6 +88,8 @@ export default function useFeed({ feedId }: Props) {
 
   const fetchCommentList = async (feedId: string, page: number) => {
     const res = await getFeedCommentList(feedId, page);
+    console.log(res.commentList);
+
     setCommentList(() => res.commentList);
   };
 
@@ -142,12 +156,12 @@ export default function useFeed({ feedId }: Props) {
   const handleLikeFeed = async (feedId: string) => {
     await likeFeed(feedId, userProfile.userId);
     setIsLiked(true);
-    fetchLikedFeeds(userProfile.userId);
+    fetchLikedFeedIds(userProfile.userId);
   };
   const handleDeleteLikeFeed = async (feedId: string) => {
     await deleteLikeFeed(feedId, userProfile.userId);
     setIsLiked(false);
-    fetchLikedFeeds(userProfile.userId);
+    fetchLikedFeedIds(userProfile.userId);
   };
 
   return {

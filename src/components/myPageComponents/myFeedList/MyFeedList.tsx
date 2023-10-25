@@ -9,7 +9,7 @@ type Feed = {
     userName: string;
     imgUrl: string;
   };
-  id: string;
+  feedId: string;
   likes: number;
   contents: string;
   commentCount: string;

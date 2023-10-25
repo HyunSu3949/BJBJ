@@ -1,5 +1,6 @@
 import React from 'react';
 import { approveMember, rejectMember } from '../../../apis/clubApis';
+import UserImg from '../../common/userImg/UserImg';
 
 type Props = {
   memberId: string;
@@ -23,7 +24,7 @@ export default function AwaitngCard({
   };
   return (
     <div>
-      <img src={user.imgUrl} alt="유저 프로필 사진" />
+      <UserImg imgUrl={user.imgUrl} />
       <span>{user.userName}</span>
       <button onClick={onApprove}>승인</button>
       <button onClick={onReject}>거절</button>

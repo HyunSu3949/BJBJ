@@ -7,7 +7,7 @@ import JoinedClubDropdown from './joinedClubDropdown/JoinedClubDropdown';
 
 export default function NavBar() {
   return (
-    <nav style={{ display: 'flex' }}>
+    <nav style={{ display: 'flex', alignItems: 'center' }}>
       <div>
         <Link to="/search">검색</Link>
         <JoinedClubDropdown />
@@ -20,7 +20,7 @@ export default function NavBar() {
           style={{ width: '50px', height: '50px' }}
         />
       </Link>
-      <div>
+      <div style={{ display: 'flex' }}>
         <LoginButton />
         <AddClubButton />
       </div>

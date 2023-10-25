@@ -8,10 +8,10 @@ import {
 import {
   getAppliedClubs,
   getJoinedClubs,
-  getlikedClubs,
+  getLikedClubIdList,
 } from '../../apis/clubApis';
 import { getUserProfile } from '../../apis/authApis';
-import { getlikedFeedList } from '../../apis/feedApis';
+import { getLikedFeedIdList, getlikedFeedList } from '../../apis/feedApis';
 
 const initialStatus: InitialStatus = {
   login: false,
@@ -23,19 +23,19 @@ const initialStatus: InitialStatus = {
   appliedClubs: [],
   joinedClubs: [],
   likedClubs: [],
-  likedFeeds: [],
+  likedFeedIds: [],
 };
 
 const initialValue: UserContextType = {
   appliedClubs: [],
   joinedClubs: [],
   likedClubs: [],
-  likedFeeds: [],
+  likedFeedIds: [],
   userProfile: initialStatus.userProfile,
   isLogedin: true,
   fetchAppliedClubs: () => {},
   fetchLikedClubs: () => {},
-  fetchLikedFeeds: () => {},
+  fetchLikedFeedIds: () => {},
   fetchJoinedClubs: () => {},
   storeTokenInLocalStorage: () => {},
   handleLogin: () => new Promise(() => {}),
@@ -57,7 +57,7 @@ export function UserContextProvider({ children }: { children: ReactNode }) {
   const [joinedClubs, setJoinedClubs] = useState(initialStatus.joinedClubs);
   const [appliedClubs, setAppliedClubs] = useState(initialStatus.appliedClubs);
   const [likedClubs, setLikedClubs] = useState(initialStatus.likedClubs);
-  const [likedFeeds, setLikedFeeds] = useState(initialStatus.likedFeeds);
+  const [likedFeedIds, setLikedFeedIds] = useState(initialStatus.likedFeedIds);
 
   const checkToken = () => {
     if (localStorage.getItem('Access_Token')) return true;
@@ -84,16 +84,16 @@ export function UserContextProvider({ children }: { children: ReactNode }) {
     setAppliedClubs(appliedClubData.memberList);
   };
   const fetchLikedClubs = async (userId: string) => {
-    const likedClubData = await getlikedClubs(userId);
+    const likedClubData = await getLikedClubIdList(userId);
     setLikedClubs(likedClubData.likedClubList);
   };
   const fetchJoinedClubs = async (userId: string) => {
     const joinedClubData = await getJoinedClubs(userId, 1);
     setJoinedClubs(joinedClubData.clubList);
   };
-  const fetchLikedFeeds = async (userId: string) => {
-    const likedFeedData = await getlikedFeedList(userId, 1);
-    setLikedFeeds(likedFeedData.feedList);
+  const fetchLikedFeedIds = async (userId: string) => {
+    const likedFeedData = await getLikedFeedIdList(userId);
+    setLikedFeedIds(likedFeedData.feedList);
   };
 
   const removeAllState = () => {
@@ -126,8 +126,8 @@ export function UserContextProvider({ children }: { children: ReactNode }) {
     joinedClubs,
     appliedClubs,
     likedClubs,
-    likedFeeds,
-    fetchLikedFeeds,
+    likedFeedIds,
+    fetchLikedFeedIds,
     fetchAppliedClubs,
     fetchLikedClubs,
     fetchJoinedClubs,
@@ -172,11 +172,11 @@ type UserContextType = {
   userProfile: UserProfile;
   joinedClubs: JoinedClub[];
   likedClubs: LikedClub[];
-  likedFeeds: LikedFeed[];
+  likedFeedIds: LikedFeed[];
   appliedClubs: AppliedClub[];
   fetchJoinedClubs: (userId: string) => void;
   fetchLikedClubs: (userId: string) => void;
-  fetchLikedFeeds: (userId: string) => void;
+  fetchLikedFeedIds: (userId: string) => void;
   fetchAppliedClubs: (userId: string) => void;
   storeTokenInLocalStorage: (queryParams: URLSearchParams) => void;
   handleLogin: () => Promise<void>;
@@ -188,6 +188,6 @@ type InitialStatus = {
   userProfile: UserProfile;
   joinedClubs: JoinedClub[];
   likedClubs: LikedClub[];
-  likedFeeds: LikedFeed[];
+  likedFeedIds: LikedFeed[];
   appliedClubs: AppliedClub[];
 };
