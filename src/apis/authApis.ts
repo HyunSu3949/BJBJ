@@ -13,8 +13,9 @@ export async function uploadImgToS3(
 ): Promise<string> {
   console.log('fileType: ', fileType);
   console.log('imageName: ', imageName);
+  const bucketName = 'bjbj-media-storage';
   const { url } = await getPreSingedUrl(imageName);
-  await fetch(url, {
+  await fetch(`https://${bucketName}.s3.amazonaws.com/${imageName}`, {
     method: 'PUT',
     body: file,
     headers: {
