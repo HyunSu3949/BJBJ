@@ -4,8 +4,14 @@ import LoginButton from './LoginButton/LoginButton';
 import AddClubButton from './addClubButton/AddClubButton';
 import logo from '../../assets/image/bjbj_logo.png';
 import JoinedClubDropdown from './joinedClubDropdown/JoinedClubDropdown';
+import { deleteClub } from '../../apis/clubApis';
+import { useUserContext } from '../contexts/userContext';
 
 export default function NavBar() {
+  const { userProfile } = useUserContext();
+  const handleDeleteClub = async () => {
+    await deleteClub({ userId: userProfile.userId });
+  };
   return (
     <nav style={{ display: 'flex', alignItems: 'center' }}>
       <div>
@@ -24,6 +30,7 @@ export default function NavBar() {
         <LoginButton />
         <AddClubButton />
       </div>
+      <button onClick={handleDeleteClub}>독서모임 삭제</button>
     </nav>
   );
 }

@@ -187,3 +187,9 @@ export async function removeParticipant({
 
   return res.data;
 }
+
+export async function deleteClub({ userId }: { userId: string }) {
+  const res = await axiosInstance.delete(`/clubs/users?userId=${userId}`);
+
+  return res.data;
+}
