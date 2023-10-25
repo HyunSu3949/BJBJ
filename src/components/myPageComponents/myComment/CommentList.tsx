@@ -1,36 +1,49 @@
-import React, { useEffect, useState } from 'react';
 import { getMyCommentList } from '../../../apis/feedApis';
 import { useUserContext } from '../../contexts/userContext';
 import Comment from './Comment';
+import usePagination from '../../../hooks/usePagination';
+import Pagination from '../../common/pagination/Pagination';
 
-type Comment = {
+type GetData = {
   feedId: string;
   contents: string;
 };
 
+type FetchParams = {
+  userId: string;
+  page: number;
+};
+
 export default function CommentList() {
-  const [commentList, setCommentList] = useState<Comment[]>([]);
   const { userProfile } = useUserContext();
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await getMyCommentList(userProfile.userId, 1);
+  const {
+    data: commentList,
+    setPage,
+    maxPage,
+  } = usePagination<GetData, FetchParams>({
+    fetchData: getMyCommentList,
+    fetchParams: {
+      page: 1,
+      userId: userProfile.userId,
+    },
+    itemsPerPage: 4,
+    dataKey: 'commentList',
+  });
 
-      setCommentList(res.commentList);
-    };
-
-    fetchData();
-  }, [userProfile.userId]);
   return (
-    <ul>
-      {commentList.map((comment, idx) => (
-        <li key={idx}>
-          <Comment
-            imgUrl={userProfile.imgUrl}
-            contents={comment.contents}
-            feedId={comment.feedId}
-          />
-        </li>
-      ))}
-    </ul>
+    <>
+      <ul>
+        {commentList?.map((comment, idx) => (
+          <li key={idx}>
+            <Comment
+              imgUrl={userProfile.imgUrl}
+              contents={comment.contents}
+              feedId={comment.feedId}
+            />
+          </li>
+        ))}
+      </ul>
+      <Pagination maxPage={maxPage} setPage={setPage} />
+    </>
   );
 }

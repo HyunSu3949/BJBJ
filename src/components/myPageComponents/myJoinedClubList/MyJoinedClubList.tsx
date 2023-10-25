@@ -1,29 +1,40 @@
-import React, { useEffect, useState } from 'react';
-
 import { getJoinedClubs } from '../../../apis/clubApis';
-import { Club, ClubSort } from '../../types';
+import { Club } from '../../types';
 import ClubCard from '../../common/clubCard/ClubCard';
 import { useUserContext } from '../../contexts/userContext';
+import usePagination from '../../../hooks/usePagination';
+import Pagination from '../../common/pagination/Pagination';
+
+type GetData = Club;
+type FetchParams = {
+  userId: string;
+  page: number;
+};
 
 export default function MyLikedClubList() {
-  const [clubs, setClubs] = useState<Club[]>([]);
   const { userProfile } = useUserContext();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const { clubList } = await getJoinedClubs(userProfile.userId, 1);
-
-      setClubs(clubList);
-    };
-
-    fetchData();
-  }, [userProfile.userId]);
+  const {
+    data: clubs,
+    setPage,
+    maxPage,
+  } = usePagination<GetData, FetchParams>({
+    fetchData: getJoinedClubs,
+    fetchParams: {
+      page: 1,
+      userId: userProfile.userId,
+    },
+    itemsPerPage: 4,
+    dataKey: 'clubList',
+  });
 
   return (
-    <ul style={{ display: 'flex' }}>
-      {clubs.map(club => (
-        <ClubCard key={club.clubId} {...club} />
-      ))}
-    </ul>
+    <>
+      <ul style={{ display: 'flex' }}>
+        {clubs.map(club => (
+          <ClubCard key={club.clubId} {...club} />
+        ))}
+      </ul>
+      <Pagination maxPage={maxPage} setPage={setPage} />
+    </>
   );
 }

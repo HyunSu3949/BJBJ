@@ -1,14 +1,14 @@
 import { getClubsSortedBy } from '../../../apis/clubApis';
-import { Club, ClubSort } from '../../types';
+import { Club, SortBy } from '../../types';
 import ClubCard from '../../common/clubCard/ClubCard';
 import usePagination from '../../../hooks/usePagination';
 import Pagination from './../../common/pagination/Pagination';
 
 type Props = {
-  sortBy: 'likes' | 'createdAt';
+  sortBy: SortBy;
 };
 type ClubFetchParams = {
-  sortBy: 'likes' | 'createdAt';
+  sortBy: SortBy;
   page: number;
 };
 

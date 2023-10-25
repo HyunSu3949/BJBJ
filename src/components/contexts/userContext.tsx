@@ -7,6 +7,7 @@ import {
 } from 'react';
 import {
   getAppliedClubs,
+  getJoinedClubIds,
   getJoinedClubs,
   getLikedClubIdList,
 } from '../../apis/clubApis';
@@ -66,7 +67,7 @@ export function UserContextProvider({ children }: { children: ReactNode }) {
 
   const storeTokenInLocalStorage = (queryPrams: URLSearchParams) => {
     const Access_Token = queryPrams.get('Access_Token')?.slice(7);
-    const Refresh_Toke = queryPrams.get('Refresh_Toke')?.slice(7);
+    const Refresh_Toke = queryPrams.get('Refresh_Token')?.slice(7);
     if (Access_Token) localStorage.setItem('Access_Token', Access_Token);
     if (Refresh_Toke) localStorage.setItem('Refresh_Token', Refresh_Toke);
 
@@ -88,7 +89,7 @@ export function UserContextProvider({ children }: { children: ReactNode }) {
     setLikedClubs(likedClubData.likedClubList);
   };
   const fetchJoinedClubs = async (userId: string) => {
-    const joinedClubData = await getJoinedClubs(userId, 1);
+    const joinedClubData = await getJoinedClubIds(userId);
     setJoinedClubs(joinedClubData.clubList);
   };
   const fetchLikedFeedIds = async (userId: string) => {

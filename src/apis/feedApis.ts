@@ -1,4 +1,3 @@
-import { ClubSort } from '../components/types';
 import { ClubStatus, PostFeed, PutFeed } from '../mocks/types';
 import { axiosInstance, axsiosPuplic } from './instance';
 
@@ -127,7 +126,13 @@ export async function getLikedFeedIdList(userId: string) {
   return res.data.data;
 }
 
-export async function getMyCommentList(userId: string, page: number) {
+export async function getMyCommentList({
+  userId,
+  page,
+}: {
+  userId: string;
+  page: number;
+}) {
   const res = await axsiosPuplic.get(`/comments/users/${userId}?page=${page}`);
 
   return res.data.data;
