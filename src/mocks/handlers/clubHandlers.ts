@@ -74,17 +74,22 @@ export const clubHandlers = [
 
   rest.get('/likedClubs/ids', (req, res, ctx) => {
     const userId = req.url.searchParams.get('userId');
-    const likedClubList = userId != null ? getLikesClubList({ userId }) : [];
-    return res(
-      ctx.json({
-        code: 1,
-        message: '',
-        data: {
-          totalCount: likedClubList.length,
-          likedClubList,
-        },
-      }),
-    );
+    if (userId) {
+      const likedClubIdList = db.likedClubs.filter(
+        liked => liked.userId == userId,
+      );
+
+      return res(
+        ctx.json({
+          code: 1,
+          message: '',
+          data: {
+            totalCount: likedClubIdList.length,
+            likedClubList: likedClubIdList,
+          },
+        }),
+      );
+    }
   }),
 
   rest.get('/members/ids', (req, res, ctx) => {

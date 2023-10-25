@@ -6,7 +6,7 @@ export async function getMainFeedListSortBy({
   sortBy,
   page,
 }: {
-  sortBy: ClubSort;
+  sortBy: 'likes' | 'createdAt';
   page: number;
 }) {
   const res = await axsiosPuplic.get(
@@ -117,6 +117,12 @@ export async function getlikedFeedList(userId: string, page: number) {
   const res = await axsiosPuplic.get(
     `/likedfeeds/users/${userId}?page=${page}`,
   );
+
+  return res.data.data;
+}
+
+export async function getLikedFeedIdList(userId: string) {
+  const res = await axsiosPuplic.get(`/likedfeeds/ids?userId=${userId}`);
 
   return res.data.data;
 }

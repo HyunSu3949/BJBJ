@@ -26,9 +26,10 @@ export const feedHandlers = [
 
   rest.get('/feeds/clubs/:clubId', (req, res, ctx) => {
     const clubId = req.params.clubId as string;
+    const page = Number(req.url.searchParams.get('page') || 1);
     const sortBy = req.url.searchParams.get('sortBy') || 'likes';
     if (clubId != undefined) {
-      const feedList = getClubFeeds(clubId);
+      const feedList = getClubFeeds(clubId, page);
       return res(
         ctx.json({
           code: 1,
@@ -173,7 +174,7 @@ export const feedHandlers = [
 
   rest.post('/comments', async (req, res, ctx) => {
     const data = await req.json();
-    db.feedComment.push(data);
+    db.feedComment.push({ commentId: ids.feedComment, ...data });
 
     return res(
       ctx.json({
@@ -277,6 +278,22 @@ export const feedHandlers = [
         data: {
           totalCount: commentList.length,
           commentList,
+        },
+      }),
+    );
+  }),
+
+  rest.get('/likedfeeds/ids', (req, res, ctx) => {
+    const userId = req.url.searchParams.get('userId');
+    const feedIdList = db.likedFeeds.filter(liked => liked.userId == userId);
+
+    return res(
+      ctx.json({
+        code: 1,
+        message: '',
+        data: {
+          totalCount: feedIdList.length,
+          feedList: feedIdList,
         },
       }),
     );

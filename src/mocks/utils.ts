@@ -86,7 +86,7 @@ export function getLikesClubList({ userId }: { userId: string }) {
 export function getFeedsSortedBylikes() {
   const feedList = db.feeds
     .map(obj => ({
-      id: obj.id,
+      feedId: obj.feedId,
       userId: obj.userId,
       contents: obj.contents,
       likes: obj.likes,
@@ -110,7 +110,7 @@ export function getFeedsSortedBylikes() {
 
       return {
         user: userInfo,
-        id: obj.id,
+        feedId: obj.feedId,
         contents: obj.contents,
         likes: obj.likes,
         commentCount: obj.commentCount,

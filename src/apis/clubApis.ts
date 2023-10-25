@@ -56,11 +56,15 @@ export async function getJoinedClubs(userId: string, page: number) {
   const res = await axiosInstance.get(`/members/users/${userId}?page=${page}`);
   return res.data.data;
 }
+export async function getJoinedClubIds(userId: string) {
+  const res = await axiosInstance.get(`/members/ids?userId=${userId}`);
+  return res.data.data;
+}
 export async function getAppliedClubs(userId: string) {
   const res = await axiosInstance.get(`/members/ids?userId=${userId}`);
   return res.data.data;
 }
-export async function getlikedClubs(userId: string) {
+export async function getLikedClubIdList(userId: string) {
   const res = await axiosInstance.get(`/likedclubs/ids?userId=${userId}`);
   return res.data.data;
 }
@@ -69,7 +73,7 @@ export async function getClubsSortedBy({
   sortBy,
   page,
 }: {
-  sortBy: ClubSort;
+  sortBy: 'likes' | 'createdAt';
   page: number;
 }) {
   const res = await axsiosPuplic.get(
