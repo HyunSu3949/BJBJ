@@ -31,6 +31,8 @@ axiosInstance.interceptors.request.use(
     config.headers['Access_Token'] = accessToken;
     config.headers['Refresh_Token'] = refreshToken;
 
+    console.log(config.headers['Access_Token']);
+
     return config;
   },
   error => {

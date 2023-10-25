@@ -19,6 +19,7 @@ const initialStatus: InitialStatus = {
   userProfile: {
     userId: '',
     userName: '',
+    userEmail: '',
     imgUrl: '',
   },
   appliedClubs: [],
@@ -76,6 +77,8 @@ export function UserContextProvider({ children }: { children: ReactNode }) {
 
   const fetchUserProfile = async () => {
     const userProfile = await getUserProfile();
+    console.log(userProfile);
+
     setUserProfile(userProfile);
     return userProfile;
   };
@@ -165,6 +168,7 @@ type LikedFeed = {
 };
 type UserProfile = {
   userId: string;
+  userEmail: string;
   userName: string;
   imgUrl: string;
 };
