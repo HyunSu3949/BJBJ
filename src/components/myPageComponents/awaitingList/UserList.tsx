@@ -36,13 +36,13 @@ export default function UserList() {
 
   return (
     <>
-      <h3>승인 대기자 목록</h3>
+      <h4>승인 대기자 목록</h4>
       {awaitingList.map((member, idx) => (
         <li key={idx}>
           <AwaitngCard {...member} fetchList={fetchList} />
         </li>
       ))}
-      <h3>참여자 목록</h3>
+      <h4>참여자 목록</h4>
       {participantList.map((member, idx) => (
         <li key={idx}>
           <ParticipantCard {...member} fetchList={fetchList} />

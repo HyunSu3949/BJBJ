@@ -1,6 +1,4 @@
-export type ClubSort = {
-  sortBy: 'likes' | 'createdAt';
-};
+export type SortBy = 'likes' | 'createdAt';
 
 export type Club = {
   clubId: string;
