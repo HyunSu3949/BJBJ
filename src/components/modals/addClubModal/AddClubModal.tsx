@@ -16,7 +16,7 @@ export default function AddClubModal({ onClose, message, btnText }: Props) {
       isOpen
       ariaHideApp={false}
       onRequestClose={handleClose}
-      className="ModalSmall"
+      className="Modal"
       overlayClassName="Overlay"
     >
       <h1>{message}</h1>

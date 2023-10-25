@@ -1,4 +1,5 @@
 import ReactModal from 'react-modal';
+import './modal.css';
 
 type Props = {
   onClose: () => void;

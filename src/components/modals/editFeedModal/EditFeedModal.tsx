@@ -29,7 +29,7 @@ export default function EditFeedModal({
       isOpen
       ariaHideApp={false}
       onRequestClose={onClose}
-      className="ModalSmall"
+      className="Modal"
       overlayClassName="Overlay"
     >
       <h1>{message}</h1>
