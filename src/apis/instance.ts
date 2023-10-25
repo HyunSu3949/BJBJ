@@ -56,7 +56,7 @@ axiosInstance.interceptors.response.use(
       localStorage.setItem('Access_Token', accessToken);
     }
     if (refreshToken) {
-      localStorage.setItem('Refresh_Token', accessToken);
+      localStorage.setItem('Refresh_Token', refreshToken);
     }
     return res;
   },
