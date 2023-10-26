@@ -7,12 +7,11 @@ import {
 } from 'react';
 import {
   getAppliedClubs,
-  getJoinedClubIds,
   getJoinedClubs,
   getLikedClubIdList,
 } from '../../apis/clubApis';
 import { getUserProfile } from '../../apis/authApis';
-import { getLikedFeedIdList, getlikedFeedList } from '../../apis/feedApis';
+import { getLikedFeedIdList } from '../../apis/feedApis';
 
 const initialStatus: InitialStatus = {
   login: false,
@@ -85,14 +84,14 @@ export function UserContextProvider({ children }: { children: ReactNode }) {
 
   const fetchAppliedClubs = async (userId: string) => {
     const appliedClubData = await getAppliedClubs(userId);
-    setAppliedClubs(appliedClubData.memberList);
+    setAppliedClubs(appliedClubData.clubList);
   };
   const fetchLikedClubs = async (userId: string) => {
     const likedClubData = await getLikedClubIdList(userId);
     setLikedClubs(likedClubData.likedClubList);
   };
   const fetchJoinedClubs = async (userId: string) => {
-    const joinedClubData = await getJoinedClubIds(userId);
+    const joinedClubData = await getJoinedClubs({ userId, page: 1 });
     setJoinedClubs(joinedClubData.clubList);
   };
   const fetchLikedFeedIds = async (userId: string) => {

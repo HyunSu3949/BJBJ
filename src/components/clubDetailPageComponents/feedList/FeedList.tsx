@@ -9,7 +9,7 @@ type Feed = {
     imgUrl: string;
   };
   feedId: string;
-  likes: number;
+  likes: string;
   contents: string;
   commentCount: string;
 };
@@ -23,13 +23,15 @@ export default function FeedList({ clubId }: { clubId: string }) {
       setFeedList(feedData.feedList);
     };
     fetchFeedData(clubId);
-  }, []);
+  }, [clubId]);
+
+  if (feedList.length == 0) {
+    return <div>작성된 게시글이 없습니다.</div>;
+  }
 
   return (
     <ul>
-      {feedList.map(feed => (
-        <FeedCardSmall key={feed.feedId} {...feed} />
-      ))}
+      {feedList?.map(feed => <FeedCardSmall key={feed.feedId} {...feed} />)}
     </ul>
   );
 }

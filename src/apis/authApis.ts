@@ -1,5 +1,7 @@
 import { domains } from '../constants/constants';
 import { axiosInstance, axsiosPuplic } from './instance';
+import AWS from 'aws-sdk';
+
 export async function getUserProfile() {
   const res = await axiosInstance.get('/users');
 
@@ -7,6 +9,35 @@ export async function getUserProfile() {
 }
 
 export async function uploadImgToS3(
+  imageName: string,
+  file: File,
+  fileType: string,
+) {
+  const BUCKET = 'bjbj-media-storage';
+  const REGION = process.env.REACT_APP_S3_REGION;
+  const ACESS_KEY_ID = process.env.REACT_APP_S3_ACCESS_KEY_ID;
+  const SECRET_ACESS_KEY_ID = process.env.REACT_APP_S3_SECRET_ACCESS_KEY;
+
+  AWS.config.update({
+    region: REGION,
+    accessKeyId: ACESS_KEY_ID,
+    secretAccessKey: SECRET_ACESS_KEY_ID,
+  });
+
+  const upload = new AWS.S3.ManagedUpload({
+    params: {
+      ContentType: fileType,
+      Bucket: BUCKET,
+      Key: `${imageName}`,
+      Body: file,
+    },
+  });
+
+  upload.promise().then(() => console.log('업로드'));
+  return '/' + imageName;
+}
+
+export async function uploadImgToS31(
   imageName: string,
   file: File,
   fileType: string,

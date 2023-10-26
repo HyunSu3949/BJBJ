@@ -65,16 +65,7 @@ export default function FeedForm({ onClose }: Props) {
       imgUrl,
     };
 
-    const { code } = await postFeed(postData);
-    if (code != 1) {
-      openModal({
-        Component: modals.CompletionModal,
-        props: {
-          message: '등록에 실패했습니다. 잠시후 다시 시도해주세요.',
-          btnText: '확인',
-        },
-      });
-    }
+    await postFeed(postData);
     onClose();
   };
 

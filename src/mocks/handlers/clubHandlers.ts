@@ -11,13 +11,20 @@ import {
   cancleJoinClub,
   getAppliedClub,
 } from '../utils';
-import { db } from '../db';
+// import { db } from '../db';
+import { db, ids } from '../empty_db';
 import { Club } from '../types';
 
 export const clubHandlers = [
   rest.post('/clubs', async (req, res, ctx) => {
     const data = await req.json();
     postClubs(data);
+    db.members.push({
+      memberId: String(ids.members++),
+      userId: '0',
+      clubId: String(ids.clubs - 1),
+      status: '승인됨',
+    });
     return res(
       ctx.json({
         code: 1,
@@ -26,12 +33,11 @@ export const clubHandlers = [
     );
   }),
 
-  rest.get('main/clubs', (req, res, ctx) => {
-    const sortBy = req.url.searchParams.get('sortby');
-    const page = Number(req.url.searchParams.get('page') || 1);
+  rest.get('/main/clubs', (req, res, ctx) => {
+    const sortBy = req.url.searchParams.get('sortBy');
 
     const clubList =
-      sortBy === 'likes' ? getClubsSortedByLikes() : getClubsSortedByLikes();
+      sortBy == 'likes' ? getClubsSortedByLikes() : getClubsSortedByLikes();
 
     return res(
       ctx.json({
@@ -39,7 +45,7 @@ export const clubHandlers = [
         message: '',
         data: {
           totalCount: clubList.length,
-          clubList: clubList.slice((page - 1) * 4, page * 4),
+          clubList: clubList,
         },
       }),
     );
@@ -102,7 +108,7 @@ export const clubHandlers = [
           message: '',
           data: {
             totalCount: appliedClubList.length,
-            memberList: appliedClubList,
+            clubList: appliedClubList,
           },
         }),
       );

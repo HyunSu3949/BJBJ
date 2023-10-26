@@ -30,3 +30,15 @@ export type ClubDetailsType = {
   author: string;
   publisher: string;
 };
+
+export type FeedCardSmallType = {
+  user: {
+    userId: string;
+    userName: string;
+    imgUrl: string;
+  };
+  feedId: string;
+  contents: string;
+  likes: string;
+  commentCount: string;
+};

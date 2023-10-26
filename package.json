@@ -61,6 +61,7 @@
   },
   "dependencies": {
     "@types/uuid": "^9.0.6",
+    "aws-sdk": "^2.1480.0",
     "axios": "^1.5.1",
     "jest-transformer-svg": "^2.0.1",
     "react": "^18.2.0",

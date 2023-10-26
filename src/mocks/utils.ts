@@ -1,7 +1,10 @@
-import { db, ids } from './db';
+// import { db, ids } from './db';
+import { db, ids } from './empty_db';
 import { GetClub, PostClub } from './types';
 
 export function getClubsSortedByLikes(): GetClub[] {
+  console.log(db.clubs);
+
   return db.clubs
     .map(club => ({
       clubId: club.clubId,
@@ -11,7 +14,8 @@ export function getClubsSortedByLikes(): GetClub[] {
       tags: club.tags,
       likes: club.likes,
     }))
-    .sort((a, b) => b.likes - a.likes);
+    .sort((a, b) => b.likes - a.likes)
+    .slice(0, 4);
 }
 
 export function postClubs(data: PostClub) {

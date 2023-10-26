@@ -1,14 +1,15 @@
-import { MainFeed } from '../../../mocks/types';
 import { useModalContext } from '../../contexts/modalContext';
 import { modals } from '../../modals/Modals';
 import UserImg from '../userImg/UserImg';
 import HeartIcon from '../../../assets/image/empty_heart.svg';
 import CommentIcon from '../../../assets/image/comment.svg';
+import { FeedCardSmallType } from '../../types';
 
 type FeedModal = {
   feedId: string;
 };
-export default function FeedCardSmall(props: MainFeed) {
+
+export default function FeedCardSmall(props: FeedCardSmallType) {
   const { openModal } = useModalContext();
 
   const openFeedModal = (feedId: string) => {

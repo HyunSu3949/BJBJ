@@ -8,6 +8,7 @@ import { uploadImgToS3 } from '../../../apis/authApis';
 import { getUsersClubInfo, putUsersClubInfo } from '../../../apis/clubApis';
 import { v4 as uuidv4 } from 'uuid';
 import EmptyImg from '../../../assets/image/empty_img.svg';
+import { domains } from '../../../constants/constants';
 
 type FormValue = {
   title: string;
@@ -59,8 +60,8 @@ export default function EditMyClubForm() {
         setValue('bookTitle', initialData.bookTitle);
         setValue('author', initialData.author);
         setValue('publisher', initialData.publisher);
-        setPreviewImg(initialData.imgUrl || null);
-        initialData.tags.split(',').forEach((tag: string) => {
+        setPreviewImg(domains.imgUrl + initialData.imgUrl || null);
+        initialData.tags?.split(',').forEach((tag: string) => {
           setValue(`tags.${tag as Tag}`, true);
         });
       }
@@ -122,25 +123,15 @@ export default function EditMyClubForm() {
       imgUrl,
     };
 
-    const { code } = await putUsersClubInfo(userProfile.userId, postData);
+    await putUsersClubInfo(userProfile.userId, postData);
 
-    if (code != 1) {
-      openModal({
-        Component: modals.CompletionModal,
-        props: {
-          message: '잠시후 다시 시도해 주세요',
-          btnText: '확인',
-        },
-      });
-    } else {
-      openModal({
-        Component: modals.CompletionModal,
-        props: {
-          message: '수정이 완료되었습니다',
-          btnText: '확인',
-        },
-      });
-    }
+    openModal({
+      Component: modals.CompletionModal,
+      props: {
+        message: '수정이 완료되었습니다',
+        btnText: '확인',
+      },
+    });
   };
 
   return (

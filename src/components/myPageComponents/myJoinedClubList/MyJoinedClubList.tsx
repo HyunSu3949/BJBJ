@@ -30,9 +30,7 @@ export default function MyLikedClubList() {
   return (
     <>
       <ul style={{ display: 'flex' }}>
-        {clubs.map(club => (
-          <ClubCard key={club.clubId} {...club} />
-        ))}
+        {clubs?.map(club => <ClubCard key={club.clubId} {...club} />)}
       </ul>
       <Pagination maxPage={maxPage} setPage={setPage} />
     </>

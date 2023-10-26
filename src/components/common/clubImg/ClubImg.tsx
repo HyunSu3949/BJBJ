@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { domains } from '../../../constants/constants';
+
 import * as S from './styles';
 type Props = {
   imgUrl: string;
@@ -15,5 +17,11 @@ export default function ClubImg({ imgUrl }: Props) {
     return <S.BasigClubImg />;
   }
 
-  return <S.Img src={imgUrl} onError={handleError} alt="독서모임 배경사진" />;
+  return (
+    <S.Img
+      src={domains.imgUrl + imgUrl}
+      onError={handleError}
+      alt="독서모임 배경사진"
+    />
+  );
 }

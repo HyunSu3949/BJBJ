@@ -1,5 +1,6 @@
 import { rest } from 'msw';
-import { db } from '../db';
+// import { db } from '../db';
+import { db } from '../empty_db';
 
 export const authHandlers = [
   rest.get('/users', (req, res, ctx) => {

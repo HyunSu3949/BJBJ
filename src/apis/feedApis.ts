@@ -3,14 +3,10 @@ import { axiosInstance, axsiosPuplic } from './instance';
 
 export async function getMainFeedListSortBy({
   sortBy,
-  page,
 }: {
   sortBy: 'likes' | 'createdAt';
-  page: number;
 }) {
-  const res = await axsiosPuplic.get(
-    `/main/feeds?sortBy=${sortBy}&page=${page}`,
-  );
+  const res = await axsiosPuplic.get(`/main/feeds?sortBy=${sortBy}`);
 
   return res.data.data;
 }

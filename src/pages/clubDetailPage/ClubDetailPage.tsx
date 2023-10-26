@@ -11,7 +11,9 @@ export default function ClubDetailPage() {
   return (
     <>
       <h1>모임 상세페이지</h1>
+      <h2>모임 정보</h2>
       <ClubDetails clubId={clubId} />
+      <h2>피드 리스트</h2>
       <FeedList clubId={clubId} />
     </>
   );

@@ -14,7 +14,7 @@ export default function JoinedClubDropdown() {
       <button onClick={onClick}>피드</button>
       {isExpanded ? (
         <ul aria-label="독서모임 피드 페이지 목록">
-          {joinedClubs.map(club => (
+          {joinedClubs?.map(club => (
             <li key={club.clubId}>
               <Link to={`/feed/${club.clubId}`} onClick={onClick}>
                 {club.title}

@@ -1,6 +1,7 @@
 import { rest } from 'msw';
 import { getClubFeeds, getFeedsSortedBylikes } from '../utils';
-import { db, ids } from '../db';
+// import { db, ids } from '../db';
+import { db, ids } from '../empty_db';
 
 export const feedHandlers = [
   rest.get('/main/feeds', (req, res, ctx) => {
@@ -75,7 +76,7 @@ export const feedHandlers = [
   rest.post('/feeds', async (req, res, ctx) => {
     const data = await req.json();
     db.feeds.push({
-      id: String(ids.feeds++),
+      feedId: String(ids.feeds++),
       likes: 0,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
@@ -92,7 +93,7 @@ export const feedHandlers = [
 
   rest.put('/feeds', async (req, res, ctx) => {
     const data = await req.json();
-    const feed = db.feeds.find(feed => feed.id == data.feedId);
+    const feed = db.feeds.find(feed => feed.feedId == data.feedId);
     if (feed) {
       feed.title = data.title;
       feed.contents = data.contents;

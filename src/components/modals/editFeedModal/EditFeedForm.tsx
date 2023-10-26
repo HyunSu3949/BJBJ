@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { useParams } from 'react-router-dom';
 import { getFeedDetail } from '../../../apis/feedApis';
 import EmptyImg from '../../../assets/image/empty_img.svg';
+import { domains } from '../../../constants/constants';
 
 type PutFeedType = {
   feedId: string;
@@ -52,7 +53,7 @@ export default function EditFeedForm({
       if (initialData) {
         setValue('title', initialData.title);
         setValue('contents', initialData.contents);
-        setPreviewImg(initialData.imgUrl || null);
+        setPreviewImg(domains.imgUrl + initialData.imgUrl || null);
       }
     };
 

@@ -14,7 +14,7 @@ export default function PostFeedModal({ onClose, message, btnText }: Props) {
       isOpen
       ariaHideApp={false}
       onRequestClose={onClose}
-      className="ModalSmall"
+      className="Modal"
       overlayClassName="Overlay"
     >
       <h1>{message}</h1>

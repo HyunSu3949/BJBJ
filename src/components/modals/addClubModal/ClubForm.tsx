@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { useModalContext } from '../../contexts/modalContext';
 import { modals } from '../Modals';
 import EmptyImg from '../../../assets/image/empty_img.svg';
+import { useNavigate } from 'react-router-dom';
 
 type Props = {
   handleClose: () => void;
@@ -30,8 +31,7 @@ type TagType = {
 export default function ClubForm({ handleClose }: Props) {
   const [previewImg, setPreviewImg] = useState<string | null>(null);
   const { openModal } = useModalContext();
-  const { userProfile } = useUserContext();
-
+  const { userProfile, fetchJoinedClubs } = useUserContext();
   const {
     register,
     handleSubmit,
@@ -55,27 +55,6 @@ export default function ClubForm({ handleClose }: Props) {
   const handleTagChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = e.target;
     setValue(`tags.${value as Tag}`, checked);
-  };
-
-  const handleAddClubResponse = (code: number) => {
-    if (code != 1) {
-      openModal({
-        Component: modals.CompletionModal,
-        props: {
-          message: '등록이 실패되었습니다. 다시 시도해주세요',
-          btnText: '확인',
-        },
-      });
-    } else {
-      openModal({
-        Component: modals.CompletionModal,
-        props: {
-          message: '등록이 완료되었습니다!',
-          btnText: '확인',
-        },
-      });
-    }
-    handleClose();
   };
 
   const getTagString = (obj: TagType) => {
@@ -108,9 +87,16 @@ export default function ClubForm({ handleClose }: Props) {
     };
     console.log('클럽 등록 데이터: ', postData);
 
-    const { code } = await postClub(postData);
-
-    handleAddClubResponse(code);
+    await postClub(postData);
+    fetchJoinedClubs(userProfile.userId);
+    openModal({
+      Component: modals.CompletionModal,
+      props: {
+        message: '등록이 완료되었습니다!',
+        btnText: '확인',
+      },
+    });
+    handleClose();
   };
   return (
     <form
