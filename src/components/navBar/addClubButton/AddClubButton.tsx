@@ -15,8 +15,10 @@ export default function AddClubButton() {
     });
   };
   return (
-    <button onClick={onClick} aria-label="독서 모임 만들기 버튼">
-      <AddClubIcon />
-    </button>
+    <AddClubIcon
+      role="button"
+      onClick={onClick}
+      aria-label="독서 모임 만들기 버튼"
+    />
   );
 }

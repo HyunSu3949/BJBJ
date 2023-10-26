@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { domains, nodeEnv } from '../../../constants/constants';
 import { useEffect } from 'react';
 import UserImg from '../../common/userImg/UserImg';
+import * as S from './styles';
 
 export default function LoginButton() {
   const navigate = useNavigate();
@@ -16,20 +17,20 @@ export default function LoginButton() {
   }, [location, storeTokenInLocalStorage]);
 
   return (
-    <div>
+    <>
       {isLogedin ? (
         <>
           <Link to="/my">
             <UserImg imgUrl={userProfile.imgUrl} />
           </Link>
-          <button
+          <S.TextButton
             onClick={() => {
               handleLogout();
               navigate('/');
             }}
           >
-            logout
-          </button>
+            로그아웃
+          </S.TextButton>
         </>
       ) : nodeEnv == 'development' ? (
         <Link to={`/?${'Access_Token=0'}`}>
@@ -40,6 +41,6 @@ export default function LoginButton() {
           <GoogleLogin aria-label="구글 로그인" role="button" />
         </a>
       )}
-    </div>
+    </>
   );
 }
