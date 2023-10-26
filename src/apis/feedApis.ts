@@ -58,9 +58,7 @@ export async function deleteFeed(feedId: string) {
 }
 
 export async function getFeedCommentList(feedId: string, page = 1) {
-  const res = await axiosInstance.get(
-    `/comments/feeds?feedId=${feedId}&page=${page}`,
-  );
+  const res = await axiosInstance.get(`/comments/feeds/${feedId}?page=${page}`);
 
   return res.data.data;
 }

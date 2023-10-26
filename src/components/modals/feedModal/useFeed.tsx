@@ -79,6 +79,8 @@ export default function useFeed({ feedId }: Props) {
   useEffect(() => {
     fetchFeedDetails(feedId);
     fetchCommentList(feedId, 1);
+    console.log(feedId, likedFeedIds);
+
     setIsLiked(likedFeedIds.some(feed => feed.feedId == feedId));
   }, [feedId, likedFeedIds]);
 
@@ -89,7 +91,6 @@ export default function useFeed({ feedId }: Props) {
 
   const fetchCommentList = async (feedId: string, page: number) => {
     const res = await getFeedCommentList(feedId, page);
-    console.log(res.commentList);
 
     setCommentList(() => res.commentList);
   };

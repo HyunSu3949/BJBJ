@@ -8,7 +8,14 @@ export const axiosPublic = axios.create({
 });
 
 axiosPublic.interceptors.response.use(
-  (res: AxiosResponse) => res,
+  (res: AxiosResponse) => {
+    const responseBody = res.data;
+    const requestUrl = res.config.url;
+
+    console.log('Request URL:', requestUrl);
+    console.log('Response Body:', responseBody);
+    return res;
+  },
   (error: AxiosError<unknown>) => {
     console.log(error);
     return Promise.reject(error);
@@ -54,6 +61,9 @@ axiosInstance.interceptors.response.use(
     const accessToken = res.headers['Access_Token'];
     const refreshToken = res.headers['Refresh_Token'];
 
+    console.log('responseToken: ', accessToken);
+    console.log('resfreshToken: ', refreshToken);
+
     if (accessToken) {
       localStorage.setItem('Access_Token', accessToken);
     }
@@ -63,7 +73,21 @@ axiosInstance.interceptors.response.use(
     return res;
   },
   (error: AxiosError<unknown>) => {
-    console.log(error);
+    if (isTokenExpiredError(error)) {
+      const headers = error.response?.headers;
+
+      if (headers) {
+        const newAccessToken = headers['Access_Token'];
+        const newRefreshToken = headers['Refresh_Token'];
+
+        if (newAccessToken) {
+          localStorage.setItem('Access_Token', newAccessToken);
+        }
+        if (newRefreshToken) {
+          localStorage.setItem('Refresh_Token', newRefreshToken);
+        }
+      }
+    }
     return Promise.reject(error);
   },
 );

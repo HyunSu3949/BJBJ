@@ -13,7 +13,7 @@ export default function FeedList({ sortBy }: Props) {
   useEffect(() => {
     const fetchData = async () => {
       const res = await getMainFeedListSortBy({ sortBy });
-      setFeeds(res.FeedList);
+      setFeeds(res.feedList);
     };
 
     fetchData();

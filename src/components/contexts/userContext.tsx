@@ -115,6 +115,7 @@ export function UserContextProvider({ children }: { children: ReactNode }) {
     const { userId } = await fetchUserProfile();
     await fetchJoinedClubs(userId);
     await fetchLikedClubs(userId);
+    await fetchLikedFeedIds(userId);
     await fetchAppliedClubs(userId);
     setIsLogedin(true);
   };

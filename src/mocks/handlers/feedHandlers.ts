@@ -138,8 +138,8 @@ export const feedHandlers = [
     );
   }),
 
-  rest.get('/comments/feeds', (req, res, ctx) => {
-    const feedId = req.url.searchParams.get('feedId');
+  rest.get('/comments/feeds/:feedId', (req, res, ctx) => {
+    const feedId = req.params.feedId;
     const page = req.url.searchParams.get('page') || 1;
 
     if (feedId != undefined) {
