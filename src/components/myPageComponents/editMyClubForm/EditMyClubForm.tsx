@@ -5,7 +5,11 @@ import { useUserContext } from '../../contexts/userContext';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { modals } from '../../modals/Modals';
 import { uploadImgToS3 } from '../../../apis/authApis';
-import { getUsersClubInfo, putUsersClubInfo } from '../../../apis/clubApis';
+import {
+  deleteClub,
+  getUsersClubInfo,
+  putUsersClubInfo,
+} from '../../../apis/clubApis';
 import { v4 as uuidv4 } from 'uuid';
 import EmptyImg from '../../../assets/image/empty_img.svg';
 import { domains } from '../../../constants/constants';
@@ -133,7 +137,9 @@ export default function EditMyClubForm() {
       },
     });
   };
-
+  const handleDeleteClub = async () => {
+    await deleteClub({ userId: userProfile.userId });
+  };
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -240,6 +246,7 @@ export default function EditMyClubForm() {
       <label>publisher</label>
       <input {...register('publisher')} />
       <button>수정하기</button>
+      <button onClick={handleDeleteClub}>독서모임 삭제</button>
     </form>
   );
 }

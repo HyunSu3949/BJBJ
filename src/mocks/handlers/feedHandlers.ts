@@ -286,15 +286,15 @@ export const feedHandlers = [
 
   rest.get('/likedfeeds/ids', (req, res, ctx) => {
     const userId = req.url.searchParams.get('userId');
-    const feedIdList = db.likedFeeds.filter(liked => liked.userId == userId);
+    const feedList = db.likedFeeds.filter(liked => liked.userId == userId);
 
     return res(
       ctx.json({
         code: 1,
         message: '',
         data: {
-          totalCount: feedIdList.length,
-          feedList: feedIdList,
+          totalCount: feedList.length,
+          feedList: feedList,
         },
       }),
     );

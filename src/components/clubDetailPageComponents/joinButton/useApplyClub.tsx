@@ -35,7 +35,6 @@ export default function useApplyClub({
     console.log(appliedClubs);
 
     if (
-      appliedClubs.length &&
       appliedClubs?.some(
         member => member.clubId == clubId && member.status == '승인됨',
       )
@@ -43,7 +42,6 @@ export default function useApplyClub({
       setApplyStatus('승인됨');
 
     if (
-      appliedClubs.length &&
       appliedClubs?.some(
         member => member.clubId == clubId && member.status == '대기중',
       )

@@ -6,7 +6,7 @@ export default function useLikeClub({ clubId }: { clubId: string }) {
   const { userProfile, likedClubs, fetchLikedClubs } = useUserContext();
   const [isLike, setIsLike] = useState(false);
   useEffect(() => {
-    if (likedClubs.some(data => data.clubId == clubId)) {
+    if (likedClubs?.some(data => data.clubId == clubId)) {
       setIsLike(true);
     } else {
       setIsLike(false);

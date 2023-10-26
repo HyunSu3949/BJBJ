@@ -34,7 +34,7 @@ export async function uploadImgToS3(
   });
 
   upload.promise().then(() => console.log('업로드'));
-  return '/' + imageName;
+  return imageName;
 }
 
 export async function uploadImgToS31(
