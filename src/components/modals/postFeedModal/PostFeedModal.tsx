@@ -1,4 +1,3 @@
-import React from 'react';
 import FeedForm from './FeedForm';
 import ReactModal from 'react-modal';
 
@@ -6,9 +5,15 @@ type Props = {
   onClose: () => void;
   message: string;
   btnText: string;
+  clubId: string;
 };
 
-export default function PostFeedModal({ onClose, message, btnText }: Props) {
+export default function PostFeedModal({
+  onClose,
+  message,
+  btnText,
+  clubId,
+}: Props) {
   return (
     <ReactModal
       isOpen
@@ -18,7 +23,7 @@ export default function PostFeedModal({ onClose, message, btnText }: Props) {
       overlayClassName="Overlay"
     >
       <h1>{message}</h1>
-      <FeedForm onClose={onClose} />
+      <FeedForm onClose={onClose} clubId={clubId} />
     </ReactModal>
   );
 }

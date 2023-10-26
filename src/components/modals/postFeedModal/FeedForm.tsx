@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useModalContext } from '../../contexts/modalContext';
 import { useUserContext } from '../../contexts/userContext';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { modals } from '../Modals';
 import { uploadImgToS3 } from '../../../apis/authApis';
 import { v4 as uuidv4 } from 'uuid';
 import { useParams } from 'react-router-dom';
@@ -11,6 +10,7 @@ import EmptyImg from '../../../assets/image/empty_img.svg';
 
 type Props = {
   onClose: () => void;
+  clubId: string;
 };
 
 type FormValue = {
@@ -19,8 +19,7 @@ type FormValue = {
   contents: string;
 };
 
-export default function FeedForm({ onClose }: Props) {
-  const { clubId } = useParams();
+export default function FeedForm({ onClose, clubId }: Props) {
   const [previewImg, setPreviewImg] = useState<string | null>(null);
   const { openModal } = useModalContext();
   const { userProfile } = useUserContext();
@@ -64,6 +63,7 @@ export default function FeedForm({ onClose }: Props) {
       contents: data.contents,
       imgUrl,
     };
+    console.log('피드:', clubId);
 
     await postFeed(postData);
     onClose();

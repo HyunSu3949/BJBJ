@@ -85,7 +85,7 @@ export async function getClubsSortedBy({
 }
 
 export async function postClub(data: PostClub) {
-  const res = await axiosInstance.post('clubs', data);
+  const res = await axiosInstance.post('/clubs', data);
 
   // return res.data;
 }
