@@ -32,6 +32,8 @@ export default function useApplyClub({
 
   const setButtonText = () => {
     setApplyStatus(status);
+    console.log(appliedClubs);
+
     if (
       appliedClubs.length &&
       appliedClubs?.some(
