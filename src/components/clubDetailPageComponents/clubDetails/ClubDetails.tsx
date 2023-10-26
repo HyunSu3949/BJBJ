@@ -40,8 +40,8 @@ export default function ClubDetails({ clubId }: { clubId: string }) {
           <p>{clubDetail.tags}</p>
         </div>
         <div>
-          <ApplyButton status={clubDetail.status} clubId={clubDetail.userId} />
-          <LikeButton clubId={clubDetail.userId} />
+          <ApplyButton status={clubDetail.status} clubId={clubId} />
+          <LikeButton clubId={clubId} />
         </div>
       </div>
       <div>
