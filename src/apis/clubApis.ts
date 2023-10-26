@@ -1,5 +1,5 @@
 import { PostClub, Tags } from '../mocks/types';
-import { axiosInstance, axsiosPuplic } from './instance';
+import { axiosInstance, axiosPublic } from './instance';
 
 export async function getClubDetails(id: string) {
   const res = await axiosInstance.get(`/clubs/${id}`);
@@ -79,7 +79,7 @@ export async function getClubsSortedBy({
 }: {
   sortBy: 'likes' | 'createdAt';
 }) {
-  const res = await axsiosPuplic.get(`/main/clubs?sortBy=${sortBy}`);
+  const res = await axiosPublic.get(`/main/clubs?sortBy=${sortBy}`);
   const response = res.data.data;
   return response;
 }
@@ -127,7 +127,7 @@ export async function getMyLikedClubList({
   userId: string;
   page: number;
 }) {
-  const res = await axsiosPuplic.get(
+  const res = await axiosInstance.get(
     `/likedclubs/users/${userId}?page=${page}`,
   );
 
@@ -135,7 +135,7 @@ export async function getMyLikedClubList({
 }
 
 export async function getAwaitingApprovalList(userId: string, page: number) {
-  const res = await axsiosPuplic.get(
+  const res = await axiosInstance.get(
     `/members?userId=${userId}&approvalStatus=대기중&page=${page}`,
   );
 
@@ -163,7 +163,7 @@ export async function rejectMember({
 }
 
 export async function getParticipantsList(userId: string, page: number) {
-  const res = await axsiosPuplic.get(
+  const res = await axiosInstance.get(
     `/members?userId=${userId}&approvalStatus=승인됨&page=${page}`,
   );
 

@@ -1,5 +1,5 @@
 import { domains } from '../constants/constants';
-import { axiosInstance, axsiosPuplic } from './instance';
+import { axiosInstance } from './instance';
 import AWS from 'aws-sdk';
 
 export async function getUserProfile() {

@@ -1,12 +1,12 @@
 import { ClubStatus, PostFeed, PutFeed } from '../mocks/types';
-import { axiosInstance, axsiosPuplic } from './instance';
+import { axiosInstance, axiosPublic } from './instance';
 
 export async function getMainFeedListSortBy({
   sortBy,
 }: {
   sortBy: 'likes' | 'createdAt';
 }) {
-  const res = await axsiosPuplic.get(`/main/feeds?sortBy=${sortBy}`);
+  const res = await axiosPublic.get(`/main/feeds?sortBy=${sortBy}`);
 
   return res.data.data;
 }
@@ -23,36 +23,36 @@ export async function getClubFeedList(
 }
 
 export async function getFeedDetail(feedId: string) {
-  const res = await axsiosPuplic.get(`/feeds/${feedId}`);
+  const res = await axiosInstance.get(`/feeds/${feedId}`);
 
   return res.data.data;
 }
 
 export async function getMyFeedList(userId: string, page = 1) {
-  const res = await axsiosPuplic.get(`/feeds/users/${userId}?page=${page}`);
+  const res = await axiosInstance.get(`/feeds/users/${userId}?page=${page}`);
 
   return res.data.data;
 }
 export async function postFeed(postFeed: PostFeed) {
-  const res = await axsiosPuplic.post(`/feeds`, postFeed);
+  const res = await axiosInstance.post(`/feeds`, postFeed);
 
   return res.data;
 }
 
 export async function putFeed(putFeed: PutFeed) {
-  const res = await axsiosPuplic.put(`/feeds`, putFeed);
+  const res = await axiosInstance.put(`/feeds`, putFeed);
 
   return res.data;
 }
 
 export async function deleteFeed(feedId: string) {
-  const res = await axsiosPuplic.delete(`/feeds?feedId=${feedId}`);
+  const res = await axiosInstance.delete(`/feeds?feedId=${feedId}`);
 
   return res.data;
 }
 
 export async function getFeedCommentList(feedId: string, page = 1) {
-  const res = await axsiosPuplic.get(
+  const res = await axiosInstance.get(
     `/comments/feeds?feedId=${feedId}&page=${page}`,
   );
 
@@ -65,25 +65,25 @@ export async function putFeedComment(putComment: {
   userId: string;
   contents: string;
 }) {
-  const res = await axsiosPuplic.put(`/comments`, putComment);
+  const res = await axiosInstance.put(`/comments`, putComment);
 
   return res.data;
 }
 
 export async function deleteComment(commentId: string) {
-  const res = await axsiosPuplic.delete(`/comments?commentId=${commentId}`);
+  const res = await axiosInstance.delete(`/comments?commentId=${commentId}`);
 
   return res.data;
 }
 
 export async function likeFeed(feedId: string, userId: string) {
-  const res = await axsiosPuplic.post(`/likedfeeds`, { feedId, userId });
+  const res = await axiosInstance.post(`/likedfeeds`, { feedId, userId });
 
   return res.data;
 }
 
 export async function deleteLikeFeed(feedId: string, userId: string) {
-  const res = await axsiosPuplic.delete(
+  const res = await axiosInstance.delete(
     `/likedfeeds?feedId=${feedId}&userId=${userId}`,
   );
 
@@ -99,7 +99,7 @@ export async function postComment({
   userId: string;
   contents: string;
 }) {
-  const res = await axsiosPuplic.post(`/comments`, {
+  const res = await axiosInstance.post(`/comments`, {
     feedId,
     userId,
     contents,
@@ -109,7 +109,7 @@ export async function postComment({
 }
 
 export async function getlikedFeedList(userId: string, page: number) {
-  const res = await axsiosPuplic.get(
+  const res = await axiosInstance.get(
     `/likedfeeds/users/${userId}?page=${page}`,
   );
 
@@ -117,7 +117,7 @@ export async function getlikedFeedList(userId: string, page: number) {
 }
 
 export async function getLikedFeedIdList(userId: string) {
-  const res = await axsiosPuplic.get(`/likedfeeds/ids?userId=${userId}`);
+  const res = await axiosInstance.get(`/likedfeeds/ids?userId=${userId}`);
 
   return res.data.data;
 }
@@ -129,7 +129,7 @@ export async function getMyCommentList({
   userId: string;
   page: number;
 }) {
-  const res = await axsiosPuplic.get(`/comments/users/${userId}?page=${page}`);
+  const res = await axiosInstance.get(`/comments/users/${userId}?page=${page}`);
 
   return res.data.data;
 }

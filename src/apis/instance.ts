@@ -3,11 +3,11 @@ import { domains } from '../constants/constants';
 
 const baseURL = domains.backEnd;
 
-export const axsiosPuplic = axios.create({
+export const axiosPublic = axios.create({
   baseURL,
 });
 
-axsiosPuplic.interceptors.response.use(
+axiosPublic.interceptors.response.use(
   (res: AxiosResponse) => res,
   (error: AxiosError<unknown>) => {
     console.log(error);
