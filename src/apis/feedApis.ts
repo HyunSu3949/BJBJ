@@ -28,7 +28,13 @@ export async function getFeedDetail(feedId: string) {
   return res.data.data;
 }
 
-export async function getMyFeedList(userId: string, page = 1) {
+export async function getMyFeedList({
+  userId,
+  page,
+}: {
+  userId: string;
+  page: number;
+}) {
   const res = await axiosInstance.get(`/feeds/users/${userId}?page=${page}`);
 
   return res.data.data;
