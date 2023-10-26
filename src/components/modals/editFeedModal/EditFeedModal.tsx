@@ -7,6 +7,7 @@ type Props = {
   handleEdit: (PutFeed: PutFeedType) => void;
   message: string;
   feedId: string;
+  clubId: string;
 };
 type PutFeedType = {
   feedId: string;
@@ -20,6 +21,7 @@ type PutFeedType = {
 export default function EditFeedModal({
   onClose,
   message,
+  clubId,
   feedId,
   handleDelete,
   handleEdit,
@@ -35,6 +37,7 @@ export default function EditFeedModal({
       <h1>{message}</h1>
       <EditFeedForm
         feedId={feedId}
+        clubId={clubId}
         onClose={onClose}
         handleDelete={handleDelete}
         handleEdit={handleEdit}

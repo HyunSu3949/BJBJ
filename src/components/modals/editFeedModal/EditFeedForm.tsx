@@ -20,6 +20,7 @@ type PutFeedType = {
 type Props = {
   onClose: () => void;
   feedId: string;
+  clubId: string;
   handleDelete: () => void;
   handleEdit: (PutFeed: PutFeedType) => void;
 };
@@ -35,8 +36,8 @@ export default function EditFeedForm({
   handleDelete,
   handleEdit,
   feedId,
+  clubId,
 }: Props) {
-  const { clubId } = useParams();
   const [previewImg, setPreviewImg] = useState<string | null>(null);
   const { userProfile } = useUserContext();
   const {

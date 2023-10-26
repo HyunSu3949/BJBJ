@@ -39,6 +39,7 @@ type Comment = {
 };
 type EditFeedModalType = {
   feedId: string;
+  clubId: string;
   handleDelete: () => void;
   handleEdit: (PutData: PutFeedType) => void;
 };
@@ -135,6 +136,7 @@ export default function useFeed({ feedId }: Props) {
         handleDelete,
         handleEdit,
         feedId,
+        clubId: feedDetails.clubId,
       },
     });
   };
