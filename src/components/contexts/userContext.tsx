@@ -120,7 +120,7 @@ export function UserContextProvider({ children }: { children: ReactNode }) {
   };
 
   useEffect(() => {
-    if (isTokenExist) handleLogin();
+    if (isTokenExist && !isLogedin) handleLogin();
   }, [isTokenExist]);
 
   const value = {
