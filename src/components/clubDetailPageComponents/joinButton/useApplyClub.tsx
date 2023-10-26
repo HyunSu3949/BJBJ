@@ -33,14 +33,14 @@ export default function useApplyClub({
   const setButtonText = () => {
     setApplyStatus(status);
     if (
-      appliedClubs.some(
+      appliedClubs?.some(
         member => member.clubId == clubId && member.status == '승인됨',
       )
     )
       setApplyStatus('승인됨');
 
     if (
-      appliedClubs.some(
+      appliedClubs?.some(
         member => member.clubId == clubId && member.status == '대기중',
       )
     )

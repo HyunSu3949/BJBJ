@@ -147,7 +147,9 @@ export function getJoinedClub(userId: string, page: number) {
 }
 
 export function getClubDetails(clubId: string) {
-  return db.clubs.find(club => club.id == clubId);
+  const club = { ...db.clubs.find(club => club.id == clubId) };
+
+  return club;
 }
 
 export function joinClub({

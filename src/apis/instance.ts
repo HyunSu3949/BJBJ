@@ -31,8 +31,6 @@ axiosInstance.interceptors.request.use(
     config.headers['Access_Token'] = accessToken;
     config.headers['Refresh_Token'] = refreshToken;
 
-    console.log('헤더 토큰: ', config.headers['Access_Token']);
-
     return config;
   },
   error => {

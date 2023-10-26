@@ -61,7 +61,7 @@ export default function EditMyClubForm() {
         setValue('author', initialData.author);
         setValue('publisher', initialData.publisher);
         setPreviewImg(domains.imgUrl + initialData.imgUrl || null);
-        initialData.tags?.split(',').forEach((tag: string) => {
+        initialData.tags.split(',').forEach((tag: string) => {
           setValue(`tags.${tag as Tag}`, true);
         });
       }

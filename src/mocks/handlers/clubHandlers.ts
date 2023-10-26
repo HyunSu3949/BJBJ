@@ -108,7 +108,7 @@ export const clubHandlers = [
           message: '',
           data: {
             totalCount: appliedClubList.length,
-            clubList: appliedClubList,
+            memberList: appliedClubList,
           },
         }),
       );

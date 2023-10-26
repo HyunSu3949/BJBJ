@@ -84,7 +84,7 @@ export function UserContextProvider({ children }: { children: ReactNode }) {
 
   const fetchAppliedClubs = async (userId: string) => {
     const appliedClubData = await getAppliedClubs(userId);
-    setAppliedClubs(appliedClubData.clubList);
+    setAppliedClubs(appliedClubData.memberList);
   };
   const fetchLikedClubs = async (userId: string) => {
     const likedClubData = await getLikedClubIdList(userId);
