@@ -1,6 +1,7 @@
 import {
   ReactNode,
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useState,
@@ -111,18 +112,18 @@ export function UserContextProvider({ children }: { children: ReactNode }) {
     removeAllState();
   };
 
-  const handleLogin = async () => {
+  const handleLogin = useCallback(async () => {
     const { userId } = await fetchUserProfile();
     await fetchJoinedClubs(userId);
     await fetchLikedClubs(userId);
     await fetchLikedFeedIds(userId);
     await fetchAppliedClubs(userId);
     setIsLogedin(true);
-  };
+  }, []);
 
   useEffect(() => {
     if (isTokenExist && !isLogedin) handleLogin();
-  }, [isTokenExist]);
+  }, [handleLogin, isLogedin, isTokenExist]);
 
   const value = {
     userProfile,
