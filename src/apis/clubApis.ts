@@ -102,8 +102,8 @@ export async function putUsersClubInfo(userId: string, data: PostClub) {
 }
 
 type SearchFormValues = {
-  keyword: string;
-  tags: Tags;
+  keyword?: string;
+  tags?: Tags;
   sortBy: 'createdAt' | 'likes';
   page: number;
 };
@@ -113,11 +113,24 @@ export async function getClubList({
   keyword,
   tags,
 }: SearchFormValues) {
-  const res = await axiosInstance.get(
-    `/clubs?sortBy=${sortBy}&tags=${tags}&keyword=${keyword}&page=${page}`,
-  );
+  let res;
+  if (keyword && !tags) {
+    res = await axiosInstance.get(
+      `/clubs?sortBy=${sortBy}&keyword=${keyword}&page=${page}`,
+    );
+  } else if (!keyword && tags) {
+    res = await axiosInstance.get(
+      `/clubs?sortBy=${sortBy}&tags=${tags}&page=${page}`,
+    );
+  } else if (!keyword && !tags) {
+    res = await axiosInstance.get(`/clubs?sortBy=${sortBy}&page=${page}`);
+  } else {
+    res = await axiosInstance.get(
+      `/clubs?sortBy=${sortBy}&tags=${tags}&keyword=${keyword}&page=${page}`,
+    );
+  }
 
-  return res.data.data;
+  return res?.data.data;
 }
 
 export async function getMyLikedClubList({
