@@ -72,6 +72,18 @@ module.exports = {
       'process.env.REACT_APP_IMG_URL': JSON.stringify(
         process.env.REACT_APP_IMG_URL,
       ),
+      'process.env.REACT_APP_S3_ACCESS_KEY_ID': JSON.stringify(
+        process.env.REACT_APP_S3_ACCESS_KEY_ID,
+      ),
+      'process.env.REACT_APP_S3_SECRET_ACCESS_KEY': JSON.stringify(
+        process.env.REACT_APP_S3_SECRET_ACCESS_KEY,
+      ),
+      'process.env.REACT_APP_S3_REGION': JSON.stringify(
+        process.env.REACT_APP_S3_REGION,
+      ),
+      'process.env.REACT_APP_S3_BUCKET': JSON.stringify(
+        process.env.REACT_APP_S3_BUCKET,
+      ),
     }),
   ],
 };
