@@ -71,7 +71,6 @@ export default function ClubForm({ handleClose }: Props) {
       const fileType: string = file.type;
 
       imgUrl = await uploadImgToS3(imageName, file, fileType);
-      console.log(imgUrl);
     }
 
     const postData = {

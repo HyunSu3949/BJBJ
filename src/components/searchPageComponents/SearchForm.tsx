@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { getClubList } from '../../apis/clubApis';
 import { Tag, Tags } from '../../mocks/types';
 import ClubCard from '../common/clubCard/ClubCard';
@@ -36,7 +36,7 @@ export default function SearchForm() {
       .join(',') as Tags;
   };
 
-  const fetchClubList = async () => {
+  const fetchClubList = useCallback(async () => {
     const { sortBy, keyword, tags, page } = searchValues;
 
     const data = await getClubList({
@@ -46,11 +46,11 @@ export default function SearchForm() {
       page,
     });
     setClublist(data.clubList);
-  };
+  }, [searchValues]);
 
   useEffect(() => {
     fetchClubList();
-  }, [searchValues.tags, searchValues.sortBy]);
+  }, [searchValues.tags, searchValues.sortBy, fetchClubList]);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -69,6 +69,7 @@ export default function SearchForm() {
       },
     }));
   };
+
   return (
     <div>
       <form
