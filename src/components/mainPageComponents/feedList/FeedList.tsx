@@ -2,6 +2,7 @@ import FeedCardSmall from '../../common/feedCard/FeedCardSmall';
 import { getMainFeedListSortBy } from '../../../apis/feedApis';
 import { useEffect, useState } from 'react';
 import { FeedCardSmallType } from '../../types';
+import * as S from './styles';
 
 type Props = {
   sortBy: 'likes' | 'createdAt';
@@ -20,10 +21,12 @@ export default function FeedList({ sortBy }: Props) {
   }, [sortBy]);
 
   return (
-    <>
-      <ul style={{ display: 'flex' }}>
-        {feeds?.map(feed => <FeedCardSmall key={feed.feedId} {...feed} />)}
-      </ul>
-    </>
+    <S.ListContainer style={{ display: 'flex' }}>
+      {feeds?.map(feed => (
+        <S.ListItem key={feed.feedId}>
+          <FeedCardSmall key={feed.feedId} {...feed} />
+        </S.ListItem>
+      ))}
+    </S.ListContainer>
   );
 }

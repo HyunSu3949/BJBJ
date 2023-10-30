@@ -1,10 +1,13 @@
 import styled from 'styled-components';
 
 export const LayoutWrapper = styled.div`
-  max-width: 1000px;
+  width: 100%;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px;
-  overflow: hidden;
+
+  @media (max-width: 768px) {
+    max-width: 720px;
+  }
 
   header,
   main,

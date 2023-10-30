@@ -20,17 +20,21 @@ export default function LoginButton() {
     <>
       {isLogedin ? (
         <>
-          <Link to="/my">
-            <UserImg imgUrl={userProfile.imgUrl} />
-          </Link>
-          <S.TextButton
-            onClick={() => {
-              handleLogout();
-              navigate('/');
-            }}
-          >
-            로그아웃
-          </S.TextButton>
+          {location.pathname !== '/my' && (
+            <Link to="/my">
+              <UserImg imgUrl={userProfile.imgUrl} />
+            </Link>
+          )}
+          {location.pathname === '/my' && (
+            <S.TextButton
+              onClick={() => {
+                handleLogout();
+                navigate('/');
+              }}
+            >
+              로그아웃
+            </S.TextButton>
+          )}
         </>
       ) : nodeEnv == 'development' ? (
         <Link to={`/?${'Access_Token=0'}`}>

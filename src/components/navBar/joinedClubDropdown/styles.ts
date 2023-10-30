@@ -9,8 +9,10 @@ export const TextButton = styled.button`
   font: inherit;
   cursor: pointer;
   outline: none;
-
+  font-weight: 700;
   &:hover {
     text-decoration: underline;
   }
 `;
+
+export const ListContainer = styled.ul``;

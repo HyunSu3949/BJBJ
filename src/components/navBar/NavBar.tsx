@@ -1,5 +1,3 @@
-import { Link } from 'react-router-dom';
-
 import LoginButton from './LoginButton/LoginButton';
 import AddClubButton from './addClubButton/AddClubButton';
 import logo from '../../assets/image/bjbj_logo.png';

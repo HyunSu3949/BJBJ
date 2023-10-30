@@ -3,7 +3,7 @@ import DefaultClubImg from '../../../assets/image/empty_img.svg';
 import DefaultClubImgBig from '../../../assets/image/empty_img_big.svg';
 
 export const Img = styled.img`
-  width: 280;
+  width: 100%;
   height: 200px;
   object-fit: cover;
 `;

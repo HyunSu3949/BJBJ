@@ -8,7 +8,7 @@ export default function Layout() {
       <header>
         <NavBar />
       </header>
-      <main>
+      <main style={{ background: '#D9D9D9' }}>
         <Outlet />
       </main>
       <footer>푸터</footer>

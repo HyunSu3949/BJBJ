@@ -5,6 +5,8 @@ import HeartIcon from '../../../assets/image/empty_heart.svg';
 import CommentIcon from '../../../assets/image/comment.svg';
 import { FeedCardSmallType } from '../../types';
 
+import * as S from './styles';
+
 type FeedModal = {
   feedId: string;
 };
@@ -23,18 +25,22 @@ export default function FeedCardSmall(props: FeedCardSmallType) {
     });
   };
   return (
-    <div onClick={() => openFeedModal(props.feedId)}>
-      <div>
+    <S.Wrapper onClick={() => openFeedModal(props.feedId)}>
+      <S.TopBox>
         <UserImg imgUrl={props.user.imgUrl} />
         <span>{props.user.userName}</span>
-      </div>
-      <p>{props.contents}</p>
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        <CommentIcon />
-        <p>{props.commentCount}</p>
-        <HeartIcon />
-        <p>{props.likes}</p>
-      </div>
-    </div>
+      </S.TopBox>
+      <S.Paragraph>{props.contents}</S.Paragraph>
+      <S.BottomBox>
+        <div>
+          <CommentIcon />
+          <span>{props.commentCount}</span>
+        </div>
+        <div>
+          <HeartIcon />
+          <span>{props.likes}</span>
+        </div>
+      </S.BottomBox>
+    </S.Wrapper>
   );
 }
