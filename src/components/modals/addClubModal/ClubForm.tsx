@@ -85,7 +85,6 @@ export default function ClubForm({ handleClose }: Props) {
       publisher: data.publisher,
       imgUrl,
     };
-    console.log('클럽 등록 데이터: ', postData);
 
     await postClub(postData);
     fetchJoinedClubs(userProfile.userId);
