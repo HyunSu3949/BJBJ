@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   getAwaitingApprovalList,
   getParticipantsList,
@@ -23,16 +23,16 @@ export default function UserList() {
   const [participantList, setParticipantList] = useState<MemberType[]>([]);
   const { userProfile } = useUserContext();
 
-  const fetchList = async () => {
+  const fetchList = useCallback(async () => {
     const awaitingData = await getAwaitingApprovalList(userProfile.userId, 1);
     setAwaitingList(awaitingData.memberList);
     const participantData = await getParticipantsList(userProfile.userId, 1);
     setParticipantList(participantData.memberList);
-  };
+  }, [userProfile.userId]);
 
   useEffect(() => {
     fetchList();
-  }, []);
+  }, [fetchList]);
 
   return (
     <>

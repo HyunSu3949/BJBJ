@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   cancleRequestParticipation,
   requestParticipation,
@@ -26,11 +26,7 @@ export default function useApplyClub({
   const { appliedClubs, userProfile, fetchAppliedClubs } = useUserContext();
   const { openModal } = useModalContext();
 
-  useEffect(() => {
-    setButtonText();
-  }, [appliedClubs]);
-
-  const setButtonText = () => {
+  const setButtonText = useCallback(() => {
     setApplyStatus(status);
 
     if (
@@ -53,7 +49,11 @@ export default function useApplyClub({
       )
     )
       setApplyStatus('대기중');
-  };
+  }, [appliedClubs, clubId, status]);
+
+  useEffect(() => {
+    setButtonText();
+  }, [appliedClubs, setButtonText]);
 
   const joinClub = async (clubId: string) => {
     await requestParticipation({ clubId, userId: userProfile.userId });

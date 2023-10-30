@@ -29,7 +29,7 @@ function usePagination<T, Params>({
       }
     };
     fetch();
-  }, [page]);
+  }, [dataKey, dataPages, fetchData, fetchParams, itemsPerPage, page]);
 
   return {
     data: dataPages[page],

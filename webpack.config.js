@@ -7,6 +7,48 @@ const webpack = require('webpack');
 
 const isDevelopment = process.env.REACT_APP_NODE_ENV == 'development';
 
+const plugins = [
+  new HtmlWebpackPlugin({
+    template: './public/index.html',
+  }),
+  new Dotenv({
+    path: isDevelopment ? '.env.development' : '.env.production',
+  }),
+  new ESLintPlugin({
+    extensions: ['js', 'jsx', 'ts', 'tsx'],
+  }),
+];
+
+if (!isDevelopment) {
+  plugins.push(
+    new webpack.DefinePlugin({
+      'process.env.REACT_APP_NODE_ENV': JSON.stringify(
+        process.env.REACT_APP_NODE_ENV,
+      ),
+      'process.env.REACT_APP_FRONT_URL': JSON.stringify(
+        process.env.REACT_APP_FRONT_URL,
+      ),
+      'process.env.REACT_APP_BACK_URL': JSON.stringify(
+        process.env.REACT_APP_BACK_URL,
+      ),
+      'process.env.REACT_APP_IMG_URL': JSON.stringify(
+        process.env.REACT_APP_IMG_URL,
+      ),
+      'process.env.REACT_APP_S3_ACCESS_KEY_ID': JSON.stringify(
+        process.env.REACT_APP_S3_ACCESS_KEY_ID,
+      ),
+      'process.env.REACT_APP_S3_SECRET_ACCESS_KEY': JSON.stringify(
+        process.env.REACT_APP_S3_SECRET_ACCESS_KEY,
+      ),
+      'process.env.REACT_APP_S3_REGION': JSON.stringify(
+        process.env.REACT_APP_S3_REGION,
+      ),
+      'process.env.REACT_APP_S3_BUCKET': JSON.stringify(
+        process.env.REACT_APP_S3_BUCKET,
+      ),
+    }),
+  );
+}
 module.exports = {
   mode: isDevelopment ? 'development' : 'production',
   entry: {
@@ -49,41 +91,5 @@ module.exports = {
     port: 3000,
     historyApiFallback: true,
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: './public/index.html',
-    }),
-    new Dotenv({
-      path: isDevelopment ? '.env.development' : '.env.production',
-    }),
-    new ESLintPlugin({
-      extensions: ['js', 'jsx', 'ts', 'tsx'],
-    }),
-    new webpack.DefinePlugin({
-      'process.env.REACT_APP_NODE_ENV': JSON.stringify(
-        process.env.REACT_APP_NODE_ENV,
-      ),
-      'process.env.REACT_APP_FRONT_URL': JSON.stringify(
-        process.env.REACT_APP_FRONT_URL,
-      ),
-      'process.env.REACT_APP_BACK_URL': JSON.stringify(
-        process.env.REACT_APP_BACK_URL,
-      ),
-      'process.env.REACT_APP_IMG_URL': JSON.stringify(
-        process.env.REACT_APP_IMG_URL,
-      ),
-      'process.env.REACT_APP_S3_ACCESS_KEY_ID': JSON.stringify(
-        process.env.REACT_APP_S3_ACCESS_KEY_ID,
-      ),
-      'process.env.REACT_APP_S3_SECRET_ACCESS_KEY': JSON.stringify(
-        process.env.REACT_APP_S3_SECRET_ACCESS_KEY,
-      ),
-      'process.env.REACT_APP_S3_REGION': JSON.stringify(
-        process.env.REACT_APP_S3_REGION,
-      ),
-      'process.env.REACT_APP_S3_BUCKET': JSON.stringify(
-        process.env.REACT_APP_S3_BUCKET,
-      ),
-    }),
-  ],
+  plugins,
 };

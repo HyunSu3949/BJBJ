@@ -15,7 +15,7 @@ export default function LoginRedirectPage() {
     storeTokenInLocalStorage(queryParams);
     handleLogin();
     if (localStorage.getItem('Access_Token')) navigate('/');
-  }, []);
+  }, [handleLogin, navigate, storeTokenInLocalStorage]);
   return (
     <>
       <h1>로그인 리다이렉트 페이지</h1>
