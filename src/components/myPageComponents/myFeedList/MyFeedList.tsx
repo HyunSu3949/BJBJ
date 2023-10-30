@@ -25,7 +25,7 @@ export default function MyFeedList() {
       userId: userProfile.userId,
     },
     itemsPerPage: 4,
-    dataKey: 'commentList',
+    dataKey: 'feedList',
   });
   return (
     <>
