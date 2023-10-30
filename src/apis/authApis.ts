@@ -13,6 +13,7 @@ export async function uploadImgToS3(
   file: File,
   fileType: string,
 ) {
+  const url = process.env.REACT_APP_BACK_URL;
   const BUCKET = 'bjbj-media-storage';
   const REGION = process.env.REACT_APP_S3_REGION;
   const ACESS_KEY_ID = process.env.REACT_APP_S3_ACCESS_KEY_ID;
