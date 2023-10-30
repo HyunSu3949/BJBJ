@@ -18,10 +18,6 @@ export async function uploadImgToS3(
   const ACESS_KEY_ID = process.env.REACT_APP_S3_ACCESS_KEY_ID;
   const SECRET_ACESS_KEY_ID = process.env.REACT_APP_S3_SECRET_ACCESS_KEY;
 
-  console.log('REGION: ', REGION);
-  console.log('ACESS_KEY_ID: ', ACESS_KEY_ID);
-  console.log('SECRET_ACESS_KEY_ID: ', SECRET_ACESS_KEY_ID);
-
   AWS.config.update({
     region: REGION,
     accessKeyId: ACESS_KEY_ID,

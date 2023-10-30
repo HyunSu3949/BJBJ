@@ -1,5 +1,5 @@
-// import { db, ids } from './db';
-import { db, ids } from './empty_db';
+import { db, ids } from './db';
+// import { db, ids } from './empty_db';
 import { GetClub, PostClub } from './types';
 
 export function getClubsSortedByLikes(): GetClub[] {

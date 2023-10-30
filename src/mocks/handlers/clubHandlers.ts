@@ -11,8 +11,8 @@ import {
   cancleJoinClub,
   getAppliedClub,
 } from '../utils';
-// import { db } from '../db';
-import { db, ids } from '../empty_db';
+import { db, ids } from '../db';
+// import { db, ids } from '../empty_db';
 import { Club } from '../types';
 
 export const clubHandlers = [

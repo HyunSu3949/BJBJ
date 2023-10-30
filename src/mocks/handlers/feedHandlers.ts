@@ -1,7 +1,7 @@
 import { rest } from 'msw';
 import { getClubFeeds, getFeedsSortedBylikes } from '../utils';
-// import { db, ids } from '../db';
-import { db, ids } from '../empty_db';
+import { db, ids } from '../db';
+// import { db, ids } from '../empty_db';
 
 export const feedHandlers = [
   rest.get('/main/feeds', (req, res, ctx) => {
