@@ -1,7 +1,7 @@
-import React from 'react';
 import { useModalContext } from '../../contexts/modalContext';
 import { modals } from '../../modals/Modals';
 import UserImg from '../../common/userImg/UserImg';
+import * as S from './styles';
 
 type Props = {
   imgUrl: string;
@@ -11,6 +11,7 @@ type Props = {
 type FeedModalType = {
   feedId: string;
 };
+
 export default function Comment({ imgUrl, contents, feedId }: Props) {
   const { openModal } = useModalContext();
   const onClick = () => {
@@ -24,10 +25,12 @@ export default function Comment({ imgUrl, contents, feedId }: Props) {
     });
   };
   return (
-    <div style={{ display: 'flex' }}>
-      <UserImg imgUrl={imgUrl} />
+    <S.ItemWrapper>
+      <div>
+        <UserImg imgUrl={imgUrl} />
+      </div>
       <p>{contents}</p>
       <button onClick={onClick}>글보기</button>
-    </div>
+    </S.ItemWrapper>
   );
 }

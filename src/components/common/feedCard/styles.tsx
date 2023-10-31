@@ -4,13 +4,14 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 280px;
-  padding: 10px 20px;
+  padding: 10px 10px;
   padding-bottom: 20px;
   height: fit-content;
   box-sizing: border-box;
   border: 1px solid #dde1e6;
   border-radius: 16px;
   cursor: pointer;
+  background-color: white;
 `;
 
 export const TopBox = styled.div`

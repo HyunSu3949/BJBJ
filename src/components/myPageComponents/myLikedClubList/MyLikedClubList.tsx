@@ -4,6 +4,7 @@ import ClubCard from '../../common/clubCard/ClubCard';
 import { useUserContext } from '../../contexts/userContext';
 import usePagination from '../../../hooks/usePagination';
 import Pagination from '../../common/pagination/Pagination';
+import * as S from './styles';
 
 type GetData = Club;
 type FetchParams = {
@@ -29,9 +30,13 @@ export default function MyLikedClubList() {
 
   return (
     <>
-      <ul style={{ display: 'flex' }}>
-        {clubs?.map(club => <ClubCard key={club.clubId} {...club} />)}
-      </ul>
+      <S.ListContainer>
+        {clubs?.map(club => (
+          <S.ListItem key={club.clubId}>
+            <ClubCard {...club} />
+          </S.ListItem>
+        ))}
+      </S.ListContainer>
       <Pagination maxPage={maxPage} setPage={setPage} />
     </>
   );

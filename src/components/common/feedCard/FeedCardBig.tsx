@@ -1,4 +1,3 @@
-import React from 'react';
 import { useModalContext } from '../../contexts/modalContext';
 import { modals } from '../../modals/Modals';
 

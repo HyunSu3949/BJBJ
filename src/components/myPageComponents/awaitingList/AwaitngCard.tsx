@@ -1,6 +1,6 @@
-import React from 'react';
 import { approveMember, rejectMember } from '../../../apis/clubApis';
 import UserImg from '../../common/userImg/UserImg';
+import * as S from './styles';
 
 type Props = {
   memberId: string;
@@ -23,11 +23,15 @@ export default function AwaitngCard({
     fetchList();
   };
   return (
-    <div>
-      <UserImg imgUrl={user.imgUrl} />
-      <span>{user.userName}</span>
-      <button onClick={onApprove}>승인</button>
-      <button onClick={onReject}>거절</button>
-    </div>
+    <S.ItemWrapper>
+      <div>
+        <UserImg imgUrl={user.imgUrl} />
+      </div>
+      <p>{user.userName}</p>
+      <div>
+        <button onClick={onApprove}>승인</button>
+        <button onClick={onReject}>거절</button>
+      </div>
+    </S.ItemWrapper>
   );
 }

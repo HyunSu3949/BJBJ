@@ -3,6 +3,7 @@ import { useUserContext } from '../../contexts/userContext';
 import Comment from './Comment';
 import usePagination from '../../../hooks/usePagination';
 import Pagination from '../../common/pagination/Pagination';
+import * as S from './styles';
 
 type GetData = {
   feedId: string;
@@ -32,17 +33,17 @@ export default function CommentList() {
 
   return (
     <>
-      <ul>
+      <S.ListContainer>
         {commentList?.map((comment, idx) => (
-          <li key={idx}>
+          <S.ListItem key={idx}>
             <Comment
               imgUrl={userProfile.imgUrl}
               contents={comment.contents}
               feedId={comment.feedId}
             />
-          </li>
+          </S.ListItem>
         ))}
-      </ul>
+      </S.ListContainer>
       <Pagination maxPage={maxPage} setPage={setPage} />
     </>
   );

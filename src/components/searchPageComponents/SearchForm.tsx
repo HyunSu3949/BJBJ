@@ -3,6 +3,7 @@ import { getClubList } from '../../apis/clubApis';
 import { Tag, Tags } from '../../mocks/types';
 import ClubCard from '../common/clubCard/ClubCard';
 import { Club } from '../types';
+import * as S from './styles';
 
 type TagType = {
   [key in Tag]: boolean;
@@ -58,6 +59,13 @@ export default function SearchForm() {
     const { name, value } = e.target;
     setSearchValues(prev => ({ ...prev, [name]: value }));
   };
+  const [tagsState, setTagsState] = useState<TagType>({
+    소모임: false,
+    오프라인: false,
+    온라인: false,
+    수도권: false,
+    지방: false,
+  });
 
   const handleTagChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = e.target;
@@ -68,61 +76,68 @@ export default function SearchForm() {
         [value as Tag]: checked,
       },
     }));
+    setTagsState(prev => ({ ...prev, [value]: checked }));
   };
 
   return (
-    <div>
-      <form
+    <S.SearchFormWrapper>
+      <S.Form
         onSubmit={e => {
           e.preventDefault();
           fetchClubList();
         }}
       >
-        <input
-          type="text"
-          name="keyword"
-          value={searchValues.keyword}
-          onChange={handleInputChange}
-          placeholder="키워드 입력"
-        />
-        <button>검색</button>
         <div>
-          {(['소모임', '오프라인', '온라인', '수도권', '지방'] as Tag[]).map(
-            tag => (
-              <label key={tag}>
-                <input
-                  type="checkbox"
-                  name="tags"
-                  value={tag}
-                  checked={searchValues.tags[tag]}
-                  onChange={handleTagChange}
-                />
-                {tag}
-              </label>
-            ),
-          )}
+          <label>독서 모임 검색하기</label>
+          <div>
+            <S.Input
+              type="text"
+              name="keyword"
+              value={searchValues.keyword}
+              onChange={handleInputChange}
+              placeholder="키워드 입력"
+            />
+            <S.Button>검색</S.Button>
+          </div>
         </div>
-
-        <select
-          name="sortBy"
-          value={searchValues.sortBy}
-          onChange={handleInputChange}
-        >
-          <option value="createdAt">최신순</option>
-          <option value="likes">좋아요순</option>
-        </select>
-      </form>
-
-      <div>
-        <h2>검색 결과</h2>
-        <ul style={{ display: 'flex' }}>
+        <div>
+          <label>태그</label>
+          <S.TagBox>
+            {(['소모임', '오프라인', '온라인', '수도권', '지방'] as Tag[]).map(
+              tag => (
+                <S.Label key={tag} isSelected={tagsState[tag]}>
+                  <S.Checkbox
+                    type="checkbox"
+                    value={tag}
+                    onChange={handleTagChange}
+                  />
+                  {tag}
+                </S.Label>
+              ),
+            )}
+          </S.TagBox>
+        </div>
+        <div>
+          <S.Select
+            name="sortBy"
+            value={searchValues.sortBy}
+            onChange={handleInputChange}
+          >
+            <option value="createdAt">최신순</option>
+            <option value="likes">좋아요순</option>
+          </S.Select>
+        </div>
+      </S.Form>
+      <S.ResultContainer>
+        <S.SearchResultTitle>검색 결과</S.SearchResultTitle>
+        <S.ListContainer>
           {clubList.map(club => (
             <li key={club.clubId}>
               <ClubCard {...club} />
             </li>
           ))}
-        </ul>
-      </div>
-    </div>
+        </S.ListContainer>
+      </S.ResultContainer>
+    </S.SearchFormWrapper>
   );
 }

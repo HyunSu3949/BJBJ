@@ -1,11 +1,12 @@
 .Modal {
   position: absolute;
+  left: calc(50vw - 375px);
+  width: 750px;
   margin: 0 auto;
-  width: 500px;
   background: #fff;
-  border-radius: 10px 10px 0 0;
-  padding: 0 0 10px 0;
-  font-size: 14px;
+  border-radius: 10px;
+  padding: 20px;
+  font-size: 16px;
   line-height: 16px;
   font-weight: 400;
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
@@ -40,7 +41,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: #fff;
+  background: #d9d9d9;
   background-color: rgba(0, 0, 0, 0.25);
   z-index: 10;
 }

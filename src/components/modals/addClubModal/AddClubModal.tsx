@@ -1,5 +1,6 @@
 import ReactModal from 'react-modal';
 import ClubForm from './ClubForm';
+import * as S from './styles';
 
 type Props = {
   onClose: () => void;
@@ -19,11 +20,10 @@ export default function AddClubModal({ onClose, message, btnText }: Props) {
       className="Modal"
       overlayClassName="Overlay"
     >
-      <h1>{message}</h1>
+      <S.Heading>
+        <h1>{message}</h1>
+      </S.Heading>
       <ClubForm handleClose={handleClose} />
-      <div>
-        <button onClick={handleClose}>취소</button>
-      </div>
     </ReactModal>
   );
 }
