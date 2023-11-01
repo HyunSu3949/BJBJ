@@ -9,6 +9,7 @@ import { useModalContext } from '../../contexts/modalContext';
 import { modals } from '../Modals';
 import EmptyImg from '../../../assets/image/empty_img.svg';
 import * as S from './styles';
+import { useNavigateContext } from '../../contexts/NavigateContext';
 
 type Props = {
   handleClose: () => void;
@@ -38,7 +39,7 @@ export default function ClubForm({ handleClose }: Props) {
     formState: { errors },
     setValue,
   } = useForm<FormValue>();
-
+  const { navigate } = useNavigateContext();
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -80,6 +81,7 @@ export default function ClubForm({ handleClose }: Props) {
     } else {
       message = '독서모임이 생성되었습니다!.';
     }
+    navigate('/my');
     openModal({
       Component: modals.CompletionModal,
       props: {

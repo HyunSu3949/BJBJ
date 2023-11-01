@@ -47,6 +47,7 @@ export const RightDiv = styled.div`
     margin-right: 10px;
   }
   flex: 1;
+  cursor: pointer;
 `;
 
 export const UnstyledLink = styled(Link)`

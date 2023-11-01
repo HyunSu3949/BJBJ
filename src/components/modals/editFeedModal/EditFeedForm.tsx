@@ -3,10 +3,12 @@ import { useUserContext } from '../../contexts/userContext';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { uploadImgToS3 } from '../../../apis/authApis';
 import { v4 as uuidv4 } from 'uuid';
-import { useParams } from 'react-router-dom';
 import { getFeedDetail } from '../../../apis/feedApis';
 import EmptyImg from '../../../assets/image/empty_img.svg';
 import { domains } from '../../../constants/constants';
+import CloseIcon from '../../../assets/image/close.svg';
+import UserImg from '../../common/userImg/UserImg';
+import * as S from './styles';
 
 type PutFeedType = {
   feedId: string;
@@ -102,50 +104,56 @@ export default function EditFeedForm({
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      style={{ display: 'flex', flexDirection: 'column' }}
-    >
-      <label>title</label>
-      <input {...register('title', { required: true, maxLength: 20 })} />
-      {errors.title && errors.title.type === 'required' && (
-        <div>제목을 입력해 주세요!</div>
-      )}
-      {errors.title && errors.title.type === 'maxLength' && (
-        <div>최대 20자만 입력할 수 있습니다!</div>
-      )}
-
-      <label>contents</label>
-      <textarea {...register('contents', { required: true, maxLength: 20 })} />
-      {errors.contents && errors.contents.type === 'required' && (
-        <div>내용을 입력해 주세요!</div>
-      )}
-
-      <label>img</label>
-      {previewImg ? (
-        <div style={{ position: 'relative' }}>
-          <img
-            src={previewImg}
-            alt="Preview"
-            style={{ width: '200px', height: '200px' }}
-          />
-          <button
-            type="button"
-            onClick={handleImageRemove}
-            style={{ position: 'absolute', top: 0, right: 0 }}
-          >
-            X
+    <S.Wrapper>
+      <div>
+        <UserImg imgUrl={userProfile.imgUrl} />
+        <span>{userProfile.userName}</span>
+      </div>
+      <S.Form
+        onSubmit={handleSubmit(onSubmit)}
+        style={{ display: 'flex', flexDirection: 'column' }}
+      >
+        <label htmlFor="title">제목</label>
+        <input
+          {...register('title', { required: true, maxLength: 20 })}
+          placeholder="제목을 입력해주세요"
+        />
+        {errors.title && errors.title.type === 'required' && (
+          <div>제목을 입력해 주세요!</div>
+        )}
+        {errors.title && errors.title.type === 'maxLength' && (
+          <div>최대 20자만 입력할 수 있습니다!</div>
+        )}
+        <label htmlFor="contents">내용</label>
+        <textarea
+          {...register('contents', { required: true, maxLength: 20 })}
+        />
+        {errors.contents && errors.contents.type === 'required' && (
+          <div>내용을 입력해 주세요!</div>
+        )}
+        <label htmlFor="img">사진</label>
+        {previewImg ? (
+          <S.ImgBox>
+            <img
+              src={previewImg}
+              alt="Preview"
+              style={{ width: '200px', height: '200px' }}
+            />
+            <S.CloseButtonBox>
+              <CloseIcon onClick={handleImageRemove} type="button" />
+            </S.CloseButtonBox>
+          </S.ImgBox>
+        ) : (
+          <EmptyImg />
+        )}
+        <input type="file" {...register('img')} onChange={handleImageChange} />
+        <S.ButtonBox>
+          <button type="submit">수정</button>
+          <button type="button" onClick={handleDelete}>
+            삭제
           </button>
-        </div>
-      ) : (
-        <EmptyImg style={{ width: '100px', height: '100px' }} />
-      )}
-      <input type="file" {...register('img')} onChange={handleImageChange} />
-
-      <button type="submit">수정</button>
-      <button type="button" onClick={handleDelete}>
-        삭제
-      </button>
-    </form>
+        </S.ButtonBox>
+      </S.Form>
+    </S.Wrapper>
   );
 }

@@ -1,5 +1,6 @@
 import { useUserContext } from '../../contexts/userContext';
 import UserImg from '../../common/userImg/UserImg';
+import * as S from './styles';
 
 type Props = {
   userId: string;
@@ -19,19 +20,24 @@ export default function Comment({
 }: Props) {
   const { userProfile } = useUserContext();
   return (
-    <>
-      <div>
+    <S.CommentWrapper>
+      <div className="user-image-wrapper">
         <UserImg imgUrl={imgUrl} />
       </div>
-      <div>
-        <span>{userName}</span>
-        {userId == userProfile.userId && (
-          <div>
-            <button onClick={() => handleDeleteComment(commentId)}>삭제</button>
-          </div>
-        )}
+      <div className="comment-content-wrapper">
+        <div className="user-info-wrapper">
+          <span className="user-name">{userName}</span>
+          {userId == userProfile.userId && (
+            <button
+              className="delete-button"
+              onClick={() => handleDeleteComment(commentId)}
+            >
+              삭제
+            </button>
+          )}
+        </div>
+        <p className="comment-text">{contents}</p>
       </div>
-      <p>{contents}</p>
-    </>
+    </S.CommentWrapper>
   );
 }

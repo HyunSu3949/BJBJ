@@ -33,10 +33,14 @@ export default function ConfirmModal({
       className="ModalSmall"
       overlayClassName="Overlay"
     >
-      <p>{message}</p>
-      <div>
-        <button onClick={handleClickConfirm}>{btnText}</button>
-        <button onClick={handleClickCancel}>취소</button>
+      <p className="modal-text">{message}</p>
+      <div className="modal-button-box">
+        <button className="modal-button" onClick={handleClickConfirm}>
+          {btnText}
+        </button>
+        <button className="modal-button-cancle" onClick={handleClickCancel}>
+          취소
+        </button>
       </div>
     </ReactModal>
   );

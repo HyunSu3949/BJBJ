@@ -11,7 +11,6 @@ import {
   putUsersClubInfo,
 } from '../../../apis/clubApis';
 import { v4 as uuidv4 } from 'uuid';
-import EmptyImg from '../../../assets/image/empty_img.svg';
 import { domains } from '../../../constants/constants';
 import * as S from './styles';
 import ClubImg from '../../common/clubImg/ClubImg';
@@ -103,6 +102,21 @@ export default function EditMyClubForm() {
       .map(([key, _]) => key)
       .join(',') as Tags;
   };
+  const handleSubmitResult = (code: number) => {
+    let message = '';
+    if (code != 1) {
+      message = '등록에 실패했습니다. 잠시 후 다시 시도해주세요.';
+    } else {
+      message = '독서모임이 생성되었습니다!.';
+    }
+    openModal({
+      Component: modals.CompletionModal,
+      props: {
+        message,
+        btnText: '확인',
+      },
+    });
+  };
 
   const onSubmit: SubmitHandler<FormValue> = async data => {
     let imgUrl = '';
@@ -127,15 +141,8 @@ export default function EditMyClubForm() {
       imgUrl,
     };
 
-    await putUsersClubInfo(userProfile.userId, postData);
-
-    openModal({
-      Component: modals.CompletionModal,
-      props: {
-        message: '수정이 완료되었습니다',
-        btnText: '확인',
-      },
-    });
+    const { code } = await putUsersClubInfo(userProfile.userId, postData);
+    handleSubmitResult(code);
   };
   const handleDeleteClub = async () => {
     await deleteClub({ userId: userProfile.userId });
@@ -257,7 +264,7 @@ export default function EditMyClubForm() {
       </div>
       <S.ButtonBox>
         <S.Button variant="primary">등록</S.Button>
-        <S.Button onClick={handleDeleteClub} type="button">
+        <S.Button variant="secondary" onClick={handleDeleteClub} type="button">
           독서모임 삭제
         </S.Button>
       </S.ButtonBox>

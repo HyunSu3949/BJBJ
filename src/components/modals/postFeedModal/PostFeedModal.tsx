@@ -22,7 +22,7 @@ export default function PostFeedModal({
       className="Modal"
       overlayClassName="Overlay"
     >
-      <h1>{message}</h1>
+      <h1 className="sr-only">{message}</h1>
       <FeedForm onClose={onClose} clubId={clubId} />
     </ReactModal>
   );

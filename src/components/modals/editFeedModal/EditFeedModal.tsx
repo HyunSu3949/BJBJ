@@ -1,5 +1,5 @@
-import EditFeedForm from './EditFeedForm';
 import ReactModal from 'react-modal';
+import EditFeedForm from './EditFeedForm';
 
 type Props = {
   onClose: () => void;
@@ -34,7 +34,7 @@ export default function EditFeedModal({
       className="Modal"
       overlayClassName="Overlay"
     >
-      <h1>{message}</h1>
+      <h1 className="sr-only">{message}</h1>
       <EditFeedForm
         feedId={feedId}
         clubId={clubId}

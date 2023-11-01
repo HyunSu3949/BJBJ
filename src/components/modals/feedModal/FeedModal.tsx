@@ -6,12 +6,14 @@ import Comment from './Comment';
 import CommentForm from './CommentForm';
 import LikeFeedButton from './LikeFeedButton';
 import UserImg from '../../common/userImg/UserImg';
-import ClubImg from '../../common/clubImg/ClubImg';
+import CommentIcon from '../../../assets/image/comment.svg';
+import * as S from './styles';
 
 type Props = {
   onClose: () => void;
   feedId: string;
 };
+
 export default function FeedModal({ onClose, feedId }: Props) {
   const {
     isLiked,
@@ -33,46 +35,59 @@ export default function FeedModal({ onClose, feedId }: Props) {
       className="Modal"
       overlayClassName="Overlay"
     >
-      <div
-        style={{
-          width: '95%',
-          display: 'flex',
-          justifyContent: 'flex-end',
-          alignItems: 'center',
-        }}
-      >
-        {userProfile.userId == feedDetails?.user.userId && (
-          <button onClick={openEditFeedModal}>수정/삭제</button>
-        )}
-        <CloseIcon onClick={onClose} />
-      </div>
-      <div>
-        <UserImg imgUrl={feedDetails.user.imgUrl} />
-        <span>{feedDetails.user.userName}</span>
-        <h2>{feedDetails.title}</h2>
-        <div>{feedDetails.contents}</div>
-        {feedDetails.imgUrl && <ClubImg imgUrl={feedDetails.imgUrl} />}
-      </div>
-      <div>
-        <LikeFeedButton
-          isLiked={isLiked}
-          feedId={feedId}
-          handleLikeFeed={handleLikeFeed}
-          handleDeleteLikeFeed={handleDeleteLikeFeed}
-        />
-      </div>
-      <div>
-        <CommentForm feedId={feedId} handlePostComment={handlePostComment} />
-      </div>
-      <div>
-        <ul>
-          {commentList.map((comment, idx) => (
-            <li key={idx}>
-              <Comment {...comment} handleDeleteComment={handleDeleteComment} />
-            </li>
-          ))}
-        </ul>
-      </div>
+      <S.Wrapper>
+        <S.IconDiv>
+          <CloseIcon onClick={onClose} />
+        </S.IconDiv>
+        <S.TopDiv>
+          <div>
+            <UserImg imgUrl={feedDetails.user.imgUrl} />
+            <span>{feedDetails.user.userName}</span>
+          </div>
+
+          {userProfile.userId == feedDetails?.user.userId && (
+            <button onClick={openEditFeedModal}>수정/삭제</button>
+          )}
+        </S.TopDiv>
+        <S.MidDiv>
+          <h2>{feedDetails.title}</h2>
+          <p>{feedDetails.contents}</p>
+          {feedDetails.imgUrl && <img src={feedDetails.imgUrl} />}
+          <S.ButtonDiv>
+            <div>
+              <LikeFeedButton
+                isLiked={isLiked}
+                feedId={feedId}
+                handleLikeFeed={handleLikeFeed}
+                handleDeleteLikeFeed={handleDeleteLikeFeed}
+              />
+              <span>{feedDetails.likes}</span>
+            </div>
+            <div>
+              <CommentIcon />
+              <span>{commentList.length}</span>
+            </div>
+          </S.ButtonDiv>
+          <div>
+            <CommentForm
+              feedId={feedId}
+              handlePostComment={handlePostComment}
+            />
+          </div>
+        </S.MidDiv>
+        <S.BottomDiv>
+          <ul>
+            {commentList.map((comment, idx) => (
+              <li key={idx}>
+                <Comment
+                  {...comment}
+                  handleDeleteComment={handleDeleteComment}
+                />
+              </li>
+            ))}
+          </ul>
+        </S.BottomDiv>
+      </S.Wrapper>
     </ReactModal>
   );
 }

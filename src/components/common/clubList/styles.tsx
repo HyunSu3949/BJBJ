@@ -7,7 +7,6 @@ export const ListContainer = styled.ul`
   list-style: none;
   padding: 0;
   margin: 0 auto;
-  justify-content: center;
   /* background-color: #f4d0d6; */
 `;
 

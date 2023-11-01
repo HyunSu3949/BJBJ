@@ -23,9 +23,11 @@ export default function CompletionModal({ onClose, message, btnText }: Props) {
       className="ModalSmall"
       overlayClassName="Overlay"
     >
-      <p>{message}</p>
+      <p className="modal-text">{message}</p>
       <div>
-        <button onClick={handleClickCancel}>{btnText}</button>
+        <button className="modal-button" onClick={handleClickCancel}>
+          {btnText}
+        </button>
       </div>
     </ReactModal>
   );

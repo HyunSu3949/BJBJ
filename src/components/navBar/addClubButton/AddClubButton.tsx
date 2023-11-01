@@ -1,6 +1,7 @@
-import AddClubIcon from '../../../assets/image/add_club_button.svg';
+import PlusIcon from '../../../assets/image/plus.svg';
 import { useModalContext } from '../../contexts/modalContext';
 import { modals } from '../../modals/Modals';
+import * as S from './styles';
 
 export default function AddClubButton() {
   const { openModal } = useModalContext();
@@ -15,10 +16,9 @@ export default function AddClubButton() {
     });
   };
   return (
-    <AddClubIcon
-      role="button"
-      onClick={onClick}
-      aria-label="독서 모임 만들기 버튼"
-    />
+    <S.Button onClick={onClick} aria-label="독서 모임 만들기 버튼">
+      <PlusIcon />
+      독서 모임 만들기
+    </S.Button>
   );
 }

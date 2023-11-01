@@ -8,10 +8,9 @@ export default function Layout() {
       <header>
         <NavBar />
       </header>
-      <main style={{ background: '#D9D9D9' }}>
+      <main>
         <Outlet />
       </main>
-      <footer>푸터</footer>
     </S.LayoutWrapper>
   );
 }

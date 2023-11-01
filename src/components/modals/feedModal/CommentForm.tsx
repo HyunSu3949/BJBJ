@@ -1,5 +1,7 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useUserContext } from '../../contexts/userContext';
+import * as S from './styles';
+import UserImg from './../../common/userImg/UserImg';
 
 type FormValue = {
   contents: string;
@@ -36,12 +38,15 @@ export default function CommentForm({ feedId, handlePostComment }: Props) {
     handlePostComment(postData);
   };
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <input type="text" {...register('contents', { required: true })} />
-      {errors.contents && errors.contents.type === 'required' && (
-        <div>댓글을 입력해주세요!</div>
-      )}
-      <button type="submit">등록</button>
-    </form>
+    <S.FormWrapper>
+      <UserImg imgUrl={userProfile.imgUrl} />
+      <S.Form onSubmit={handleSubmit(onSubmit)}>
+        <input type="text" {...register('contents', { required: true })} />
+        {errors.contents && errors.contents.type === 'required' && (
+          <div>댓글을 입력해주세요!</div>
+        )}
+        <button type="submit">등록</button>
+      </S.Form>
+    </S.FormWrapper>
   );
 }
