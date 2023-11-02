@@ -42,8 +42,6 @@ export async function uploadImgToS31(
   file: File,
   fileType: string,
 ): Promise<string> {
-  console.log('fileType: ', fileType);
-  console.log('imageName: ', imageName);
   const bucketName = 'bjbj-media-storage';
   const { url } = await getPreSingedUrl(imageName);
   await fetch(`https://${bucketName}.s3.amazonaws.com/${imageName}`, {
