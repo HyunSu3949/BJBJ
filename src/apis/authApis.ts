@@ -54,8 +54,6 @@ export async function uploadImgToS31(
     console.log(err);
   });
 
-  console.log('presignedUrl: ', url);
-
   return domains.imgUrl + imageName;
 }
 export async function getPreSingedUrl(imageName: string) {

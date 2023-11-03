@@ -1,13 +1,28 @@
 import axiosInstance, { axiosPublic } from './instance';
-import type { ApiEndpoints } from 'ApiTypes';
+import type { GetApi } from 'GetApiTypes';
 
-const apiEndPointsForGet = {
-  mainClubList: '/main/clubs',
-  likedClubList: '/likedclubs/users/:userId',
-  clubDetails: '/clubs/:id',
-  joinedClubList: '/members/users/:userId',
-  appliedClubIdList: '/members/ids',
-  likedClubIdList: '/likedclubs/ids',
+const getApiEndPoints = {
+  getUserProfile: '/users',
+  //클럽----------------------------------
+  getMainClubList: '/main/clubs',
+  getLikedClubList: '/likedclubs/users/:userId',
+  getJoinedClubList: '/members/users/:userId',
+  getAppliedClubIdList: '/members/ids',
+  getLikedClubIdList: '/likedclubs/ids',
+  getClubList: '/clubs',
+  getClubDetails: '/clubs/:id',
+  getPendingApprovalMemberList: '/members',
+  getApprovedMemberList: '/members',
+  getClubInfo: '/clubs/users/:userId',
+  //피드----------------------------------
+  getMainFeedList: '/main/feeds',
+  getClubFeedList: '/feeds/clubs/:clubId',
+  getFeedDetails: '/feeds/:feedId',
+  getCommentList: '/comments/feeds/:feedId',
+  getUserCommentList: '/comments/users/:userId',
+  getUserFeedList: '/feeds/users/:userId',
+  getLikedFeedList: '/likedfeeds/users/:userId',
+  getLikedFeedIdList: '/likedfeeds/ids',
 };
 
 const getQueryString = <QP extends { [key: string]: string | number }>(
@@ -36,19 +51,16 @@ const getPathWhitPathVariable = <PV extends { [key: string]: string | number }>(
   return path;
 };
 
-export const createGetApiFunction = (() => {
-  const apiFunction = <K extends keyof ApiEndpoints>(
-    key: K,
-    noNeedToken = false,
-  ) => {
+const createGetApiFunction = (() => {
+  const apiFunction = <K extends keyof GetApi>(key: K, noNeedToken = false) => {
     return async ({
       pathVariables,
       queryParameters,
     }: {
-      pathVariables?: ApiEndpoints[K]['pathVariables'];
-      queryParameters?: ApiEndpoints[K]['queryParameters'];
-    }): Promise<ApiEndpoints[K]['result']> => {
-      let path = apiEndPointsForGet[key];
+      pathVariables?: GetApi[K]['pathVariables'];
+      queryParameters?: GetApi[K]['queryParameters'];
+    }): Promise<GetApi[K]['result']> => {
+      let path = getApiEndPoints[key];
 
       if (pathVariables) {
         path = getPathWhitPathVariable(path, pathVariables);
@@ -63,14 +75,37 @@ export const createGetApiFunction = (() => {
       } else {
         result = await axiosInstance.get(path);
       }
-      return result.data;
+      return result.data.data;
     };
   };
   return apiFunction;
 })();
 
-export const getMainClubList = createGetApiFunction('mainClubList', true);
-export const getClubDetails = createGetApiFunction('clubDetails');
-export const getJoinedClubList = createGetApiFunction('joinedClubList');
-export const getAppliedClubIdList = createGetApiFunction('appliedClubIdList');
-export const getLikedClubIdList = createGetApiFunction('likedClubIdList');
+export const getUserProfile = createGetApiFunction('getUserProfile');
+//독서--------------------------------------
+export const getMainClubList = createGetApiFunction('getMainClubList', true);
+export const getAppliedClubIdList = createGetApiFunction(
+  'getAppliedClubIdList',
+);
+export const getLikedClubIdList = createGetApiFunction('getLikedClubIdList');
+export const getClubList = createGetApiFunction('getClubList');
+export const getLikedClubList = createGetApiFunction('getLikedClubList');
+export const getClubDetails = createGetApiFunction('getClubDetails');
+export const getJoinedClubList = createGetApiFunction('getJoinedClubList');
+export const getPendingApprovalMemberList = createGetApiFunction(
+  'getPendingApprovalMemberList',
+);
+export const getApprovedMemberList = createGetApiFunction(
+  'getApprovedMemberList',
+);
+export const getClubInfo = createGetApiFunction('getClubInfo');
+
+//피드--------------------------------------
+export const getMainFeedList = createGetApiFunction('getMainFeedList', true);
+export const getClubFeedList = createGetApiFunction('getClubFeedList');
+export const getFeedDetails = createGetApiFunction('getFeedDetails');
+export const getCommentList = createGetApiFunction('getCommentList');
+export const getUserCommentList = createGetApiFunction('getUserCommentList');
+export const getUserFeedList = createGetApiFunction('getUserFeedList');
+export const getLikedFeedList = createGetApiFunction('getLikedFeedList');
+export const getLikedFeedIdList = createGetApiFunction('getLikedFeedIdList');

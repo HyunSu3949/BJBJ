@@ -1,14 +1,14 @@
-export type Tag = '소모임' | '오프라인' | '온라인' | '수도권' | '지방';
-export type Tags =
-  | `${Tag}`
-  | `${Tag},${Tag}`
-  | `${Tag},${Tag},${Tag}`
-  | `${Tag},${Tag},${Tag},${Tag}`;
-
-export type ClubStatus = '모집중' | '마감됨';
+export type DB = {
+  clubs: Club[];
+  users: User[];
+  members: Member[];
+  likedClubs: LikeClub[];
+  likedFeeds: LikeFeed[];
+  feeds: Feed[];
+  feedComment: FeedComment[];
+};
 
 export type Club = {
-  id: string;
   clubId: string;
   userId: string;
   title: string;
@@ -26,14 +26,52 @@ export type Club = {
   publisher: string;
 };
 
-export type GetClub = {
+export type User = {
+  userId: string;
+  userName: string;
+  userEmail: string;
+  imgUrl: string;
+};
+
+export type Member = {
+  memberId: string;
+  userId: string;
+  clubId: string;
+  status: string;
+};
+
+export type LikeFeed = {
+  likeId: string;
+  userId: string;
+  feedId: string;
+};
+
+export type LikeClub = {
+  likeId: string;
+  userId: string;
+  clubId: string;
+};
+
+export type Feed = {
+  feedId: string;
+  userId: string;
   clubId: string;
   title: string;
-  contents: string;
-  imgUrl: string;
-  tags: Tags;
   likes: number;
+  contents: string;
+  createdAt: string;
+  updatedAt: string;
+  imgUrl: string;
 };
+export type FeedComment = {
+  commentId: string;
+  userId: string;
+  feedId: string;
+  contents: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
 export type PostClub = {
   userId: string;
   title: string;
@@ -47,50 +85,6 @@ export type PostClub = {
   publisher: string;
 };
 
-export type Users = {
-  id: string;
-  userId: string;
-  userName: string;
-  userEmail: string;
-  imgUrl: string;
-};
-export type Members = {
-  memberId: string;
-  userId: string;
-  clubId: string;
-  status: string;
-};
-export type LikedFeeds = {
-  id: string;
-  userId: string;
-  feedId: string;
-};
-export type LikedClubs = {
-  id: string;
-  userId: string;
-  clubId: string;
-};
-export type Feeds = {
-  id: string;
-  feedId: string;
-  userId: string;
-  clubId: string;
-  title: string;
-  likes: number;
-  contents: string;
-  createdAt: string;
-  updatedAt: string;
-  imgUrl: string;
-};
-export type FeedComment = {
-  id: string;
-  commentId: string;
-  userId: string;
-  feedId: string;
-  contents: string;
-  createdAt: string;
-  updatedAt: string;
-};
 export type PostFeed = {
   userId: string;
   clubId: string;
@@ -98,6 +92,7 @@ export type PostFeed = {
   contents: string;
   imgUrl: string;
 };
+
 export type PutFeed = {
   feedId: string;
   userId: string;
@@ -105,16 +100,6 @@ export type PutFeed = {
   title: string;
   contents: string;
   imgUrl: string;
-};
-
-export type DB = {
-  clubs: Club[];
-  users: Users[];
-  members: Members[];
-  likedClubs: LikedClubs[];
-  likedFeeds: LikedFeeds[];
-  feeds: Feeds[];
-  feedComment: FeedComment[];
 };
 
 export type MainFeed = {
@@ -128,3 +113,20 @@ export type MainFeed = {
   contents: string;
   commentCount: string;
 };
+export type GetClub = {
+  clubId: string;
+  title: string;
+  contents: string;
+  imgUrl: string;
+  tags: Tags;
+  likes: number;
+};
+
+export type Tag = '소모임' | '오프라인' | '온라인' | '수도권' | '지방';
+
+export type Tags =
+  | `${Tag}`
+  | `${Tag},${Tag}`
+  | `${Tag},${Tag},${Tag}`
+  | `${Tag},${Tag},${Tag},${Tag}`;
+export type ClubStatus = '모집중' | '마감됨';

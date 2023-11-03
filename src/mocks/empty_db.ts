@@ -13,7 +13,6 @@ export const ids = {
 export const db: DB = {
   users: [
     {
-      id: '0',
       userId: '0',
       userName: '현수',
       userEmail: 'ahs@gmail.com',

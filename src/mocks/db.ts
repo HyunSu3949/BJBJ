@@ -11,35 +11,30 @@ export const ids = {
 export const db: DB = {
   users: [
     {
-      id: '0',
       userId: '0',
       userName: '현수',
       userEmail: 'ahs@gmail.com',
       imgUrl: 'hs.png',
     },
     {
-      id: '1',
       userId: '1',
       userName: '주홍',
       userEmail: 'mjh@gmail.com',
       imgUrl: 'jh.png',
     },
     {
-      id: '2',
       userId: '2',
       userName: '준용',
       userEmail: 'bjy@gmail.com',
       imgUrl: 'jy.png',
     },
     {
-      id: '3',
       userId: '3',
       userName: '지훈',
       userEmail: 'sjh@gmail.com',
       imgUrl: 'sjh.png',
     },
     {
-      id: '4',
       userId: '4',
       userName: '용준',
       userEmail: 'jy@gmail.com',
@@ -48,7 +43,6 @@ export const db: DB = {
   ],
   clubs: [
     {
-      id: '0',
       clubId: '0',
       userId: '0', // 현수
       title: '오만과편견 독서모임0',
@@ -66,7 +60,6 @@ export const db: DB = {
       publisher: '생능출판사',
     },
     {
-      id: '1',
       clubId: '1',
       userId: '1', //주홍
       title: '오만과편견 독서모임1',
@@ -84,7 +77,6 @@ export const db: DB = {
       publisher: '생능출판사',
     },
     {
-      id: '2',
       clubId: '2',
       userId: '2', // 준용
       title: '오만과편견 독서모임2',
@@ -102,7 +94,6 @@ export const db: DB = {
       publisher: '생능출판사',
     },
     {
-      id: '3',
       clubId: '3',
       userId: '3', // 지훈
       title: '오만과편견 독서모임3',
@@ -120,7 +111,6 @@ export const db: DB = {
       publisher: '생능출판사',
     },
     {
-      id: '4',
       clubId: '4',
       userId: '4', // 지훈
       title: '오만과편견 독서모임4',
@@ -140,7 +130,6 @@ export const db: DB = {
   ],
   feeds: [
     {
-      id: '0',
       feedId: '0',
       userId: '0',
       clubId: '0',
@@ -152,7 +141,6 @@ export const db: DB = {
       imgUrl: '0.png',
     },
     {
-      id: '1',
       feedId: '1',
       userId: '1',
       clubId: '1',
@@ -164,7 +152,6 @@ export const db: DB = {
       imgUrl: '0.png',
     },
     {
-      id: '2',
       feedId: '2',
       userId: '2',
       clubId: '2',
@@ -176,7 +163,6 @@ export const db: DB = {
       imgUrl: '0.png',
     },
     {
-      id: '3',
       feedId: '3',
       userId: '3',
       clubId: '3',
@@ -188,7 +174,6 @@ export const db: DB = {
       imgUrl: '0.png',
     },
     {
-      id: '4',
       feedId: '4',
       userId: '4',
       clubId: '4',
@@ -247,66 +232,65 @@ export const db: DB = {
   ],
   likedClubs: [
     {
-      id: '0',
+      likeId: '0',
       userId: '0',
       clubId: '0',
     },
     {
-      id: '2',
+      likeId: '2',
       userId: '0',
       clubId: '2',
     },
     {
-      id: '3',
+      likeId: '3',
       userId: '1',
       clubId: '1',
     },
     {
-      id: '4',
+      likeId: '4',
       userId: '1',
       clubId: '2',
     },
     {
-      id: '5',
+      likeId: '5',
       userId: '2',
       clubId: '0',
     },
   ],
   likedFeeds: [
     {
-      id: '0',
+      likeId: '0',
       userId: '1',
       feedId: '0',
     },
     {
-      id: '1',
+      likeId: '1',
       userId: '2',
       feedId: '0',
     },
     {
-      id: '2',
+      likeId: '2',
       userId: '1',
       feedId: '1',
     },
     {
-      id: '3',
+      likeId: '3',
       userId: '2',
       feedId: '1',
     },
     {
-      id: '4',
+      likeId: '4',
       userId: '1',
       feedId: '2',
     },
     {
-      id: '5',
+      likeId: '5',
       userId: '2',
       feedId: '2',
     },
   ],
   feedComment: [
     {
-      id: '0',
       commentId: '0',
       userId: '0',
       feedId: '0',
@@ -315,7 +299,6 @@ export const db: DB = {
       updatedAt: '2023-10-05T12:34:56.789',
     },
     {
-      id: '1',
       commentId: '1',
       userId: '0',
       feedId: '1',
@@ -324,7 +307,6 @@ export const db: DB = {
       updatedAt: '2023-10-05T12:34:56.789',
     },
     {
-      id: '2',
       commentId: '2',
       userId: '0',
       feedId: '2',
@@ -333,7 +315,6 @@ export const db: DB = {
       updatedAt: '2023-10-05T12:34:56.789',
     },
     {
-      id: '3',
       commentId: '3',
       userId: '1',
       feedId: '0',
@@ -342,7 +323,6 @@ export const db: DB = {
       updatedAt: '2023-10-05T12:34:56.789',
     },
     {
-      id: '4',
       commentId: '4',
       userId: '1',
       feedId: '1',
@@ -351,7 +331,6 @@ export const db: DB = {
       updatedAt: '2023-10-05T12:34:56.789',
     },
     {
-      id: '5',
       commentId: '5',
       userId: '1',
       feedId: '2',
@@ -360,7 +339,6 @@ export const db: DB = {
       updatedAt: '2023-10-05T12:34:56.789',
     },
     {
-      id: '6',
       commentId: '6',
       userId: '2',
       feedId: '0',
@@ -369,7 +347,6 @@ export const db: DB = {
       updatedAt: '2023-10-05T12:34:56.789',
     },
     {
-      id: '7',
       commentId: '7',
       userId: '2',
       feedId: '1',
@@ -378,7 +355,6 @@ export const db: DB = {
       updatedAt: '2023-10-05T12:34:56.789',
     },
     {
-      id: '8',
       commentId: '8',
       userId: '2',
       feedId: '2',

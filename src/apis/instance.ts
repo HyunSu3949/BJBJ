@@ -12,8 +12,8 @@ axiosPublic.interceptors.response.use(
     const responseBody = res.data;
     const requestUrl = res.config.url;
 
-    console.log('Request URL:', requestUrl);
-    console.log('Response Body:', responseBody);
+    // console.log('Request URL:', requestUrl);
+    // console.log('Response Body:', responseBody);
     return res;
   },
   (error: AxiosError<unknown>) => {
@@ -55,8 +55,8 @@ axiosInstance.interceptors.response.use(
     const responseBody = res.data;
     const requestUrl = res.config.url;
 
-    console.log('Request URL:', requestUrl);
-    console.log('Response Body:', responseBody);
+    // console.log('Request URL:', requestUrl);
+    // console.log('Response Body:', responseBody);
 
     const accessToken = res.headers['Access_Token'];
     const refreshToken = res.headers['Refresh_Token'];
