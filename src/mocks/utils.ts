@@ -3,8 +3,6 @@ import { db, ids } from './db';
 import { GetClub, PostClub } from './types';
 
 export function getClubsSortedByLikes(): GetClub[] {
-  console.log(db.clubs);
-
   return db.clubs
     .map(club => ({
       clubId: club.clubId,
@@ -34,7 +32,6 @@ export function postClubs(data: PostClub) {
   const nextId = ids.clubs++;
 
   db.clubs.push({
-    id: String(nextId),
     clubId: String(nextId),
     userId,
     title,
@@ -62,12 +59,12 @@ export function likesClub({
 }) {
   const nextId = ids.likedClubs++;
   db.likedClubs.push({
-    id: String(nextId),
+    likeId: String(nextId),
     userId,
     clubId,
   });
   db.clubs.forEach(obj => {
-    if (obj.id == clubId) obj.likes++;
+    if (obj.clubId == clubId) obj.likes++;
   });
 }
 
@@ -147,7 +144,7 @@ export function getJoinedClub(userId: string, page: number) {
 }
 
 export function getClubDetails(clubId: string) {
-  const club = { ...db.clubs.find(club => club.id == clubId) };
+  const club = { ...db.clubs.find(club => club.clubId == clubId) };
 
   return club;
 }
@@ -203,7 +200,6 @@ export function getClubFeeds(clubId: string, page: number) {
 
       return {
         user: userInfo,
-        id: obj.id,
         feedId: obj.feedId,
         contents: obj.contents,
         likes: obj.likes,

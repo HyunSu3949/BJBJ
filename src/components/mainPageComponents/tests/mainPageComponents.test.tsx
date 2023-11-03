@@ -1,45 +1,66 @@
-import { BrowserRouter, MemoryRouter, Route, Routes } from 'react-router-dom';
-import { render, screen, waitFor } from '@testing-library/react';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import ClubList from '../clubList/ClubList';
-import FeedList from '../feedList/FeedList';
-import ClubDetailPage from '../../../pages/clubDetailPage/ClubDetailPage';
+import { UserContextProvider } from '../../contexts/userContext';
+import Layout from '../../route/Layout';
+import MainPage from '../../../pages/mainPage/MainPage';
+import SearchPage from '../../../pages/searchPage/SearchPage';
 
-test('독서모임 리스트가 렌더링되었는지 테스트', async () => {
-  render(<ClubList sortBy="likes" />, { wrapper: BrowserRouter });
-  const items = await waitFor(() => screen.findAllByRole('listitem'));
-  expect(items).not.toHaveLength(0);
-});
+const setup = async () => {
+  render(
+    <UserContextProvider>
+      <MemoryRouter>
+        <Routes>
+          <Route element={<Layout />}>
+            <Route path="/" element={<MainPage />} />
+            <Route path="/search" element={<SearchPage />} />
+          </Route>
+        </Routes>
+      </MemoryRouter>
+    </UserContextProvider>,
+  );
+};
 
-test('독서모임 리스트 렌더링 테스트(날짜순)', async () => {
-  render(<ClubList sortBy="createdAt" />, { wrapper: BrowserRouter });
-  const items = await waitFor(() => screen.findAllByRole('listitem'));
-  expect(items).not.toHaveLength(0);
-});
+const login = async () => {
+  const loginButton = await screen.findByLabelText('구글 로그인');
+  expect(loginButton).toBeInTheDocument();
 
-test('피드 렌더링 테스트(좋아요순)', async () => {
-  render(<FeedList sortBy="likes" />);
-  const items = await screen.findAllByRole('listitem');
-  await waitFor(() => {
+  await userEvent.click(loginButton);
+  expect(await screen.findByLabelText('마이 페이지 링크')).toBeInTheDocument();
+};
+
+describe('메인 페이지', () => {
+  beforeEach(async () => {
+    await setup();
+    await login();
+  });
+
+  afterEach(async () => {
+    cleanup();
+  });
+
+  test('독서모임 리스트가 렌더링 테스트', async () => {
+    const items = await screen.findAllByLabelText('독서 모임 카드');
     expect(items).not.toHaveLength(0);
   });
-});
 
-test('더 알아보기 링크 클릭 시 페이지 이동', async () => {
-  const user = userEvent.setup();
-  render(
-    <MemoryRouter>
-      <Routes>
-        <Route path="/" element={<ClubList sortBy="likes" />} />
-        <Route path="/club/:clubId" element={<ClubDetailPage />} />
-      </Routes>
-    </MemoryRouter>,
-  );
+  test('피드 렌더링 테스트', async () => {
+    const items = await screen.findAllByLabelText('피드 카드');
+    expect(items).not.toHaveLength(0);
+  });
 
-  const linkElements = await screen.findAllByText('더 알아보기');
-  await user.click(linkElements[0]);
+  test('더 알아보기 버튼 클릭 시 페이지 이동', async () => {
+    const linkButtons = await screen.findAllByRole('link', {
+      name: '더알아보기',
+    });
+    expect(linkButtons).toHaveLength(2);
 
-  const detailHeader = screen.getByText('모임 상세페이지');
-  expect(detailHeader).toBeInTheDocument();
+    await userEvent.click(linkButtons[0]);
+
+    const searchPageHeading = await screen.findByRole('heading', {
+      name: '검색페이지',
+    });
+    expect(searchPageHeading).toBeInTheDocument();
+  });
 });

@@ -21,7 +21,7 @@ export default function LoginButton() {
       {isLogedin ? (
         <>
           {location.pathname !== '/my' && (
-            <Link to="/my">
+            <Link to="/my" aria-label="마이 페이지 링크">
               <UserImg imgUrl={userProfile.imgUrl} />
             </Link>
           )}

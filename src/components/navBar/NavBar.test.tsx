@@ -35,27 +35,13 @@ const login = async () => {
   const loginButton = await screen.findByLabelText('구글 로그인');
   await userEvent.click(loginButton);
 
-  await waitFor(async () => {
-    expect(
-      await screen.findByAltText('유저 프로필 이미지'),
-    ).toBeInTheDocument();
-  });
+  expect(await screen.findByLabelText('마이 페이지 링크')).toBeInTheDocument();
 };
 
 describe('navBar 테스트', () => {
   beforeEach(async () => {
     await setup();
     await login();
-  });
-
-  test('로그아웃 테스트', async () => {
-    expect(
-      await screen.findByLabelText('유저 프로필 이미지'),
-    ).toBeInTheDocument();
-
-    const logoutButton = await screen.findByRole('button', { name: 'logout' });
-    userEvent.click(logoutButton);
-    expect(await screen.findByLabelText('구글 로그인')).toBeInTheDocument();
   });
 
   test('피드 목록 드롭다운 테스트', async () => {

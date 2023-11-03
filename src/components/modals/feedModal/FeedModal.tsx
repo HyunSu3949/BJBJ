@@ -8,6 +8,7 @@ import LikeFeedButton from './LikeFeedButton';
 import UserImg from '../../common/userImg/UserImg';
 import CommentIcon from '../../../assets/image/comment.svg';
 import * as S from './styles';
+import { domains } from '../../../constants/constants';
 
 type Props = {
   onClose: () => void;
@@ -52,7 +53,9 @@ export default function FeedModal({ onClose, feedId }: Props) {
         <S.MidDiv>
           <h2>{feedDetails.title}</h2>
           <p>{feedDetails.contents}</p>
-          {feedDetails.imgUrl && <img src={feedDetails.imgUrl} />}
+          {feedDetails.imgUrl && (
+            <img src={domains.imgUrl + feedDetails.imgUrl} />
+          )}
           <S.ButtonDiv>
             <div>
               <LikeFeedButton

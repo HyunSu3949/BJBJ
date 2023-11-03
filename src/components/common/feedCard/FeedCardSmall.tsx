@@ -25,7 +25,10 @@ export default function FeedCardSmall(props: FeedCardSmallType) {
     });
   };
   return (
-    <S.Wrapper onClick={() => openFeedModal(props.feedId)}>
+    <S.Wrapper
+      onClick={() => openFeedModal(props.feedId)}
+      aria-label="피드 카드"
+    >
       <S.TopBox>
         <UserImg imgUrl={props.user.imgUrl} />
         <span>{props.user.userName}</span>

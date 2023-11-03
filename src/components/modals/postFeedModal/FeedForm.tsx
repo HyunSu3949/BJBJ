@@ -63,7 +63,7 @@ export default function FeedForm({ onClose, clubId }: Props) {
       contents: data.contents,
       imgUrl,
     };
-    console.log('피드:', clubId);
+    // console.log('피드:', clubId);
 
     await postFeed(postData);
     onClose();

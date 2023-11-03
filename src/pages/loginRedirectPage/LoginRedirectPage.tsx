@@ -9,7 +9,7 @@ export default function LoginRedirectPage() {
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     queryParams.set('Access_Token', '0'); // 0번 아이디를 가정해서 토큰을 0으로 설정
-    console.log('loginredrienct ======', queryParams.get('Access_Token'));
+    // console.log('loginredrienct ======', queryParams.get('Access_Token'));
 
     queryParams.set('Refresh_Token', '0');
     storeTokenInLocalStorage(queryParams);

@@ -27,24 +27,15 @@ const setup = async () => {
 };
 const login = async () => {
   const loginButton = await screen.findByLabelText('구글 로그인');
+  expect(loginButton).toBeInTheDocument();
   await userEvent.click(loginButton);
 
-  await waitFor(async () => {
-    expect(
-      await screen.findByLabelText('유저 프로필 이미지'),
-    ).toBeInTheDocument();
-  });
+  expect(await screen.findByLabelText('마이 페이지 링크')).toBeInTheDocument();
 };
 
 const goToClubDetail = async () => {
   const linkElements = await screen.findAllByText('더 알아보기');
   await userEvent.click(linkElements[0]);
-};
-const goToMain = async () => {
-  const linkElements = await screen.findByAltText('메인로고');
-  await userEvent.click(linkElements);
-
-  expect(await screen.findByText('메인페이지')).toBeInTheDocument();
 };
 
 describe('Club Detail Page', () => {
@@ -61,7 +52,7 @@ describe('Club Detail Page', () => {
   test('상세페이지 컴포넌트 렌더링 테스트', async () => {
     const clubTitle = await screen.findByText(/독서모임1/i);
     expect(clubTitle).toBeInTheDocument();
-    const clubFeedList = await screen.findAllByRole('listitem');
+    const clubFeedList = await screen.findAllByLabelText('피드 카드');
     expect(clubFeedList).not.toHaveLength(0);
   });
 

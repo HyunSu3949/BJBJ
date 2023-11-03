@@ -15,12 +15,12 @@ export default function MainPage() {
       <S.Section>
         <h2>최신순</h2>
         <ClubList sortBy="createdAt" />
-        <Link to="/search">더 알아보기</Link>
+        <Link to="/search">더알아보기</Link>
       </S.Section>
       <S.Section>
         <h2>인기글</h2>
         <FeedList sortBy="likes" />
-        <Link to="/search">더 알아보기</Link>
+        <Link to="/search">더알아보기</Link>
       </S.Section>
     </>
   );

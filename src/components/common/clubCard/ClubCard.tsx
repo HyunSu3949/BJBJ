@@ -6,7 +6,7 @@ import * as S from './styles';
 
 export default function ClubCard(club: Club) {
   return (
-    <S.Wrapper>
+    <S.Wrapper aria-label="독서 모임 카드">
       <ClubImg imgUrl={club.imgUrl} />
       <S.InfoBox>
         <h3>{club.title}</h3>
